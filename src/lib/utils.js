@@ -51,6 +51,7 @@ export const CATEGORIES = [
 
 export const DAYS = ['monday','tuesday','wednesday','thursday','friday','saturday','sunday']
 
+// TODO: Replace Station 8 name, frequency, location and color when you get details
 export const STATIONS_SEED = [
   { name:'Premier 93.5 FM',   slug:'premier-93-5',   frequency:'93.5',  tagline:'Your Dependable Companion', location:'Ibadan, Oyo State',    color:'#1A6B9A', stream_url:'' },
   { name:'Amuludun 99.1 FM',  slug:'amuludun-99-1',  frequency:'99.1',  tagline:'O Tawonyo — Stand Out',      location:'Ibadan, Oyo State',    color:'#8B5E3C', stream_url:'' },
@@ -59,4 +60,14 @@ export const STATIONS_SEED = [
   { name:'Gold 95.5 FM',      slug:'gold-95-5',      frequency:'95.5',  tagline:'Pure Gold',                   location:'Ilesa, Osun State',    color:'#B8860B', stream_url:'' },
   { name:'Progress 105.5 FM', slug:'progress-105-5', frequency:'105.5', tagline:'Moving Forward',              location:'Southwest Zone',       color:'#8B2020', stream_url:'' },
   { name:'Choice 95.9 FM',    slug:'choice-95-9',    frequency:'95.9',  tagline:'Your First Choice',           location:'Southwest Zone',       color:'#2D6A4F', stream_url:'' },
+  // TODO: Update name, slug, frequency, tagline, location, color below
+  { name:'Station 8 FM',      slug:'station-8',      frequency:'XX.X',  tagline:'Coming Soon',                 location:'Southwest Zone',       color:'#6B4A9A', stream_url:'' },
 ]
+
+// TODO: Replace with real social media URLs when you get them from management
+export const SOCIAL_LINKS = {
+  facebook:  'https://facebook.com/radionigeriaibadan',
+  twitter:   'https://twitter.com/radionigeriaibadan',
+  instagram: 'https://instagram.com/radionigeriaibadan',
+  youtube:   'https://youtube.com/@radionigeriaibadan',
+}
