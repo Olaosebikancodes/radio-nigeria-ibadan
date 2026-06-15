@@ -102,7 +102,7 @@ export default function Footer() {
             © {new Date().getFullYear()} Federal Radio Corporation of Nigeria — Ibadan Zonal Station. All rights reserved.
           </p>
           <p style={{ fontSize:'12px', color:'var(--color-text-dim)' }}>
-            Site by <span style={{ color:'var(--color-accent)' }}>Prisac Labs</span>
+            Built by <span style={{ color:'var(--color-accent)' }}>Isaac Olaosebikan</span> (coFounder of Prisac Tech Labs) — Corps Member, ICT Unit, Radio Nigeria Ibadan Zonal Station, OY/25C/2486
           </p>
         </div>
       </div>
