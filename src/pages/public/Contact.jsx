@@ -1,11 +1,24 @@
 import { useState } from 'react'
+import { supabase } from '../../lib/supabase'
+import toast from 'react-hot-toast'
 
 export default function Contact() {
   const [form, setForm] = useState({ name:'', email:'', subject:'', message:'' })
   const [sent, setSent] = useState(false)
+  const [sending, setSending] = useState(false)
 
   const handle = e => setForm(f => ({...f, [e.target.name]: e.target.value}))
-  const submit = e => { e.preventDefault(); setSent(true) }
+
+  const submit = async (e) => {
+    e.preventDefault()
+    setSending(true)
+    const { error } = await supabase.from('contact_messages').insert({
+      name: form.name, email: form.email, subject: form.subject, message: form.message,
+    })
+    setSending(false)
+    if (error) { toast.error('Failed to send. Please try again.'); return }
+    setSent(true)
+  }
 
   const inputStyle = { width:'100%', padding:'11px 14px', borderRadius:'10px', fontSize:'14px', background:'var(--color-surface-2)', border:'1px solid var(--color-border)', color:'var(--color-text)', outline:'none', transition:'border-color 0.2s', fontFamily:'var(--font-body)' }
 
@@ -49,8 +62,8 @@ export default function Contact() {
                 <label style={{ fontSize:'12px', fontWeight:600, color:'var(--color-text-muted)', display:'block', marginBottom:'6px' }}>Message</label>
                 <textarea name="message" value={form.message} onChange={handle} required rows={6} placeholder="Write your message here…" style={{...inputStyle, resize:'vertical'}} onFocus={e=>e.target.style.borderColor='var(--color-brand-light)'} onBlur={e=>e.target.style.borderColor='var(--color-border)'} />
               </div>
-              <button type="submit" style={{ padding:'13px 28px', borderRadius:'10px', fontSize:'14px', fontWeight:700, cursor:'pointer', background:'var(--color-brand)', color:'#fff', border:'none', transition:'background 0.2s', alignSelf:'flex-start' }} onMouseEnter={e=>e.currentTarget.style.background='var(--color-brand-light)'} onMouseLeave={e=>e.currentTarget.style.background='var(--color-brand)'}>
-                Send Message →
+              <button type="submit" disabled={sending} style={{ padding:'13px 28px', borderRadius:'10px', fontSize:'14px', fontWeight:700, cursor:sending?'not-allowed':'pointer', background:'var(--color-brand)', color:'#fff', border:'none', transition:'background 0.2s', alignSelf:'flex-start', opacity:sending?0.7:1 }} onMouseEnter={e=>{ if(!sending) e.currentTarget.style.background='var(--color-brand-light)' }} onMouseLeave={e=>e.currentTarget.style.background='var(--color-brand)'}>
+                {sending ? 'Sending…' : 'Send Message →'}
               </button>
             </form>
           )}

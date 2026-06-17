@@ -8,15 +8,14 @@ export function PlayerProvider({ children }) {
   const [volume, setVolume]   = useState(0.8)
   const audioRef = useRef(null)
 
-  const play = (station) => {
-    if (!station?.stream_url) return
-    if (activeStation?.id === station.id) {
-      toggle(); return
-    }
-    setActiveStation(station)
+  const play = (item) => {
+    const url = item?.stream_url || item?.audio_url
+    if (!url) return
+    if (activeStation?.id === item.id) { toggle(); return }
+    setActiveStation(item)
     setPlaying(true)
     if (audioRef.current) {
-      audioRef.current.src = station.stream_url
+      audioRef.current.src = url
       audioRef.current.volume = volume
       audioRef.current.play().catch(() => setPlaying(false))
     }

@@ -21,7 +21,7 @@ export default function Stations() {
         <div style={{ maxWidth:'1280px', margin:'0 auto' }}>
           <p style={{ fontSize:'11px', fontWeight:600, color:'var(--color-brand-light)', textTransform:'uppercase', letterSpacing:'0.1em', marginBottom:'10px' }}>FRCN South West Zone</p>
           <h1 style={{ fontFamily:'var(--font-display)', fontSize:'clamp(32px,5vw,56px)', fontWeight:900, color:'var(--color-text)', letterSpacing:'-0.04em', marginBottom:'12px' }}>Our Stations</h1>
-          <p style={{ fontSize:'16px', color:'var(--color-text-muted)', maxWidth:'560px' }}>7 FM stations serving Oyo, Ogun, Ondo, Osun and the broader South West region.</p>
+          <p style={{ fontSize:'16px', color:'var(--color-text-muted)', maxWidth:'560px' }}>8 FM stations serving Oyo, Ogun, Ondo, Osun, Ekiti and the broader South West region.</p>
         </div>
       </div>
 

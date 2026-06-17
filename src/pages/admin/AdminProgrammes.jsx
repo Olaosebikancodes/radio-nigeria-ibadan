@@ -6,7 +6,7 @@ import toast from 'react-hot-toast'
 
 const inputStyle = { width:'100%', padding:'9px 12px', borderRadius:'8px', fontSize:'13px', background:'var(--color-surface-2)', border:'1px solid var(--color-border)', color:'var(--color-text)', outline:'none', fontFamily:'var(--font-body)' }
 
-const EMPTY = { title:'', host:'', language:'English', station_id:'', days:[], start_time:'06:00', end_time:'07:00', description:'' }
+const EMPTY = { title:'', host:'', language:'English', station_id:'', days:[], start_time:'06:00', end_time:'07:00' }
 
 export default function AdminProgrammes() {
   const [programmes, setProgrammes] = useState([])
@@ -47,7 +47,7 @@ export default function AdminProgrammes() {
   }
 
   const startEdit = (p) => {
-    setForm({ title:p.title, host:p.host||'', language:p.language||'English', station_id:p.station_id, days:p.days||[], start_time:p.start_time, end_time:p.end_time, description:p.description||'' })
+    setForm({ title:p.title, host:p.host||'', language:p.language||'English', station_id:p.station_id, days:p.days||[], start_time:p.start_time, end_time:p.end_time })
     setEditing(p.id); setShowForm(true)
   }
 

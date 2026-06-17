@@ -64,7 +64,6 @@ export const STATIONS_SEED = [
   { name:'Asabari 88.3 FM',   slug:'asabari-88-3',   frequency:'88.3',  tagline:'Ti wan tiwa',                 location:'Southwest Zone',         color:'#6B4A9A', stream_url:'https://centova57.instainternet.com/proxy/asabari?mp=/stream',   cover_image:`${IMG}/Asabari%20FM.jpeg` },
 ]
 
-// TODO: Replace with real social media URLs when you get them from management
 export const SOCIAL_LINKS = {
   facebook:  'https://facebook.com/radionigeriaibadan',
   twitter:   'https://twitter.com/radionigeriaibadan',

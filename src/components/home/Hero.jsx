@@ -73,18 +73,26 @@ function ListenDropdown({ onClose, anchorRef }) {
     </div>
   )
 
+  useEffect(() => {
+    if (isMobile) {
+      document.body.style.overflow = 'hidden'
+      return () => { document.body.style.overflow = '' }
+    }
+  }, [isMobile])
+
   if (isMobile) {
     return (
-      <div onClick={onClose} style={{ position: 'fixed', inset: 0, zIndex: 500, background: 'rgba(0,0,0,0.6)', backdropFilter: 'blur(4px)', display: 'flex', alignItems: 'flex-end' }}>
-        <div onClick={e => e.stopPropagation()} style={{ width: '100%', background: 'var(--color-surface)', borderRadius: '20px 20px 0 0', border: '1px solid var(--color-border-light)', borderBottom: 'none', maxHeight: '80vh', display: 'flex', flexDirection: 'column', animation: 'fade-up 0.22s var(--ease-out-expo)' }}>
-          <div style={{ display: 'flex', justifyContent: 'center', padding: '10px 0 0' }}>
+      <div onClick={onClose} style={{ position: 'fixed', inset: 0, zIndex: 500, background: 'rgba(0,0,0,0.55)', backdropFilter: 'blur(4px)' }}>
+        <div onClick={e => e.stopPropagation()} style={{ position: 'absolute', bottom: 0, left: 0, right: 0, background: 'var(--color-surface)', borderRadius: '20px 20px 0 0', border: '1px solid var(--color-border-light)', borderBottom: 'none', maxHeight: '82vh', display: 'flex', flexDirection: 'column', animation: 'sheet-up 0.28s var(--ease-out-expo)' }}>
+          <div style={{ display: 'flex', justifyContent: 'center', padding: '10px 0 4px' }}>
             <div style={{ width: '36px', height: '4px', borderRadius: '2px', background: 'var(--color-border-light)' }} />
           </div>
           {header}
-          <div style={{ overflowY: 'auto', flex: 1, paddingBottom: '24px' }}>
+          <div style={{ overflowY: 'auto', flex: 1, paddingBottom: '32px' }}>
             <StationList stations={stations} onClose={onClose} />
           </div>
         </div>
+        <style>{`@keyframes sheet-up { from { transform: translateY(100%); } to { transform: translateY(0); } }`}</style>
       </div>
     )
   }

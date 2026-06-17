@@ -73,7 +73,7 @@ export default function StationDetail() {
         </div>
       </div>
 
-      <div style={{ maxWidth:'1280px', margin:'0 auto', padding:'48px 24px 80px', display:'grid', gridTemplateColumns:'1fr 360px', gap:'40px' }}>
+      <div className="station-body-grid" style={{ maxWidth:'1280px', margin:'0 auto', padding:'48px 24px 80px', display:'grid', gridTemplateColumns:'1fr 360px', gap:'40px' }}>
         {/* Left */}
         <div>
           {station.description && (
@@ -110,7 +110,7 @@ export default function StationDetail() {
 
         {/* Right — Today's schedule */}
         <div>
-          <div style={{ background:'var(--color-surface)', borderRadius:'16px', border:'1px solid var(--color-border)', overflow:'hidden', position:'sticky', top:'88px' }}>
+          <div className="station-sidebar-sticky" style={{ background:'var(--color-surface)', borderRadius:'16px', border:'1px solid var(--color-border)', overflow:'hidden', position:'sticky', top:'88px' }}>
             <div style={{ padding:'20px 20px 16px', borderBottom:'1px solid var(--color-border)', background:'var(--color-surface-2)' }}>
               <h3 style={{ fontFamily:'var(--font-display)', fontWeight:700, fontSize:'16px', color:'var(--color-text)' }}>Today's Schedule</h3>
               <p style={{ fontSize:'12px', color:'var(--color-text-dim)', marginTop:'4px' }}>{new Date().toLocaleDateString('en-NG',{weekday:'long',day:'numeric',month:'long'})}</p>
@@ -141,7 +141,10 @@ export default function StationDetail() {
       </div>
 
       <style>{`
-        @media(max-width:900px){ main>div:last-child{ grid-template-columns:1fr !important; } }
+        @media(max-width:900px){
+          .station-body-grid{ grid-template-columns:1fr !important; }
+          .station-sidebar-sticky{ position:static !important; }
+        }
         @media(max-width:560px){ .station-articles-grid{ grid-template-columns:1fr !important; } }
       `}</style>
     </main>

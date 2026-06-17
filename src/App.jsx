@@ -1,17 +1,24 @@
-import { BrowserRouter } from 'react-router-dom'
+import { BrowserRouter, useLocation } from 'react-router-dom'
+import { useEffect } from 'react'
 import { Toaster } from 'react-hot-toast'
 import { AuthProvider } from './context/AuthContext'
 import { PlayerProvider } from './context/PlayerContext'
 import Navbar from './components/layout/Navbar'
 import Footer from './components/layout/Footer'
 import AppRoutes from './routes'
-import { useLocation } from 'react-router-dom'
+
+function ScrollToTop() {
+  const { pathname } = useLocation()
+  useEffect(() => { window.scrollTo(0, 0) }, [pathname])
+  return null
+}
 
 function Layout() {
   const { pathname } = useLocation()
   const isAdmin = pathname.startsWith('/admin')
   return (
     <>
+      <ScrollToTop />
       {!isAdmin && <Navbar />}
       <AppRoutes />
       {!isAdmin && <Footer />}

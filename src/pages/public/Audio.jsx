@@ -1,21 +1,22 @@
 import { useEffect, useState } from 'react'
 import { supabase } from '../../lib/supabase'
 import { formatDuration, timeAgo } from '../../lib/utils'
+import { usePlayer } from '../../context/PlayerContext'
 
 function AudioCard({ item }) {
-  const [playing, setPlaying] = useState(false)
-  const [audio] = useState(() => new Audio(item.audio_url))
+  const { play, activeStation, playing, toggle } = usePlayer()
+  const isActive  = activeStation?.id === item.id
+  const isPlaying = isActive && playing
 
-  const toggle = () => {
-    if (playing) { audio.pause(); setPlaying(false) }
-    else { audio.play(); setPlaying(true) }
+  const handlePlay = () => {
+    if (isActive) toggle()
+    else play(item)
   }
-  useEffect(() => { audio.onended = () => setPlaying(false); return () => audio.pause() }, [audio])
 
   return (
-    <div style={{ background:'var(--color-surface)', borderRadius:'14px', overflow:'hidden', border:'1px solid var(--color-border)', transition:'border-color 0.2s', display:'flex', gap:'0', flexDirection:'column' }}
-      onMouseEnter={e=>e.currentTarget.style.borderColor='var(--color-border-light)'}
-      onMouseLeave={e=>e.currentTarget.style.borderColor='var(--color-border)'}
+    <div style={{ background:'var(--color-surface)', borderRadius:'14px', overflow:'hidden', border:`1px solid ${isActive ? 'var(--color-brand-light)' : 'var(--color-border)'}`, transition:'border-color 0.2s', display:'flex', flexDirection:'column' }}
+      onMouseEnter={e=>{ if (!isActive) e.currentTarget.style.borderColor='var(--color-border-light)' }}
+      onMouseLeave={e=>{ if (!isActive) e.currentTarget.style.borderColor='var(--color-border)' }}
     >
       {/* Cover */}
       <div style={{ height:'140px', background:'var(--color-surface-2)', position:'relative', overflow:'hidden' }}>
@@ -23,14 +24,13 @@ function AudioCard({ item }) {
           ? <img src={item.cover_image} alt={item.title} style={{width:'100%',height:'100%',objectFit:'cover'}}/>
           : <div style={{display:'flex',alignItems:'center',justifyContent:'center',height:'100%',opacity:0.15,fontSize:'36px'}}>🎙️</div>
         }
-        {/* Play overlay */}
-        <button onClick={toggle} style={{ position:'absolute', inset:0, display:'flex', alignItems:'center', justifyContent:'center', background:'rgba(0,0,0,0.4)', border:'none', cursor:'pointer', opacity:0, transition:'opacity 0.2s' }}
+        <button onClick={handlePlay} style={{ position:'absolute', inset:0, display:'flex', alignItems:'center', justifyContent:'center', background:'rgba(0,0,0,0.35)', border:'none', cursor:'pointer', opacity: isPlaying ? 1 : 0, transition:'opacity 0.2s' }}
           onMouseEnter={e=>e.currentTarget.style.opacity=1}
-          onMouseLeave={e=>e.currentTarget.style.opacity=0}
+          onMouseLeave={e=>{ if (!isPlaying) e.currentTarget.style.opacity=0 }}
         >
-          <div style={{ width:'48px', height:'48px', borderRadius:'50%', background:'var(--color-brand)', display:'flex', alignItems:'center', justifyContent:'center', fontSize:'18px', color:'#fff' }}>{playing ? '❙❙' : '▶'}</div>
+          <div style={{ width:'48px', height:'48px', borderRadius:'50%', background:'var(--color-brand)', display:'flex', alignItems:'center', justifyContent:'center', fontSize:'18px', color:'#fff' }}>{isPlaying ? '❙❙' : '▶'}</div>
         </button>
-        {playing && (
+        {isPlaying && (
           <div style={{ position:'absolute', bottom:'8px', left:'8px', display:'flex', alignItems:'flex-end', gap:'2px', height:'16px' }}>
             {[1,2,3,4].map(i=><div key={i} style={{ width:'3px', borderRadius:'2px', background:'var(--color-accent)', animation:`wave-bar 0.7s ease-in-out ${i*0.1}s infinite`, transformOrigin:'bottom', height:`${[8,14,10,12][i-1]}px`}}/>)}
           </div>
@@ -43,7 +43,7 @@ function AudioCard({ item }) {
         {item.description && <p style={{ fontSize:'12px', color:'var(--color-text-muted)', lineHeight:1.6 }}>{item.description.slice(0,80)}…</p>}
         <div style={{ display:'flex', alignItems:'center', justifyContent:'space-between', marginTop:'auto', paddingTop:'8px' }}>
           <p style={{ fontSize:'11px', color:'var(--color-text-dim)' }}>{item.stations?.name || 'Radio Nigeria'}</p>
-          <div style={{ display:'flex', align:'center', gap:'8px' }}>
+          <div style={{ display:'flex', gap:'8px' }}>
             {item.duration_sec && <span style={{ fontSize:'11px', color:'var(--color-text-dim)' }}>⏱ {formatDuration(item.duration_sec)}</span>}
             <span style={{ fontSize:'11px', color:'var(--color-text-dim)' }}>{timeAgo(item.published_at||item.created_at)}</span>
           </div>
@@ -51,8 +51,8 @@ function AudioCard({ item }) {
       </div>
 
       {/* Play button */}
-      <button onClick={toggle} style={{ margin:'0 16px 16px', padding:'9px', borderRadius:'8px', fontSize:'13px', fontWeight:600, cursor:'pointer', background: playing?'var(--color-brand)':'var(--color-surface-2)', color: playing?'#fff':'var(--color-text-muted)', border:'1px solid var(--color-border)', transition:'all 0.2s' }}>
-        {playing ? '❙❙  Pause' : '▶  Play Episode'}
+      <button onClick={handlePlay} style={{ margin:'0 16px 16px', padding:'9px', borderRadius:'8px', fontSize:'13px', fontWeight:600, cursor:'pointer', background:isPlaying?'var(--color-brand)':'var(--color-surface-2)', color:isPlaying?'#fff':'var(--color-text-muted)', border:'1px solid var(--color-border)', transition:'all 0.2s' }}>
+        {isPlaying ? '❙❙  Pause' : '▶  Play Episode'}
       </button>
     </div>
   )

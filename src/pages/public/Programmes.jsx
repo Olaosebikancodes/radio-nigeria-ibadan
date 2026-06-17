@@ -66,8 +66,8 @@ export default function Programmes() {
         {/* Table */}
         <div style={{ background:'var(--color-surface)', borderRadius:'16px', border:'1px solid var(--color-border)', overflow:'hidden' }}>
           {/* Desktop header */}
-          <div className="prog-header" style={{ display:'grid', gridTemplateColumns:'140px 8px 1fr 120px 80px 100px', gap:'0 16px', padding:'12px 24px', background:'var(--color-surface-2)', borderBottom:'1px solid var(--color-border)' }}>
-            {['Time', '', 'Programme', 'Host', 'Language', 'Station'].map(h => (
+          <div className="prog-header" style={{ display:'grid', gridTemplateColumns:'140px 8px 1fr 140px 120px', gap:'0 16px', padding:'12px 24px', background:'var(--color-surface-2)', borderBottom:'1px solid var(--color-border)' }}>
+            {['Time', '', 'Programme', 'Host', 'Station'].map(h => (
               <p key={h} style={{ fontSize:'10px', fontWeight:700, color:'var(--color-text-dim)', textTransform:'uppercase', letterSpacing:'0.08em' }}>{h}</p>
             ))}
           </div>
@@ -82,7 +82,7 @@ export default function Programmes() {
                   const stationColor = p.stations?.color_hex || 'var(--color-text-dim)'
                   return (
                     <div key={p.id} className="prog-row" style={{
-                      display:'grid', gridTemplateColumns:'140px 8px 1fr 120px 80px 100px', gap:'0 16px',
+                      display:'grid', gridTemplateColumns:'140px 8px 1fr 140px 120px', gap:'0 16px',
                       padding:'14px 24px', alignItems:'center',
                       borderBottom:'1px solid var(--color-border)',
                       background: live ? 'rgba(0,92,46,0.08)' : 'transparent',
@@ -100,10 +100,9 @@ export default function Programmes() {
                         <p className="prog-host-mobile" style={{ display:'none', fontSize:'11px', color:'var(--color-text-muted)', marginTop:'2px' }}>{p.host || p.stations?.name || ''}</p>
                       </div>
                       <p className="prog-host" style={{ fontSize:'12px', color:'var(--color-text-muted)', overflow:'hidden', textOverflow:'ellipsis', whiteSpace:'nowrap' }}>{p.host || '—'}</p>
-                      <p className="prog-lang" style={{ fontSize:'12px', color:'var(--color-text-dim)' }}>{p.language || '—'}</p>
                       <div className="prog-station" style={{ display:'flex', alignItems:'center', gap:'6px' }}>
                         {live && <LiveBadge />}
-                        {!live && <p style={{ fontSize:'11px', color:'var(--color-text-dim)', overflow:'hidden', textOverflow:'ellipsis', whiteSpace:'nowrap' }}>{p.stations?.name || '—'}</p>}
+                        <p style={{ fontSize:'11px', color:'var(--color-text-dim)', overflow:'hidden', textOverflow:'ellipsis', whiteSpace:'nowrap' }}>{p.stations?.name || '—'}</p>
                       </div>
                     </div>
                   )
@@ -124,8 +123,7 @@ export default function Programmes() {
           .prog-dot   { display: none !important; }
           .prog-main  { grid-column: 2 !important; grid-row: 1 !important; }
           .prog-time  { grid-column: 1 !important; grid-row: 1 !important; font-size: 11px !important; }
-          .prog-host  { display: none !important; }
-          .prog-lang  { display: none !important; }
+          .prog-host    { display: none !important; }
           .prog-station { grid-column: 2 !important; grid-row: 2 !important; padding-bottom: 2px; }
           .prog-host-mobile { display: block !important; }
         }
