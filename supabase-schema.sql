@@ -128,12 +128,24 @@ CREATE POLICY "Staff manage staff"              ON staff         FOR ALL USING (
 -- Seed: FM Stations
 -- ══════════════════════════════════════════════
 
-INSERT INTO stations (name, slug, frequency, tagline, location, color_hex, sort_order) VALUES
-  ('Premier 93.5 FM',   'premier-93-5',   '93.5',  'Your Dependable Companion', 'Ibadan, Oyo State',    '#1A6B9A', 1),
-  ('Amuludun 99.1 FM',  'amuludun-99-1',  '99.1',  'O Tawonyo — Stand Out',     'Ibadan, Oyo State',    '#8B5E3C', 2),
-  ('Paramount 94.5 FM', 'paramount-94-5', '94.5',  'The Voice of Ogun State',   'Abeokuta, Ogun State', '#5A3B9A', 3),
-  ('Positive 102.5 FM', 'positive-102-5', '102.5', 'Stay Positive',              'Ondo State',           '#1B7A4A', 4),
-  ('Gold 95.5 FM',      'gold-95-5',      '95.5',  'Pure Gold',                  'Ilesa, Osun State',    '#B8860B', 5),
-  ('Progress 105.5 FM', 'progress-105-5', '105.5', 'Moving Forward',             'Southwest Zone',       '#8B2020', 6),
-  ('Choice 95.9 FM',    'choice-95-9',    '95.9',  'Your First Choice',          'Southwest Zone',       '#2D6A4F', 7)
-ON CONFLICT (slug) DO NOTHING;
+-- Update existing stations (already inserted previously)
+INSERT INTO stations (name, slug, frequency, tagline, location, color_hex, stream_url, sort_order) VALUES
+  ('Premier FM',         'premier-93-5',   '93.5',  'Your Dependable Companion', 'Ibadan, Oyo State',      '#1A6B9A', 'https://centova57.instainternet.com/proxy/premier?mp=/stream',   1),
+  ('Amuludun 99.1 FM',  'amuludun-99-1',  '99.1',  'O ta won yo',               'Moniya, Ibadan',         '#8B5E3C', 'https://centova57.instainternet.com/proxy/amuludun?mp=/stream',  2),
+  ('Paramount 94.5 FM', 'paramount-94-5', '94.5',  'Our integrity is paramount','Abeokuta, Ogun State',   '#5A3B9A', 'https://centova57.instainternet.com/proxy/paramount?mp=/stream', 3),
+  ('Positive 102.5 FM', 'positive-102-5', '102.5', 'The Positive Station',      'Akure, Ondo State',      '#C0392B', 'https://centova57.instainternet.com/proxy/positive?mp=/stream',  4),
+  ('Progress 100.5 FM', 'progress-100-5', '100.5', 'Your Partner In Progress',  'Ado Ekiti, Ekiti State', '#8B2020', 'https://centova57.instainternet.com/proxy/progress?mp=/stream',  5),
+  ('Gold 95.5 FM',      'gold-95-5',      '95.5',  'The Jewel of Osun State',   'Ilesha, Osun State',     '#B8860B', 'https://centova57.instainternet.com/proxy/gold?mp=/stream',      6),
+  ('Ogo-Ilu 89.3 FM',   'ogo-ilu-89-3',   '89.3',  'The society''s pride',      'Oko, Anambra State',     '#2D7A3A', 'https://centova57.instainternet.com/proxy/ogoilu?mp=/stream',    7),
+  ('Asabari 88.3 FM',   'asabari-88-3',   '88.3',  'Ti wan tiwa',               'Southwest Zone',         '#6B4A9A', 'https://centova57.instainternet.com/proxy/asabari?mp=/stream',   8)
+ON CONFLICT (slug) DO UPDATE SET
+  name       = EXCLUDED.name,
+  frequency  = EXCLUDED.frequency,
+  tagline    = EXCLUDED.tagline,
+  location   = EXCLUDED.location,
+  color_hex  = EXCLUDED.color_hex,
+  stream_url = EXCLUDED.stream_url,
+  sort_order = EXCLUDED.sort_order;
+
+-- Remove old stations that no longer exist
+DELETE FROM stations WHERE slug IN ('progress-105-5', 'choice-95-9');
