@@ -94,9 +94,9 @@ export default function Navbar() {
               <a href={SOCIAL_LINKS.youtube} target="_blank" rel="noopener noreferrer" style={socialStyle} onMouseEnter={e=>{e.currentTarget.style.background='#FF000022';e.currentTarget.style.color='#FF0000';e.currentTarget.style.borderColor='#FF000044'}} onMouseLeave={e=>{e.currentTarget.style.background='var(--color-surface)';e.currentTarget.style.color='var(--color-text-muted)';e.currentTarget.style.borderColor='var(--color-border)'}} title="YouTube"><YoutubeIcon /></a>
             </div>
 
-            {/* Mini player */}
+            {/* Mini player — hidden on mobile, shown inside hamburger menu */}
             {activeStation && (
-              <button onClick={toggle} style={{ display:'flex', alignItems:'center', gap:'7px', padding:'5px 12px', borderRadius:'999px', background:'var(--color-surface-2)', border:'1px solid var(--color-border-light)', color:'var(--color-text)', cursor:'pointer', fontSize:'11px', fontWeight:500 }}>
+              <button onClick={toggle} className="nav-mini-player" style={{ display:'flex', alignItems:'center', gap:'7px', padding:'5px 12px', borderRadius:'999px', background:'var(--color-surface-2)', border:'1px solid var(--color-border-light)', color:'var(--color-text)', cursor:'pointer', fontSize:'11px', fontWeight:500 }}>
                 <span style={{ width:'6px', height:'6px', borderRadius:'50%', background:'var(--color-live)', animation:'pulse-live 1.4s infinite', flexShrink:0 }} />
                 <WaveIcon active={playing} />
                 <span style={{ maxWidth:'90px', overflow:'hidden', textOverflow:'ellipsis', whiteSpace:'nowrap' }}>{activeStation.name}</span>
@@ -113,8 +113,11 @@ export default function Navbar() {
             </Link>
 
             {/* Hamburger */}
-            <button onClick={() => setOpen(o=>!o)} className="hamburger" style={{ display:'none', flexDirection:'column', gap:'5px', padding:'6px', background:'none', border:'none', cursor:'pointer' }}>
+            <button onClick={() => setOpen(o=>!o)} className="hamburger" style={{ display:'none', flexDirection:'column', gap:'5px', padding:'6px', background:'none', border:'none', cursor:'pointer', position:'relative' }}>
               {[0,1,2].map(i=><span key={i} style={{ display:'block', width:'20px', height:'2px', background:'var(--color-text)', borderRadius:'2px' }} />)}
+              {activeStation && playing && (
+                <span style={{ position:'absolute', top:'4px', right:'4px', width:'7px', height:'7px', borderRadius:'50%', background:'var(--color-live)', border:'1.5px solid var(--color-bg)', animation:'pulse-live 1.4s infinite' }} />
+              )}
             </button>
           </div>
         </div>
@@ -123,6 +126,20 @@ export default function Navbar() {
       {/* Mobile menu */}
       {open && (
         <div style={{ position:'absolute', top:'68px', left:0, right:0, background:'rgba(8,14,10,0.97)', backdropFilter:'blur(20px)', borderBottom:'1px solid var(--color-border)', padding:'12px 20px 20px', display:'flex', flexDirection:'column', gap:'2px' }}>
+
+          {/* Mini player — only shown here on mobile when a stream is active */}
+          {activeStation && (
+            <button onClick={toggle} style={{ display:'flex', alignItems:'center', gap:'10px', padding:'12px 14px', borderRadius:'10px', background:'var(--color-surface-2)', border:'1px solid var(--color-border-light)', cursor:'pointer', marginBottom:'8px', width:'100%', textAlign:'left' }}>
+              <span style={{ width:'8px', height:'8px', borderRadius:'50%', background:'var(--color-live)', animation:'pulse-live 1.4s infinite', flexShrink:0 }} />
+              <WaveIcon active={playing} />
+              <div style={{ flex:1, minWidth:0 }}>
+                <p style={{ fontSize:'13px', fontWeight:600, color:'var(--color-text)', overflow:'hidden', textOverflow:'ellipsis', whiteSpace:'nowrap' }}>{activeStation.name}</p>
+                <p style={{ fontSize:'11px', color:'var(--color-text-muted)', marginTop:'1px' }}>{playing ? 'Now playing · tap to pause' : 'Paused · tap to resume'}</p>
+              </div>
+              <span style={{ fontSize:'18px', color:'var(--color-text-muted)', flexShrink:0 }}>{playing ? '❙❙' : '▶'}</span>
+            </button>
+          )}
+
           {NAV.map(({ label, to }) => (
             <NavLink key={to} to={to} end={to==='/'} style={({ isActive }) => ({ padding:'11px 14px', borderRadius:'8px', fontSize:'14px', fontWeight:500, color: isActive ? 'var(--color-accent)' : 'var(--color-text)', background: isActive ? 'rgba(240,165,0,0.08)' : 'transparent' })}>{label}</NavLink>
           ))}
@@ -137,7 +154,7 @@ export default function Navbar() {
 
       <style>{`
         @media (max-width: 1024px) { .desktop-nav { display: none !important; } .hamburger { display: flex !important; } }
-        @media (max-width: 768px)  { .social-icons { display: none !important; } }
+        @media (max-width: 768px)  { .social-icons { display: none !important; } .nav-mini-player { display: none !important; } }
         @media (max-width: 400px)  { .nav-logo-text { display: none !important; } }
       `}</style>
     </header>
