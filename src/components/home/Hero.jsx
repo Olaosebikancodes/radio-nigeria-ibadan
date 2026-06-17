@@ -4,73 +4,96 @@ import { supabase } from '../../lib/supabase'
 import { STATIONS_SEED, timeAgo } from '../../lib/utils'
 import { usePlayer } from '../../context/PlayerContext'
 
+function StationList({ stations, onClose }) {
+  const { play, activeStation, playing } = usePlayer()
+  return stations.map(s => {
+    const isActive  = activeStation?.id === s.id || activeStation?.slug === s.slug
+    const isPlaying = isActive && playing
+    const color = s.color_hex || s.color
+    return (
+      <button key={s.slug} onClick={() => { play(s); onClose() }} style={{
+        width: '100%', display: 'flex', alignItems: 'center', gap: '14px',
+        padding: '12px 16px',
+        background: isActive ? `${color}12` : 'transparent',
+        border: 'none', borderBottom: '1px solid var(--color-border)',
+        cursor: 'pointer', textAlign: 'left', transition: 'background 0.12s',
+      }}>
+        <div style={{ width: '44px', height: '44px', borderRadius: '10px', background: `${color}18`, border: `1px solid ${color}40`, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, overflow: 'hidden' }}>
+          {s.cover_image
+            ? <img src={s.cover_image} alt={s.name} style={{ width: '100%', height: '100%', objectFit: 'contain', padding: '3px' }} />
+            : isPlaying
+              ? <div style={{ display: 'flex', alignItems: 'flex-end', gap: '2px', height: '16px' }}>
+                  {[1,2,3].map(i => <div key={i} style={{ width: '3px', borderRadius: '2px', background: color, animation: `wave-bar 0.7s ease-in-out ${i*0.1}s infinite`, transformOrigin: 'bottom', height: `${[8,14,10][i-1]}px` }} />)}
+                </div>
+              : <span style={{ fontFamily: 'var(--font-display)', fontWeight: 900, fontSize: '11px', color }}>{s.frequency}</span>
+          }
+        </div>
+        <div style={{ flex: 1, minWidth: 0 }}>
+          <p style={{ fontSize: '14px', fontWeight: 600, color: 'var(--color-text)', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{s.name}</p>
+          <p style={{ fontSize: '12px', color: 'var(--color-text-muted)', marginTop: '2px', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{s.tagline}</p>
+        </div>
+        {isActive && (
+          <span style={{ fontSize: '10px', fontWeight: 700, color, background: `${color}15`, padding: '3px 8px', borderRadius: '999px', border: `1px solid ${color}33`, flexShrink: 0 }}>{isPlaying ? 'On Air' : 'Paused'}</span>
+        )}
+      </button>
+    )
+  })
+}
+
 function ListenDropdown({ onClose, anchorRef }) {
   const [stations, setStations] = useState([])
-  const { play, activeStation, playing } = usePlayer()
+  const [isMobile, setIsMobile] = useState(() => window.innerWidth < 768)
   const dropRef = useRef(null)
 
   useEffect(() => {
     supabase.from('stations').select('*').eq('active', true).order('sort_order')
       .then(({ data }) => setStations(data?.length ? data : STATIONS_SEED))
+    const fn = () => setIsMobile(window.innerWidth < 768)
+    window.addEventListener('resize', fn, { passive: true })
+    return () => window.removeEventListener('resize', fn)
   }, [])
 
+  // Close on outside click (desktop only)
   useEffect(() => {
+    if (isMobile) return
     const handler = (e) => {
       if (dropRef.current && !dropRef.current.contains(e.target) && !anchorRef.current?.contains(e.target)) onClose()
     }
     document.addEventListener('mousedown', handler)
     return () => document.removeEventListener('mousedown', handler)
-  }, [onClose, anchorRef])
+  }, [onClose, anchorRef, isMobile])
+
+  const header = (
+    <div style={{ padding: '12px 16px', borderBottom: '1px solid var(--color-border)', background: 'var(--color-surface-2)', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+      <div>
+        <p style={{ fontSize: '13px', fontWeight: 700, color: 'var(--color-text)', fontFamily: 'var(--font-display)' }}>Select a Station</p>
+        <p style={{ fontSize: '11px', color: 'var(--color-text-muted)', marginTop: '2px' }}>{stations.length} FM stations · South West Zone</p>
+      </div>
+      <button onClick={onClose} style={{ width: '28px', height: '28px', borderRadius: '7px', background: 'var(--color-surface)', border: '1px solid var(--color-border)', color: 'var(--color-text-muted)', fontSize: '14px', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>✕</button>
+    </div>
+  )
+
+  if (isMobile) {
+    return (
+      <div onClick={onClose} style={{ position: 'fixed', inset: 0, zIndex: 500, background: 'rgba(0,0,0,0.6)', backdropFilter: 'blur(4px)', display: 'flex', alignItems: 'flex-end' }}>
+        <div onClick={e => e.stopPropagation()} style={{ width: '100%', background: 'var(--color-surface)', borderRadius: '20px 20px 0 0', border: '1px solid var(--color-border-light)', borderBottom: 'none', maxHeight: '80vh', display: 'flex', flexDirection: 'column', animation: 'fade-up 0.22s var(--ease-out-expo)' }}>
+          <div style={{ display: 'flex', justifyContent: 'center', padding: '10px 0 0' }}>
+            <div style={{ width: '36px', height: '4px', borderRadius: '2px', background: 'var(--color-border-light)' }} />
+          </div>
+          {header}
+          <div style={{ overflowY: 'auto', flex: 1, paddingBottom: '24px' }}>
+            <StationList stations={stations} onClose={onClose} />
+          </div>
+        </div>
+      </div>
+    )
+  }
 
   return (
-    <div ref={dropRef} style={{
-      position: 'absolute', top: 'calc(100% + 8px)', left: 0, zIndex: 200,
-      width: '320px', maxWidth: 'calc(100vw - 32px)', background: 'var(--color-surface)',
-      borderRadius: '14px', border: '1px solid var(--color-border-light)',
-      boxShadow: '0 16px 48px rgba(0,0,0,0.5)',
-      overflow: 'hidden',
-      animation: 'fade-up 0.18s var(--ease-out-expo)',
-    }}>
-      <div style={{ padding: '12px 14px', borderBottom: '1px solid var(--color-border)', background: 'var(--color-surface-2)' }}>
-        <p style={{ fontSize: '12px', fontWeight: 700, color: 'var(--color-text)', fontFamily: 'var(--font-display)' }}>Select a Station</p>
-        <p style={{ fontSize: '11px', color: 'var(--color-text-muted)', marginTop: '2px' }}>8 FM stations · South West Zone</p>
-      </div>
+    <div ref={dropRef} style={{ position: 'absolute', top: 'calc(100% + 8px)', left: 0, zIndex: 200, width: '320px', background: 'var(--color-surface)', borderRadius: '14px', border: '1px solid var(--color-border-light)', boxShadow: '0 16px 48px rgba(0,0,0,0.5)', overflow: 'hidden', animation: 'fade-up 0.18s var(--ease-out-expo)' }}>
+      {header}
       <div style={{ maxHeight: '380px', overflowY: 'auto' }}>
-        {stations.map(s => {
-          const isActive  = activeStation?.id === s.id || activeStation?.slug === s.slug
-          const isPlaying = isActive && playing
-          const color = s.color_hex || s.color
-          return (
-            <button key={s.slug} onClick={() => { play(s); onClose() }} style={{
-              width: '100%', display: 'flex', alignItems: 'center', gap: '12px',
-              padding: '10px 14px',
-              background: isActive ? `${color}12` : 'transparent',
-              border: 'none', borderBottom: '1px solid var(--color-border)',
-              cursor: 'pointer', textAlign: 'left', transition: 'background 0.12s',
-            }}
-              onMouseEnter={e => { if (!isActive) e.currentTarget.style.background = 'var(--color-surface-2)' }}
-              onMouseLeave={e => { if (!isActive) e.currentTarget.style.background = isActive ? `${color}12` : 'transparent' }}
-            >
-              <div style={{ width: '40px', height: '40px', borderRadius: '10px', background: `${color}18`, border: `1px solid ${color}40`, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, overflow: 'hidden' }}>
-                {s.cover_image
-                  ? <img src={s.cover_image} alt={s.name} style={{ width: '100%', height: '100%', objectFit: 'contain', padding: '3px' }} />
-                  : isPlaying
-                    ? <div style={{ display: 'flex', alignItems: 'flex-end', gap: '2px', height: '16px' }}>
-                        {[1,2,3].map(i => <div key={i} style={{ width: '3px', borderRadius: '2px', background: color, animation: `wave-bar 0.7s ease-in-out ${i*0.1}s infinite`, transformOrigin: 'bottom', height: `${[8,14,10][i-1]}px` }} />)}
-                      </div>
-                    : <span style={{ fontFamily: 'var(--font-display)', fontWeight: 900, fontSize: '11px', color }}>{s.frequency}</span>
-                }
-              </div>
-              <div style={{ flex: 1, minWidth: 0 }}>
-                <p style={{ fontSize: '13px', fontWeight: 600, color: 'var(--color-text)', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{s.name}</p>
-                <p style={{ fontSize: '11px', color: 'var(--color-text-muted)', marginTop: '1px', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{s.tagline}</p>
-              </div>
-              {isActive && (
-                <span style={{ fontSize: '10px', fontWeight: 700, color, background: `${color}15`, padding: '3px 8px', borderRadius: '999px', border: `1px solid ${color}33`, flexShrink: 0 }}>{isPlaying ? 'On Air' : 'Paused'}</span>
-              )}
-            </button>
-          )
-        })}
+        <StationList stations={stations} onClose={onClose} />
       </div>
     </div>
   )
