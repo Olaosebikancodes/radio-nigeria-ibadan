@@ -1,111 +1,7 @@
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { supabase } from '../../lib/supabase'
-import { STATIONS_SEED, timeAgo } from '../../lib/utils'
-import { usePlayer } from '../../context/PlayerContext'
-
-function StationList({ stations, onClose }) {
-  const { play, activeStation, playing } = usePlayer()
-  return stations.map(s => {
-    const isActive  = activeStation?.id === s.id || activeStation?.slug === s.slug
-    const isPlaying = isActive && playing
-    const color = s.color_hex || s.color
-    return (
-      <button key={s.slug} onClick={() => { play(s); onClose() }} style={{
-        width: '100%', display: 'flex', alignItems: 'center', gap: '14px',
-        padding: '12px 16px',
-        background: isActive ? `${color}12` : 'transparent',
-        border: 'none', borderBottom: '1px solid var(--color-border)',
-        cursor: 'pointer', textAlign: 'left', transition: 'background 0.12s',
-      }}>
-        <div style={{ width: '44px', height: '44px', borderRadius: '10px', background: `${color}18`, border: `1px solid ${color}40`, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, overflow: 'hidden' }}>
-          {s.cover_image
-            ? <img src={s.cover_image} alt={s.name} style={{ width: '100%', height: '100%', objectFit: 'contain', padding: '3px' }} />
-            : isPlaying
-              ? <div style={{ display: 'flex', alignItems: 'flex-end', gap: '2px', height: '16px' }}>
-                  {[1,2,3].map(i => <div key={i} style={{ width: '3px', borderRadius: '2px', background: color, animation: `wave-bar 0.7s ease-in-out ${i*0.1}s infinite`, transformOrigin: 'bottom', height: `${[8,14,10][i-1]}px` }} />)}
-                </div>
-              : <span style={{ fontFamily: 'var(--font-display)', fontWeight: 900, fontSize: '11px', color }}>{s.frequency}</span>
-          }
-        </div>
-        <div style={{ flex: 1, minWidth: 0 }}>
-          <p style={{ fontSize: '14px', fontWeight: 600, color: 'var(--color-text)', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{s.name}</p>
-          <p style={{ fontSize: '12px', color: 'var(--color-text-muted)', marginTop: '2px', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{s.tagline}</p>
-        </div>
-        {isActive && (
-          <span style={{ fontSize: '10px', fontWeight: 700, color, background: `${color}15`, padding: '3px 8px', borderRadius: '999px', border: `1px solid ${color}33`, flexShrink: 0 }}>{isPlaying ? 'On Air' : 'Paused'}</span>
-        )}
-      </button>
-    )
-  })
-}
-
-function ListenDropdown({ onClose, anchorRef }) {
-  const [stations, setStations] = useState([])
-  const [isMobile, setIsMobile] = useState(() => window.innerWidth < 768)
-  const dropRef = useRef(null)
-
-  useEffect(() => {
-    supabase.from('stations').select('*').eq('active', true).order('sort_order')
-      .then(({ data }) => setStations(data?.length ? data : STATIONS_SEED))
-    const fn = () => setIsMobile(window.innerWidth < 768)
-    window.addEventListener('resize', fn, { passive: true })
-    return () => window.removeEventListener('resize', fn)
-  }, [])
-
-  // Close on outside click (desktop only)
-  useEffect(() => {
-    if (isMobile) return
-    const handler = (e) => {
-      if (dropRef.current && !dropRef.current.contains(e.target) && !anchorRef.current?.contains(e.target)) onClose()
-    }
-    document.addEventListener('mousedown', handler)
-    return () => document.removeEventListener('mousedown', handler)
-  }, [onClose, anchorRef, isMobile])
-
-  const header = (
-    <div style={{ padding: '12px 16px', borderBottom: '1px solid var(--color-border)', background: 'var(--color-surface-2)', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-      <div>
-        <p style={{ fontSize: '13px', fontWeight: 700, color: 'var(--color-text)', fontFamily: 'var(--font-display)' }}>Select a Station</p>
-        <p style={{ fontSize: '11px', color: 'var(--color-text-muted)', marginTop: '2px' }}>{stations.length} FM stations · South West Zone</p>
-      </div>
-      <button onClick={onClose} style={{ width: '28px', height: '28px', borderRadius: '7px', background: 'var(--color-surface)', border: '1px solid var(--color-border)', color: 'var(--color-text-muted)', fontSize: '14px', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>✕</button>
-    </div>
-  )
-
-  useEffect(() => {
-    if (isMobile) {
-      document.body.style.overflow = 'hidden'
-      return () => { document.body.style.overflow = '' }
-    }
-  }, [isMobile])
-
-  if (isMobile) {
-    return (
-      <div onClick={onClose} style={{ position: 'fixed', inset: 0, zIndex: 500, background: 'rgba(0,0,0,0.55)', backdropFilter: 'blur(4px)' }}>
-        <div onClick={e => e.stopPropagation()} style={{ position: 'absolute', bottom: 0, left: 0, right: 0, background: 'var(--color-surface)', borderRadius: '20px 20px 0 0', border: '1px solid var(--color-border-light)', borderBottom: 'none', maxHeight: '82vh', display: 'flex', flexDirection: 'column', animation: 'sheet-up 0.28s var(--ease-out-expo)' }}>
-          <div style={{ display: 'flex', justifyContent: 'center', padding: '10px 0 4px' }}>
-            <div style={{ width: '36px', height: '4px', borderRadius: '2px', background: 'var(--color-border-light)' }} />
-          </div>
-          {header}
-          <div style={{ overflowY: 'auto', flex: 1, paddingBottom: '32px' }}>
-            <StationList stations={stations} onClose={onClose} />
-          </div>
-        </div>
-        <style>{`@keyframes sheet-up { from { transform: translateY(100%); } to { transform: translateY(0); } }`}</style>
-      </div>
-    )
-  }
-
-  return (
-    <div ref={dropRef} style={{ position: 'absolute', top: 'calc(100% + 8px)', left: 0, zIndex: 200, width: '320px', background: 'var(--color-surface)', borderRadius: '14px', border: '1px solid var(--color-border-light)', boxShadow: '0 16px 48px rgba(0,0,0,0.5)', overflow: 'hidden', animation: 'fade-up 0.18s var(--ease-out-expo)' }}>
-      {header}
-      <div style={{ maxHeight: '380px', overflowY: 'auto' }}>
-        <StationList stations={stations} onClose={onClose} />
-      </div>
-    </div>
-  )
-}
+import { timeAgo } from '../../lib/utils'
 
 function NewsPanel() {
   const [articles, setArticles] = useState([])
@@ -176,9 +72,6 @@ function NewsPanel() {
 }
 
 export default function Hero() {
-  const [dropOpen, setDropOpen] = useState(false)
-  const btnRef = useRef(null)
-
   return (
     <section style={{ position: 'relative', paddingTop: '68px', minHeight: '100vh', display: 'flex', alignItems: 'center', overflow: 'hidden' }}>
       {/* Background */}
@@ -206,11 +99,11 @@ export default function Hero() {
           </p>
 
           {/* CTAs */}
-          <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap', position: 'relative' }}>
-            <button ref={btnRef} onClick={() => setDropOpen(o => !o)} style={{
+          <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap' }}>
+            <Link to="/live" style={{
               display: 'inline-flex', alignItems: 'center', gap: '8px',
               padding: '13px 22px', borderRadius: '10px', fontSize: '14px', fontWeight: 700,
-              background: 'var(--color-brand)', color: '#fff', border: 'none', cursor: 'pointer',
+              background: 'var(--color-brand)', color: '#fff',
               transition: 'all 0.2s var(--ease-out-expo)',
               boxShadow: '0 0 20px rgba(0,92,46,0.3)',
             }}
@@ -219,9 +112,7 @@ export default function Hero() {
             >
               <span style={{ width: '7px', height: '7px', borderRadius: '50%', background: '#4EFF8C', animation: 'pulse-live 1.4s infinite' }} />
               Listen Live
-              <span style={{ fontSize: '11px', transition: 'transform 0.2s', display: 'inline-block', transform: dropOpen ? 'rotate(180deg)' : 'none' }}>▼</span>
-            </button>
-            {dropOpen && <ListenDropdown onClose={() => setDropOpen(false)} anchorRef={btnRef} />}
+            </Link>
 
             <Link to="/news" style={{
               display: 'inline-flex', alignItems: 'center', gap: '8px',
@@ -232,7 +123,7 @@ export default function Hero() {
             }}
               onMouseEnter={e => { e.currentTarget.style.background = 'var(--color-surface-2)'; e.currentTarget.style.transform = 'translateY(-2px)' }}
               onMouseLeave={e => { e.currentTarget.style.background = 'transparent'; e.currentTarget.style.transform = 'none' }}
-            >Latest News →</Link>
+            >Latest News</Link>
           </div>
 
           {/* Waveform */}
@@ -250,12 +141,11 @@ export default function Hero() {
               <div style={{ width: '8px', height: '8px', borderRadius: '50%', background: 'var(--color-live)', animation: 'pulse-live 1.4s infinite' }} />
               <p style={{ fontSize: '11px', fontWeight: 700, color: 'var(--color-text-dim)', textTransform: 'uppercase', letterSpacing: '0.08em' }}>Latest Headlines</p>
             </div>
-            <Link to="/news" style={{ fontSize: '12px', color: 'var(--color-accent)', fontWeight: 600 }}>See all →</Link>
+            <Link to="/news" style={{ fontSize: '12px', color: 'var(--color-accent)', fontWeight: 600 }}>See all</Link>
           </div>
           <NewsPanel />
         </div>
       </div>
-
 
       <style>{`
         @media (max-width: 900px) {

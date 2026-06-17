@@ -3,6 +3,36 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer base {
+  :root {
+    --background: 152 43% 5%;
+    --foreground: 90 14% 93%;
+    --card: 152 31% 8%;
+    --card-foreground: 90 14% 93%;
+    --popover: 152 31% 8%;
+    --popover-foreground: 90 14% 93%;
+    --primary: 152 100% 18%;
+    --primary-foreground: 90 14% 93%;
+    --secondary: 152 20% 13%;
+    --secondary-foreground: 90 14% 93%;
+    --muted: 152 20% 13%;
+    --muted-foreground: 140 10% 55%;
+    --accent: 38 100% 47%;
+    --accent-foreground: 152 43% 5%;
+    --destructive: 4 86% 58%;
+    --destructive-foreground: 90 14% 93%;
+    --border: 152 20% 13%;
+    --input: 152 20% 13%;
+    --ring: 152 100% 18%;
+    --radius: 0.625rem;
+    --chart-1: 152 100% 18%;
+    --chart-2: 38 100% 47%;
+    --chart-3: 210 80% 45%;
+    --chart-4: 280 60% 45%;
+    --chart-5: 4 86% 58%;
+  }
+}
+
 :root {
   /* Brand */
   --color-brand:        #005C2E;
