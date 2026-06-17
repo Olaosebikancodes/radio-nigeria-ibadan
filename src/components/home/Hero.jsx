@@ -25,7 +25,7 @@ function ListenDropdown({ onClose, anchorRef }) {
   return (
     <div ref={dropRef} style={{
       position: 'absolute', top: 'calc(100% + 8px)', left: 0, zIndex: 200,
-      width: '320px', background: 'var(--color-surface)',
+      width: '320px', maxWidth: 'calc(100vw - 32px)', background: 'var(--color-surface)',
       borderRadius: '14px', border: '1px solid var(--color-border-light)',
       boxShadow: '0 16px 48px rgba(0,0,0,0.5)',
       overflow: 'hidden',
@@ -154,11 +154,11 @@ export default function Hero() {
       <div style={{ position: 'absolute', inset: 0, background: `radial-gradient(ellipse 70% 60% at 30% 50%, rgba(0,92,46,0.2) 0%, transparent 65%), radial-gradient(ellipse 50% 50% at 80% 30%, rgba(240,165,0,0.05) 0%, transparent 60%), var(--color-bg)` }} />
       <div style={{ position: 'absolute', inset: 0, opacity: 0.025, backgroundImage: `linear-gradient(var(--color-text) 1px, transparent 1px), linear-gradient(90deg, var(--color-text) 1px, transparent 1px)`, backgroundSize: '60px 60px' }} />
 
-      <div style={{ position: 'relative', zIndex: 1, maxWidth: '1280px', margin: '0 auto', padding: '48px 24px', width: '100%', display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '64px', alignItems: 'center' }}>
+      <div className="hero-grid" style={{ position: 'relative', zIndex: 1, maxWidth: '1280px', margin: '0 auto', padding: '48px 24px', width: '100%', display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '64px', alignItems: 'center' }}>
 
         {/* LEFT */}
         <div style={{ animation: 'fade-up 0.7s var(--ease-out-expo) both' }}>
-          <img src="https://tfxpqxxzopsycpnmdyke.supabase.co/storage/v1/object/public/images/IZS%20Logo.png" alt="Radio Nigeria Ibadan" style={{ height: '90px', width: 'auto', objectFit: 'contain', marginBottom: '20px', display: 'block' }} />
+          <img src="https://tfxpqxxzopsycpnmdyke.supabase.co/storage/v1/object/public/images/IZS%20Logo.png" alt="Radio Nigeria Ibadan" className="hero-logo" style={{ height: '90px', width: 'auto', objectFit: 'contain', marginBottom: '20px', display: 'block' }} />
 
           <div style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', padding: '5px 14px', borderRadius: '999px', background: 'rgba(0,92,46,0.15)', border: '1px solid rgba(0,92,46,0.35)', fontSize: '11px', color: 'var(--color-brand-light)', fontWeight: 600, letterSpacing: '0.06em', textTransform: 'uppercase', marginBottom: '24px' }}>
             <span style={{ width: '6px', height: '6px', borderRadius: '50%', background: '#4EFF8C', animation: 'pulse-live 1.4s infinite' }} />
@@ -228,12 +228,11 @@ export default function Hero() {
 
       <style>{`
         @media (max-width: 900px) {
-          section > div[style*="grid-template-columns"] {
-            grid-template-columns: 1fr !important;
-            gap: 40px !important;
-            padding: 32px 20px 48px !important;
-            min-height: unset !important;
-          }
+          .hero-grid { grid-template-columns: 1fr !important; gap: 40px !important; padding: 32px 20px 48px !important; }
+          .hero-logo { height: 64px !important; }
+        }
+        @media (max-width: 480px) {
+          .hero-logo { height: 52px !important; }
         }
       `}</style>
     </section>

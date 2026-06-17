@@ -98,6 +98,8 @@ export default function AdminLayout({ children }) {
           .admin-sidebar { display: none !important; }
           .admin-topbar  { display: flex !important; }
           .admin-main    { margin-left: 0 !important; padding-top: 56px; }
+          .admin-main > div { padding: 16px !important; }
+          .admin-page-header { flex-direction: column !important; align-items: flex-start !important; }
         }
       `}</style>
     </div>

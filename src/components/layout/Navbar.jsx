@@ -71,7 +71,7 @@ export default function Navbar() {
           {/* Logo */}
           <Link to="/" style={{ display:'flex', alignItems:'center', gap:'10px', flexShrink:0 }}>
             <img src="https://tfxpqxxzopsycpnmdyke.supabase.co/storage/v1/object/public/images/IZS%20Logo.png" alt="Radio Nigeria Ibadan" style={{ height:'56px', width:'auto', objectFit:'contain' }} />
-            <div>
+            <div className="nav-logo-text">
               <p style={{ fontFamily:'var(--font-display)', fontWeight:700, fontSize:'14px', lineHeight:1, color:'var(--color-text)', letterSpacing:'-0.03em' }}>Radio Nigeria</p>
               <p style={{ fontSize:'9px', color:'var(--color-text-muted)', letterSpacing:'0.08em', textTransform:'uppercase', marginTop:'2px' }}>Ibadan Zonal Station</p>
             </div>
@@ -138,6 +138,7 @@ export default function Navbar() {
       <style>{`
         @media (max-width: 1024px) { .desktop-nav { display: none !important; } .hamburger { display: flex !important; } }
         @media (max-width: 768px)  { .social-icons { display: none !important; } }
+        @media (max-width: 400px)  { .nav-logo-text { display: none !important; } }
       `}</style>
     </header>
   )

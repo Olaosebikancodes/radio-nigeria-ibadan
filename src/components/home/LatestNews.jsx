@@ -40,9 +40,15 @@ export default function LatestNews() {
   const [articles, setArticles] = useState([])
   const [loading, setLoading]   = useState(true)
   const [offset, setOffset]     = useState(0)
+  const [isMobile, setIsMobile] = useState(() => window.innerWidth < 700)
   const trackRef = useRef(null)
-  const CARD_WIDTH  = 'calc(25% - 9px)'
   const SLIDE_EVERY = 4000
+
+  useEffect(() => {
+    const fn = () => setIsMobile(window.innerWidth < 700)
+    window.addEventListener('resize', fn, { passive: true })
+    return () => window.removeEventListener('resize', fn)
+  }, [])
 
   useEffect(() => {
     supabase.from('articles')
@@ -51,17 +57,17 @@ export default function LatestNews() {
       .then(({ data }) => { setArticles(data || []); setLoading(false) })
   }, [])
 
-  // Auto-advance one card at a time, loop back
+  // Auto-advance one card at a time, loop back (desktop only)
   useEffect(() => {
-    if (articles.length <= 4) return
+    if (articles.length <= 4 || isMobile) return
     const t = setInterval(() => {
       setOffset(o => (o + 1) % (articles.length - 3))
     }, SLIDE_EVERY)
     return () => clearInterval(t)
-  }, [articles.length])
+  }, [articles.length, isMobile])
 
-  const cardW  = 280 // approximate px per card including gap
-  const translateX = offset * -(cardW + 16)
+  const cardW      = 280
+  const translateX = isMobile ? 0 : offset * -(cardW + 16)
 
   return (
     <section style={{ background: 'var(--color-surface)', borderTop: '1px solid var(--color-border)', borderBottom: '1px solid var(--color-border)' }}>
@@ -88,15 +94,19 @@ export default function LatestNews() {
           </div>
         </div>
 
-        {/* Carousel track */}
-        <div style={{ overflow: 'hidden' }}>
-          {loading ? (
-            <div style={{ display: 'flex', gap: '16px' }}>
-              {Array(4).fill(0).map((_, i) => <div key={i} style={{ flex: '0 0 calc(25% - 12px)' }}><ArticleCardSkeleton /></div>)}
-            </div>
-          ) : articles.length === 0 ? (
-            <p style={{ color: 'var(--color-text-muted)', textAlign: 'center', padding: '40px 0' }}>No articles yet. Check back soon.</p>
-          ) : (
+        {/* Carousel / grid */}
+        {loading ? (
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(220px, 1fr))', gap: '16px' }}>
+            {Array(4).fill(0).map((_, i) => <ArticleCardSkeleton key={i} />)}
+          </div>
+        ) : articles.length === 0 ? (
+          <p style={{ color: 'var(--color-text-muted)', textAlign: 'center', padding: '40px 0' }}>No articles yet. Check back soon.</p>
+        ) : isMobile ? (
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(240px, 1fr))', gap: '12px' }}>
+            {articles.slice(0, 6).map(a => <ArticleCard key={a.id} article={a} />)}
+          </div>
+        ) : (
+          <div style={{ overflow: 'hidden' }}>
             <div ref={trackRef} style={{
               display: 'flex', gap: '16px',
               transform: `translateX(${translateX}px)`,
@@ -104,18 +114,9 @@ export default function LatestNews() {
             }}>
               {articles.map(a => <ArticleCard key={a.id} article={a} />)}
             </div>
-          )}
-        </div>
+          </div>
+        )}
       </div>
-
-      <style>{`
-        @media (max-width: 900px) {
-          .news-track > * { flex: 0 0 calc(50% - 8px) !important; }
-        }
-        @media (max-width: 560px) {
-          .news-track > * { flex: 0 0 85% !important; }
-        }
-      `}</style>
     </section>
   )
 }

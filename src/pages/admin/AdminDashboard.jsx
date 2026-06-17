@@ -50,7 +50,7 @@ export default function AdminDashboard() {
   return (
     <AdminLayout>
       <div style={{ padding:'32px' }}>
-        <div style={{ marginBottom:'32px' }}>
+        <div style={{ marginBottom:'32px', display:'flex', flexWrap:'wrap', gap:'8px', justifyContent:'space-between' }}>
           <h1 style={{ fontFamily:'var(--font-display)', fontSize:'28px', fontWeight:700, color:'var(--color-text)', letterSpacing:'-0.03em' }}>Dashboard</h1>
           <p style={{ fontSize:'13px', color:'var(--color-text-muted)', marginTop:'4px' }}>{new Date().toLocaleDateString('en-NG',{weekday:'long',day:'numeric',month:'long',year:'numeric'})}</p>
         </div>
@@ -75,12 +75,12 @@ export default function AdminDashboard() {
           {loading ? <div style={{padding:'20px'}}><Skeleton height="40px"/></div>
             : recent.length===0 ? <p style={{padding:'24px',color:'var(--color-text-muted)',fontSize:'13px'}}>No articles yet.</p>
             : recent.map(a => (
-              <div key={a.id} style={{ display:'flex', alignItems:'center', justifyContent:'space-between', padding:'14px 24px', borderBottom:'1px solid var(--color-border)' }}>
-                <div>
-                  <p style={{ fontSize:'14px', fontWeight:500, color:'var(--color-text)' }}>{a.title}</p>
+              <div key={a.id} style={{ display:'flex', alignItems:'center', justifyContent:'space-between', padding:'14px 24px', borderBottom:'1px solid var(--color-border)', gap:'12px', flexWrap:'wrap' }}>
+                <div style={{ minWidth:0, flex:1 }}>
+                  <p style={{ fontSize:'14px', fontWeight:500, color:'var(--color-text)', overflow:'hidden', textOverflow:'ellipsis', whiteSpace:'nowrap' }}>{a.title}</p>
                   <p style={{ fontSize:'11px', color:'var(--color-text-dim)', marginTop:'2px' }}>{new Date(a.created_at).toLocaleDateString('en-NG')}</p>
                 </div>
-                <div style={{ display:'flex', alignItems:'center', gap:'10px' }}>
+                <div style={{ display:'flex', alignItems:'center', gap:'10px', flexShrink:0 }}>
                   <span style={{ fontSize:'11px', fontWeight:600, padding:'3px 10px', borderRadius:'999px', background: a.published?'rgba(52,199,89,0.12)':'rgba(255,165,0,0.12)', color: a.published?'var(--color-success)':'var(--color-warning)' }}>{a.published?'Published':'Draft'}</span>
                   <Link to={`/admin/news/${a.id}/edit`} style={{ fontSize:'12px', color:'var(--color-accent)' }}>Edit</Link>
                 </div>

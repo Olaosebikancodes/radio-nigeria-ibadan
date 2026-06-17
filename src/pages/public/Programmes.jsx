@@ -65,8 +65,8 @@ export default function Programmes() {
 
         {/* Table */}
         <div style={{ background:'var(--color-surface)', borderRadius:'16px', border:'1px solid var(--color-border)', overflow:'hidden' }}>
-          {/* Header */}
-          <div style={{ display:'grid', gridTemplateColumns:'140px 8px 1fr 120px 80px 100px', gap:'0 16px', padding:'12px 24px', background:'var(--color-surface-2)', borderBottom:'1px solid var(--color-border)' }}>
+          {/* Desktop header */}
+          <div className="prog-header" style={{ display:'grid', gridTemplateColumns:'140px 8px 1fr 120px 80px 100px', gap:'0 16px', padding:'12px 24px', background:'var(--color-surface-2)', borderBottom:'1px solid var(--color-border)' }}>
             {['Time', '', 'Programme', 'Host', 'Language', 'Station'].map(h => (
               <p key={h} style={{ fontSize:'10px', fontWeight:700, color:'var(--color-text-dim)', textTransform:'uppercase', letterSpacing:'0.08em' }}>{h}</p>
             ))}
@@ -79,8 +79,9 @@ export default function Programmes() {
               ? <p style={{ padding:'48px 24px', color:'var(--color-text-muted)', textAlign:'center' }}>No programmes scheduled for {day}.</p>
               : filtered.map(p => {
                   const live = isOnAir(p.start_time, p.end_time)
+                  const stationColor = p.stations?.color_hex || 'var(--color-text-dim)'
                   return (
-                    <div key={p.id} style={{
+                    <div key={p.id} className="prog-row" style={{
                       display:'grid', gridTemplateColumns:'140px 8px 1fr 120px 80px 100px', gap:'0 16px',
                       padding:'14px 24px', alignItems:'center',
                       borderBottom:'1px solid var(--color-border)',
@@ -88,16 +89,19 @@ export default function Programmes() {
                       transition:'background 0.2s',
                     }}
                       onMouseEnter={e=>{ if(!live) e.currentTarget.style.background='var(--color-surface-2)' }}
-                      onMouseLeave={e=>{ if(!live) e.currentTarget.style.background='transparent' }}
+                      onMouseLeave={e=>{ if(!live) e.currentTarget.style.background=live?'rgba(0,92,46,0.08)':'transparent' }}
                     >
-                      <p style={{ fontSize:'12px', fontWeight:600, color: live ? 'var(--color-accent)' : 'var(--color-text-muted)' }}>
+                      <p className="prog-time" style={{ fontSize:'12px', fontWeight:600, color: live ? 'var(--color-accent)' : 'var(--color-text-muted)' }}>
                         {formatTime(p.start_time)} — {formatTime(p.end_time)}
                       </p>
-                      <div style={{ width:'4px', height:'4px', borderRadius:'50%', background: p.stations?.color_hex || 'var(--color-text-dim)', justifySelf:'center' }} />
-                      <p style={{ fontWeight:600, fontSize:'14px', color:'var(--color-text)', overflow:'hidden', textOverflow:'ellipsis', whiteSpace:'nowrap' }}>{p.title}</p>
-                      <p style={{ fontSize:'12px', color:'var(--color-text-muted)', overflow:'hidden', textOverflow:'ellipsis', whiteSpace:'nowrap' }}>{p.host || '—'}</p>
-                      <p style={{ fontSize:'12px', color:'var(--color-text-dim)' }}>{p.language || '—'}</p>
-                      <div style={{ display:'flex', alignItems:'center', gap:'6px' }}>
+                      <div className="prog-dot" style={{ width:'4px', height:'4px', borderRadius:'50%', background: stationColor, justifySelf:'center' }} />
+                      <div className="prog-main">
+                        <p style={{ fontWeight:600, fontSize:'14px', color:'var(--color-text)', overflow:'hidden', textOverflow:'ellipsis', whiteSpace:'nowrap' }}>{p.title}</p>
+                        <p className="prog-host-mobile" style={{ display:'none', fontSize:'11px', color:'var(--color-text-muted)', marginTop:'2px' }}>{p.host || p.stations?.name || ''}</p>
+                      </div>
+                      <p className="prog-host" style={{ fontSize:'12px', color:'var(--color-text-muted)', overflow:'hidden', textOverflow:'ellipsis', whiteSpace:'nowrap' }}>{p.host || '—'}</p>
+                      <p className="prog-lang" style={{ fontSize:'12px', color:'var(--color-text-dim)' }}>{p.language || '—'}</p>
+                      <div className="prog-station" style={{ display:'flex', alignItems:'center', gap:'6px' }}>
                         {live && <LiveBadge />}
                         {!live && <p style={{ fontSize:'11px', color:'var(--color-text-dim)', overflow:'hidden', textOverflow:'ellipsis', whiteSpace:'nowrap' }}>{p.stations?.name || '—'}</p>}
                       </div>
@@ -109,8 +113,21 @@ export default function Programmes() {
       </div>
 
       <style>{`
-        @media (max-width: 700px) {
-          .prog-grid { grid-template-columns: 100px 1fr !important; }
+        @media (max-width: 680px) {
+          .prog-header { display: none !important; }
+          .prog-row {
+            grid-template-columns: 90px 1fr !important;
+            grid-template-rows: auto !important;
+            gap: 0 12px !important;
+            padding: 12px 16px !important;
+          }
+          .prog-dot   { display: none !important; }
+          .prog-main  { grid-column: 2 !important; grid-row: 1 !important; }
+          .prog-time  { grid-column: 1 !important; grid-row: 1 !important; font-size: 11px !important; }
+          .prog-host  { display: none !important; }
+          .prog-lang  { display: none !important; }
+          .prog-station { grid-column: 2 !important; grid-row: 2 !important; padding-bottom: 2px; }
+          .prog-host-mobile { display: block !important; }
         }
       `}</style>
     </main>

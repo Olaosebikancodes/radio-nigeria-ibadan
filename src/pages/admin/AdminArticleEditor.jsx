@@ -84,7 +84,7 @@ export default function AdminArticleEditor() {
           </div>
         </div>
 
-        <div style={{ display:'grid', gridTemplateColumns:'1fr 280px', gap:'24px' }}>
+        <div className="editor-grid" style={{ display:'grid', gridTemplateColumns:'1fr 280px', gap:'24px' }}>
           {/* Left — editor */}
           <div style={{ display:'flex', flexDirection:'column', gap:'16px' }}>
             <div>
@@ -147,6 +147,7 @@ export default function AdminArticleEditor() {
       </div>
 
       <style>{`
+        @media (max-width: 768px) { .editor-grid { grid-template-columns: 1fr !important; } }
         .tiptap-editor { min-height:260px; color:var(--color-text); font-size:15px; line-height:1.75; outline:none; }
         .tiptap-editor h2 { font-family:var(--font-display); font-size:22px; color:var(--color-text); margin:20px 0 10px; }
         .tiptap-editor h3 { font-family:var(--font-display); font-size:18px; color:var(--color-text); margin:16px 0 8px; }

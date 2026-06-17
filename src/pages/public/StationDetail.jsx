@@ -87,7 +87,7 @@ export default function StationDetail() {
           {articles.length > 0 && (
             <div>
               <h2 style={{ fontFamily:'var(--font-display)', fontSize:'22px', fontWeight:700, color:'var(--color-text)', marginBottom:'20px', letterSpacing:'-0.03em' }}>Latest from {station.name}</h2>
-              <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:'14px' }}>
+              <div className="station-articles-grid" style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:'14px' }}>
                 {articles.map(a => (
                   <Link key={a.id} to={`/news/${a.slug}`} style={{ display:'block', background:'var(--color-surface)', borderRadius:'12px', overflow:'hidden', border:'1px solid var(--color-border)', transition:'all 0.2s' }}
                     onMouseEnter={e=>{e.currentTarget.style.transform='translateY(-3px)';e.currentTarget.style.borderColor='var(--color-border-light)'}}
@@ -140,7 +140,10 @@ export default function StationDetail() {
         </div>
       </div>
 
-      <style>{`@media(max-width:900px){main>div:last-child{grid-template-columns:1fr !important;}}`}</style>
+      <style>{`
+        @media(max-width:900px){ main>div:last-child{ grid-template-columns:1fr !important; } }
+        @media(max-width:560px){ .station-articles-grid{ grid-template-columns:1fr !important; } }
+      `}</style>
     </main>
   )
 }

@@ -31,7 +31,7 @@ export default function Contact() {
             </div>
           ) : (
             <form onSubmit={submit} style={{ display:'flex', flexDirection:'column', gap:'16px' }}>
-              <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:'16px' }}>
+              <div className="contact-name-row" style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:'16px' }}>
                 <div>
                   <label style={{ fontSize:'12px', fontWeight:600, color:'var(--color-text-muted)', display:'block', marginBottom:'6px' }}>Full Name</label>
                   <input name="name" value={form.name} onChange={handle} required placeholder="Adeola Johnson" style={inputStyle} onFocus={e=>e.target.style.borderColor='var(--color-brand-light)'} onBlur={e=>e.target.style.borderColor='var(--color-border)'} />
@@ -84,7 +84,10 @@ export default function Contact() {
           </div>
         </div>
       </div>
-      <style>{`@media(max-width:800px){main>div:last-child{grid-template-columns:1fr !important;}}`}</style>
+      <style>{`
+        @media(max-width:800px){ main>div:last-child{ grid-template-columns:1fr !important; } }
+        @media(max-width:560px){ .contact-name-row{ grid-template-columns:1fr !important; } }
+      `}</style>
     </main>
   )
 }
