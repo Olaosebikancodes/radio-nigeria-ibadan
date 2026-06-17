@@ -29,12 +29,14 @@ export default function AdminUsers() {
   const createUser = async () => {
     if (!form.name||!form.email||!form.password) { toast.error('Name, email, and password required'); return }
     setSaving(true)
-    const { data, error } = await supabase.auth.admin.createUser({ email:form.email, password:form.password, email_confirm:true })
+    const { data, error } = await supabase.auth.signUp({ email:form.email, password:form.password })
     if (error) { toast.error(error.message); setSaving(false); return }
-    const { error: staffErr } = await supabase.from('staff').insert({ user_id:data.user.id, name:form.name, role:form.role, station_id:form.station_id||null })
+    const userId = data.user?.id
+    if (!userId) { toast.error('Could not get user ID — account may already exist'); setSaving(false); return }
+    const { error: staffErr } = await supabase.from('staff').insert({ user_id:userId, name:form.name, role:form.role, station_id:form.station_id||null })
     setSaving(false)
     if (staffErr) { toast.error(staffErr.message); return }
-    toast.success('Staff account created'); setShowForm(false); setForm(EMPTY); fetchAll()
+    toast.success(`Account created — ${form.email} will receive a confirmation email`); setShowForm(false); setForm(EMPTY); fetchAll()
   }
 
   const removeStaff = async (id, name) => {
