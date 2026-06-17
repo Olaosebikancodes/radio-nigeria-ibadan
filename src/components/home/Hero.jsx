@@ -4,92 +4,73 @@ import { supabase } from '../../lib/supabase'
 import { STATIONS_SEED, timeAgo } from '../../lib/utils'
 import { usePlayer } from '../../context/PlayerContext'
 
-function ListenModal({ onClose }) {
+function ListenDropdown({ onClose, anchorRef }) {
   const [stations, setStations] = useState([])
   const { play, activeStation, playing } = usePlayer()
+  const dropRef = useRef(null)
 
   useEffect(() => {
     supabase.from('stations').select('*').eq('active', true).order('sort_order')
       .then(({ data }) => setStations(data?.length ? data : STATIONS_SEED))
   }, [])
 
+  useEffect(() => {
+    const handler = (e) => {
+      if (dropRef.current && !dropRef.current.contains(e.target) && !anchorRef.current?.contains(e.target)) onClose()
+    }
+    document.addEventListener('mousedown', handler)
+    return () => document.removeEventListener('mousedown', handler)
+  }, [onClose, anchorRef])
+
   return (
-    // Full-screen backdrop
-    <div onClick={onClose} style={{
-      position: 'fixed', inset: 0, zIndex: 500,
-      background: 'rgba(0,0,0,0.7)', backdropFilter: 'blur(4px)',
-      display: 'flex', alignItems: 'flex-end',
-      animation: 'fade-up 0.2s var(--ease-out-expo)',
+    <div ref={dropRef} style={{
+      position: 'absolute', top: 'calc(100% + 8px)', left: 0, zIndex: 200,
+      width: '320px', background: 'var(--color-surface)',
+      borderRadius: '14px', border: '1px solid var(--color-border-light)',
+      boxShadow: '0 16px 48px rgba(0,0,0,0.5)',
+      overflow: 'hidden',
+      animation: 'fade-up 0.18s var(--ease-out-expo)',
     }}>
-      {/* Sheet — stops click propagation */}
-      <div onClick={e => e.stopPropagation()} style={{
-        width: '100%', maxWidth: '480px', margin: '0 auto',
-        background: 'var(--color-surface)',
-        borderRadius: '20px 20px 0 0',
-        border: '1px solid var(--color-border-light)',
-        borderBottom: 'none',
-        boxShadow: '0 -20px 60px rgba(0,0,0,0.5)',
-        overflow: 'hidden',
-        maxHeight: '85vh', display: 'flex', flexDirection: 'column',
-      }}>
-        {/* Handle + header */}
-        <div style={{ padding: '12px 20px 0', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '12px', flexShrink: 0 }}>
-          <div style={{ width: '36px', height: '4px', borderRadius: '2px', background: 'var(--color-border-light)' }} />
-          <div style={{ width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'space-between', paddingBottom: '12px', borderBottom: '1px solid var(--color-border)' }}>
-            <div>
-              <p style={{ fontSize: '16px', fontWeight: 700, fontFamily: 'var(--font-display)', color: 'var(--color-text)' }}>Select a Station</p>
-              <p style={{ fontSize: '12px', color: 'var(--color-text-muted)', marginTop: '2px' }}>8 FM stations · South West Zone</p>
-            </div>
-            <button onClick={onClose} style={{ width: '32px', height: '32px', borderRadius: '8px', background: 'var(--color-surface-2)', border: '1px solid var(--color-border)', color: 'var(--color-text-muted)', fontSize: '16px', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>✕</button>
-          </div>
-        </div>
-
-        {/* Station list — scrollable */}
-        <div style={{ overflowY: 'auto', flex: 1 }}>
-          {stations.map(s => {
-            const isActive  = activeStation?.id === s.id || activeStation?.slug === s.slug
-            const isPlaying = isActive && playing
-            return (
-              <button key={s.slug} onClick={() => { play(s); onClose() }} style={{
-                width: '100%', display: 'flex', alignItems: 'center', gap: '14px',
-                padding: '14px 20px',
-                background: isActive ? `${s.color}12` : 'transparent',
-                border: 'none', borderBottom: '1px solid var(--color-border)',
-                cursor: 'pointer', textAlign: 'left', transition: 'background 0.15s',
-              }}
-                onMouseEnter={e => { if (!isActive) e.currentTarget.style.background = 'var(--color-surface-2)' }}
-                onMouseLeave={e => { if (!isActive) e.currentTarget.style.background = 'transparent' }}
-              >
-                {/* Freq badge */}
-                <div style={{ width: '48px', height: '48px', borderRadius: '12px', background: `${s.color}20`, border: `1px solid ${s.color}44`, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
-                  {isPlaying
-                    ? <div style={{ display: 'flex', alignItems: 'flex-end', gap: '2px', height: '18px' }}>
-                        {[1,2,3].map(i => <div key={i} style={{ width: '3px', borderRadius: '2px', background: s.color, animation: `wave-bar 0.7s ease-in-out ${i*0.1}s infinite`, transformOrigin: 'bottom', height: `${[8,16,11][i-1]}px` }} />)}
+      <div style={{ padding: '12px 14px', borderBottom: '1px solid var(--color-border)', background: 'var(--color-surface-2)' }}>
+        <p style={{ fontSize: '12px', fontWeight: 700, color: 'var(--color-text)', fontFamily: 'var(--font-display)' }}>Select a Station</p>
+        <p style={{ fontSize: '11px', color: 'var(--color-text-muted)', marginTop: '2px' }}>8 FM stations · South West Zone</p>
+      </div>
+      <div style={{ maxHeight: '380px', overflowY: 'auto' }}>
+        {stations.map(s => {
+          const isActive  = activeStation?.id === s.id || activeStation?.slug === s.slug
+          const isPlaying = isActive && playing
+          const color = s.color_hex || s.color
+          return (
+            <button key={s.slug} onClick={() => { play(s); onClose() }} style={{
+              width: '100%', display: 'flex', alignItems: 'center', gap: '12px',
+              padding: '10px 14px',
+              background: isActive ? `${color}12` : 'transparent',
+              border: 'none', borderBottom: '1px solid var(--color-border)',
+              cursor: 'pointer', textAlign: 'left', transition: 'background 0.12s',
+            }}
+              onMouseEnter={e => { if (!isActive) e.currentTarget.style.background = 'var(--color-surface-2)' }}
+              onMouseLeave={e => { if (!isActive) e.currentTarget.style.background = isActive ? `${color}12` : 'transparent' }}
+            >
+              <div style={{ width: '40px', height: '40px', borderRadius: '10px', background: `${color}18`, border: `1px solid ${color}40`, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, overflow: 'hidden' }}>
+                {s.cover_image
+                  ? <img src={s.cover_image} alt={s.name} style={{ width: '100%', height: '100%', objectFit: 'contain', padding: '3px' }} />
+                  : isPlaying
+                    ? <div style={{ display: 'flex', alignItems: 'flex-end', gap: '2px', height: '16px' }}>
+                        {[1,2,3].map(i => <div key={i} style={{ width: '3px', borderRadius: '2px', background: color, animation: `wave-bar 0.7s ease-in-out ${i*0.1}s infinite`, transformOrigin: 'bottom', height: `${[8,14,10][i-1]}px` }} />)}
                       </div>
-                    : <span style={{ fontFamily: 'var(--font-display)', fontWeight: 900, fontSize: '12px', color: s.color }}>{s.frequency}</span>
-                  }
-                </div>
-
-                {/* Info */}
-                <div style={{ flex: 1, minWidth: 0 }}>
-                  <p style={{ fontSize: '14px', fontWeight: 600, color: 'var(--color-text)', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{s.name}</p>
-                  <p style={{ fontSize: '12px', color: 'var(--color-text-muted)', marginTop: '2px' }}>{s.tagline}</p>
-                  <p style={{ fontSize: '11px', color: 'var(--color-text-dim)', marginTop: '1px' }}>📍 {s.location}</p>
-                </div>
-
-                {/* Status */}
-                <div style={{ flexShrink: 0 }}>
-                  {isActive
-                    ? <span style={{ fontSize: '11px', fontWeight: 700, color: s.color, background: `${s.color}15`, padding: '4px 10px', borderRadius: '999px', border: `1px solid ${s.color}33` }}>{isPlaying ? 'On Air' : 'Paused'}</span>
-                    : <span style={{ fontSize: '18px', color: 'var(--color-text-dim)' }}>▶</span>
-                  }
-                </div>
-              </button>
-            )
-          })}
-          {/* bottom safe area */}
-          <div style={{ height: '24px' }} />
-        </div>
+                    : <span style={{ fontFamily: 'var(--font-display)', fontWeight: 900, fontSize: '11px', color }}>{s.frequency}</span>
+                }
+              </div>
+              <div style={{ flex: 1, minWidth: 0 }}>
+                <p style={{ fontSize: '13px', fontWeight: 600, color: 'var(--color-text)', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{s.name}</p>
+                <p style={{ fontSize: '11px', color: 'var(--color-text-muted)', marginTop: '1px', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{s.tagline}</p>
+              </div>
+              {isActive && (
+                <span style={{ fontSize: '10px', fontWeight: 700, color, background: `${color}15`, padding: '3px 8px', borderRadius: '999px', border: `1px solid ${color}33`, flexShrink: 0 }}>{isPlaying ? 'On Air' : 'Paused'}</span>
+              )}
+            </button>
+          )
+        })}
       </div>
     </div>
   )
@@ -164,7 +145,8 @@ function NewsPanel() {
 }
 
 export default function Hero() {
-  const [modalOpen, setModalOpen] = useState(false)
+  const [dropOpen, setDropOpen] = useState(false)
+  const btnRef = useRef(null)
 
   return (
     <section style={{ position: 'relative', paddingTop: '68px', minHeight: '100vh', display: 'flex', alignItems: 'center', overflow: 'hidden' }}>
@@ -176,6 +158,8 @@ export default function Hero() {
 
         {/* LEFT */}
         <div style={{ animation: 'fade-up 0.7s var(--ease-out-expo) both' }}>
+          <img src="https://tfxpqxxzopsycpnmdyke.supabase.co/storage/v1/object/public/images/IZS%20Logo.png" alt="Radio Nigeria Ibadan" style={{ height: '90px', width: 'auto', objectFit: 'contain', marginBottom: '20px', display: 'block' }} />
+
           <div style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', padding: '5px 14px', borderRadius: '999px', background: 'rgba(0,92,46,0.15)', border: '1px solid rgba(0,92,46,0.35)', fontSize: '11px', color: 'var(--color-brand-light)', fontWeight: 600, letterSpacing: '0.06em', textTransform: 'uppercase', marginBottom: '24px' }}>
             <span style={{ width: '6px', height: '6px', borderRadius: '50%', background: '#4EFF8C', animation: 'pulse-live 1.4s infinite' }} />
             Broadcasting Since 1955 · Dugbe, Ibadan
@@ -191,8 +175,8 @@ export default function Hero() {
           </p>
 
           {/* CTAs */}
-          <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap' }}>
-            <button onClick={() => setModalOpen(true)} style={{
+          <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap', position: 'relative' }}>
+            <button ref={btnRef} onClick={() => setDropOpen(o => !o)} style={{
               display: 'inline-flex', alignItems: 'center', gap: '8px',
               padding: '13px 22px', borderRadius: '10px', fontSize: '14px', fontWeight: 700,
               background: 'var(--color-brand)', color: '#fff', border: 'none', cursor: 'pointer',
@@ -204,8 +188,9 @@ export default function Hero() {
             >
               <span style={{ width: '7px', height: '7px', borderRadius: '50%', background: '#4EFF8C', animation: 'pulse-live 1.4s infinite' }} />
               Listen Live
-              <span style={{ fontSize: '11px' }}>▼</span>
+              <span style={{ fontSize: '11px', transition: 'transform 0.2s', display: 'inline-block', transform: dropOpen ? 'rotate(180deg)' : 'none' }}>▼</span>
             </button>
+            {dropOpen && <ListenDropdown onClose={() => setDropOpen(false)} anchorRef={btnRef} />}
 
             <Link to="/news" style={{
               display: 'inline-flex', alignItems: 'center', gap: '8px',
@@ -240,8 +225,6 @@ export default function Hero() {
         </div>
       </div>
 
-      {/* Station picker modal */}
-      {modalOpen && <ListenModal onClose={() => setModalOpen(false)} />}
 
       <style>{`
         @media (max-width: 900px) {
