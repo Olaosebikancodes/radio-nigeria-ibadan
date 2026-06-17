@@ -70,11 +70,7 @@ export default function Navbar() {
 
           {/* Logo */}
           <Link to="/" style={{ display:'flex', alignItems:'center', gap:'10px', flexShrink:0 }}>
-            <div style={{ width:'38px', height:'38px', borderRadius:'10px', background:'linear-gradient(135deg, var(--color-brand-light), var(--color-brand-dark))', display:'flex', alignItems:'center', justifyContent:'center', boxShadow:'0 0 16px rgba(0,92,46,0.4)', fontSize:'16px', fontWeight:900, color:'#fff', fontFamily:'var(--font-display)' }}>RN</div>
-            <div>
-              <p style={{ fontFamily:'var(--font-display)', fontWeight:700, fontSize:'14px', lineHeight:1, color:'var(--color-text)', letterSpacing:'-0.03em' }}>Radio Nigeria</p>
-              <p style={{ fontSize:'9px', color:'var(--color-text-muted)', letterSpacing:'0.08em', textTransform:'uppercase', marginTop:'2px' }}>Ibadan Zonal Station</p>
-            </div>
+            <img src="https://tfxpqxxzopsycpnmdyke.supabase.co/storage/v1/object/public/images/IZS%20Logo.png" alt="Radio Nigeria Ibadan" style={{ height:'42px', width:'auto', objectFit:'contain' }} />
           </Link>
 
           {/* Desktop nav */}

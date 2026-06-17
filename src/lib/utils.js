@@ -51,15 +51,17 @@ export const CATEGORIES = [
 
 export const DAYS = ['monday','tuesday','wednesday','thursday','friday','saturday','sunday']
 
+const IMG = 'https://tfxpqxxzopsycpnmdyke.supabase.co/storage/v1/object/public/images'
+
 export const STATIONS_SEED = [
-  { name:'Premier FM',         slug:'premier-93-5',   frequency:'93.5',  tagline:'Your Dependable Companion',  location:'Ibadan, Oyo State',      color:'#1A6B9A', stream_url:'https://centova57.instainternet.com/proxy/premier?mp=/stream' },
-  { name:'Amuludun 99.1 FM',  slug:'amuludun-99-1',  frequency:'99.1',  tagline:'O ta won yo',                 location:'Moniya, Ibadan',         color:'#8B5E3C', stream_url:'https://centova57.instainternet.com/proxy/amuludun?mp=/stream' },
-  { name:'Paramount 94.5 FM', slug:'paramount-94-5', frequency:'94.5',  tagline:'Our integrity is paramount',  location:'Abeokuta, Ogun State',   color:'#5A3B9A', stream_url:'https://centova57.instainternet.com/proxy/paramount?mp=/stream' },
-  { name:'Positive 102.5 FM', slug:'positive-102-5', frequency:'102.5', tagline:'The Positive Station',        location:'Akure, Ondo State',      color:'#C0392B', stream_url:'https://centova57.instainternet.com/proxy/positive?mp=/stream' },
-  { name:'Progress 100.5 FM', slug:'progress-100-5', frequency:'100.5', tagline:'Your Partner In Progress',    location:'Ado Ekiti, Ekiti State', color:'#8B2020', stream_url:'https://centova57.instainternet.com/proxy/progress?mp=/stream' },
-  { name:'Gold 95.5 FM',      slug:'gold-95-5',      frequency:'95.5',  tagline:'The Jewel of Osun State',     location:'Ilesha, Osun State',     color:'#B8860B', stream_url:'https://centova57.instainternet.com/proxy/gold?mp=/stream' },
-  { name:'Ogo-Ilu 89.3 FM',   slug:'ogo-ilu-89-3',   frequency:'89.3',  tagline:"The society's pride",         location:'Oko, Anambra State',     color:'#2D7A3A', stream_url:'https://centova57.instainternet.com/proxy/ogoilu?mp=/stream' },
-  { name:'Asabari 88.3 FM',   slug:'asabari-88-3',   frequency:'88.3',  tagline:'Ti wan tiwa',                 location:'Southwest Zone',         color:'#6B4A9A', stream_url:'https://centova57.instainternet.com/proxy/asabari?mp=/stream' },
+  { name:'Premier FM',         slug:'premier-93-5',   frequency:'93.5',  tagline:'Your Dependable Companion',  location:'Ibadan, Oyo State',      color:'#1A6B9A', stream_url:'https://centova57.instainternet.com/proxy/premier?mp=/stream',   cover_image:`${IMG}/Premier%20FM.png` },
+  { name:'Amuludun 99.1 FM',  slug:'amuludun-99-1',  frequency:'99.1',  tagline:'O ta won yo',                 location:'Moniya, Ibadan',         color:'#8B5E3C', stream_url:'https://centova57.instainternet.com/proxy/amuludun?mp=/stream',  cover_image:`${IMG}/Amuludun%20FM.png` },
+  { name:'Paramount 94.5 FM', slug:'paramount-94-5', frequency:'94.5',  tagline:'Our integrity is paramount',  location:'Abeokuta, Ogun State',   color:'#5A3B9A', stream_url:'https://centova57.instainternet.com/proxy/paramount?mp=/stream', cover_image:`${IMG}/Paramount%20FM.png` },
+  { name:'Positive 102.5 FM', slug:'positive-102-5', frequency:'102.5', tagline:'The Positive Station',        location:'Akure, Ondo State',      color:'#C0392B', stream_url:'https://centova57.instainternet.com/proxy/positive?mp=/stream',  cover_image:`${IMG}/Positive%20FM.png` },
+  { name:'Progress 100.5 FM', slug:'progress-100-5', frequency:'100.5', tagline:'Your Partner In Progress',    location:'Ado Ekiti, Ekiti State', color:'#8B2020', stream_url:'https://centova57.instainternet.com/proxy/progress?mp=/stream',  cover_image:`${IMG}/Progress%20FM.png` },
+  { name:'Gold 95.5 FM',      slug:'gold-95-5',      frequency:'95.5',  tagline:'The Jewel of Osun State',     location:'Ilesha, Osun State',     color:'#B8860B', stream_url:'https://centova57.instainternet.com/proxy/gold?mp=/stream',      cover_image:`${IMG}/Gold%20FM.jpg.jpeg` },
+  { name:'Ogo-Ilu 89.3 FM',   slug:'ogo-ilu-89-3',   frequency:'89.3',  tagline:"The society's pride",         location:'Oko, Anambra State',     color:'#2D7A3A', stream_url:'https://centova57.instainternet.com/proxy/ogoilu?mp=/stream',    cover_image:`${IMG}/Ogo-Ilu%20FM.png` },
+  { name:'Asabari 88.3 FM',   slug:'asabari-88-3',   frequency:'88.3',  tagline:'Ti wan tiwa',                 location:'Southwest Zone',         color:'#6B4A9A', stream_url:'https://centova57.instainternet.com/proxy/asabari?mp=/stream',   cover_image:`${IMG}/Asabari%20FM.jpeg` },
 ]
 
 // TODO: Replace with real social media URLs when you get them from management

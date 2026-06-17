@@ -44,8 +44,11 @@ export default function StationDetail() {
           <div>
             <Link to="/stations" style={{ fontSize:'12px', color:'var(--color-text-dim)', display:'inline-flex', alignItems:'center', gap:'6px', marginBottom:'24px' }}>← All Stations</Link>
             <div style={{ display:'flex', alignItems:'center', gap:'20px', marginBottom:'16px' }}>
-              <div style={{ width:'68px', height:'68px', borderRadius:'18px', background:`${station.color_hex}25`, border:`2px solid ${station.color_hex}55`, display:'flex', alignItems:'center', justifyContent:'center' }}>
-                <span style={{ fontFamily:'var(--font-display)', fontWeight:900, fontSize:'18px', color:station.color_hex }}>{station.frequency}</span>
+              <div style={{ width:'80px', height:'80px', borderRadius:'18px', background:`${station.color_hex}18`, border:`2px solid ${station.color_hex}44`, display:'flex', alignItems:'center', justifyContent:'center', overflow:'hidden', flexShrink:0 }}>
+                {station.cover_image
+                  ? <img src={station.cover_image} alt={station.name} style={{ width:'100%', height:'100%', objectFit:'contain', padding:'6px' }} />
+                  : <span style={{ fontFamily:'var(--font-display)', fontWeight:900, fontSize:'18px', color:station.color_hex }}>{station.frequency}</span>
+                }
               </div>
               <div>
                 <h1 style={{ fontFamily:'var(--font-display)', fontSize:'clamp(28px,4vw,48px)', fontWeight:900, color:'var(--color-text)', letterSpacing:'-0.04em' }}>{station.name}</h1>

@@ -37,8 +37,11 @@ export default function Stations() {
                     <div style={{ position:'absolute', top:'-30px', right:'-30px', width:'120px', height:'120px', borderRadius:'50%', background:s.color_hex, opacity:0.07, filter:'blur(30px)' }} />
 
                     <div style={{ display:'flex', alignItems:'flex-start', justifyContent:'space-between', marginBottom:'20px' }}>
-                      <div style={{ width:'56px', height:'56px', borderRadius:'14px', background:`${s.color_hex}20`, border:`1px solid ${s.color_hex}40`, display:'flex', alignItems:'center', justifyContent:'center' }}>
-                        <span style={{ fontFamily:'var(--font-display)', fontWeight:900, fontSize:'14px', color:s.color_hex }}>{s.frequency}</span>
+                      <div style={{ width:'64px', height:'64px', borderRadius:'14px', background:`${s.color_hex}12`, border:`1px solid ${s.color_hex}30`, display:'flex', alignItems:'center', justifyContent:'center', overflow:'hidden', flexShrink:0 }}>
+                        {s.cover_image
+                          ? <img src={s.cover_image} alt={s.name} style={{ width:'100%', height:'100%', objectFit:'contain', padding:'4px' }} />
+                          : <span style={{ fontFamily:'var(--font-display)', fontWeight:900, fontSize:'14px', color:s.color_hex }}>{s.frequency}</span>
+                        }
                       </div>
                       {isActive && (
                         <div style={{ display:'flex', alignItems:'flex-end', gap:'2px', height:'20px' }}>
