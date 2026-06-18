@@ -12,7 +12,7 @@ function StationChip({ station }) {
   return (
     <div style={{
       flex: '0 0 auto', display: 'flex', flexDirection: 'column', alignItems: 'center',
-      gap: '8px', padding: '14px 10px', borderRadius: '14px', width: '120px',
+      gap: '10px', padding: '16px 12px', borderRadius: '16px', width: '132px',
       background: 'var(--color-surface)',
       border: `1px solid ${isActive ? station.color + '66' : 'var(--color-border)'}`,
       transition: 'all 0.25s var(--ease-out-expo)', cursor: 'pointer',
@@ -25,14 +25,19 @@ function StationChip({ station }) {
       {/* Glow blob */}
       <div style={{ position: 'absolute', top: '-16px', right: '-16px', width: '60px', height: '60px', borderRadius: '50%', background: station.color, opacity: isActive ? 0.12 : 0.05, filter: 'blur(16px)' }} />
 
-      {/* Frequency badge */}
-      <div style={{ width: '44px', height: '44px', borderRadius: '11px', background: `${station.color}20`, border: `1px solid ${station.color}44`, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-        {isPlaying
-          ? <div style={{ display: 'flex', alignItems: 'flex-end', gap: '2px', height: '16px' }}>
-              {[1,2,3].map(i => <div key={i} style={{ width: '3px', borderRadius: '2px', background: station.color, animation: `wave-bar 0.7s ease-in-out ${i*0.1}s infinite`, transformOrigin: 'bottom', height: `${[8,14,10][i-1]}px` }} />)}
-            </div>
-          : <span style={{ fontFamily: 'var(--font-display)', fontWeight: 900, fontSize: '11px', color: station.color }}>{station.frequency}</span>
+      {/* Logo */}
+      <div style={{ width: '72px', height: '72px', borderRadius: '16px', background: `${station.color}18`, border: `1.5px solid ${station.color}44`, display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden', position: 'relative', flexShrink: 0 }}>
+        {station.cover_image
+          ? <img src={station.cover_image} alt={station.name} style={{ width: '100%', height: '100%', objectFit: 'contain', padding: '8px' }} />
+          : <span style={{ fontFamily: 'var(--font-display)', fontWeight: 900, fontSize: '13px', color: station.color }}>{station.frequency}</span>
         }
+        {isPlaying && (
+          <div style={{ position: 'absolute', inset: 0, background: `${station.color}CC`, display: 'flex', alignItems: 'center', justifyContent: 'center', borderRadius: '16px' }}>
+            <div style={{ display: 'flex', alignItems: 'flex-end', gap: '3px', height: '20px' }}>
+              {[1,2,3,4].map(i => <div key={i} style={{ width: '3px', borderRadius: '2px', background: '#fff', animation: `wave-bar 0.7s ease-in-out ${i*0.1}s infinite`, transformOrigin: 'bottom', height: `${[10,18,13,16][i-1]}px` }} />)}
+            </div>
+          </div>
+        )}
       </div>
 
       {/* Name */}
@@ -86,7 +91,7 @@ export default function StationsCarousel() {
       }}>
         {loading
           ? Array(8).fill(0).map((_, i) => (
-              <div key={i} className="skeleton" style={{ flex: '0 0 120px', height: '160px', borderRadius: '14px' }} />
+              <div key={i} className="skeleton" style={{ flex: '0 0 132px', height: '178px', borderRadius: '16px' }} />
             ))
           : stations.map(s => <StationChip key={s.id ?? s.slug} station={s} />)
         }
