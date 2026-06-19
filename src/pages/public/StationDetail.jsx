@@ -76,12 +76,13 @@ export default function StationDetail() {
       <div className="station-body-grid" style={{ maxWidth:'1280px', margin:'0 auto', padding:'48px 24px 80px', display:'grid', gridTemplateColumns:'1fr 360px', gap:'40px' }}>
         {/* Left */}
         <div>
-          {station.description && (
-            <div style={{ marginBottom:'40px' }}>
-              <h2 style={{ fontFamily:'var(--font-display)', fontSize:'22px', fontWeight:700, color:'var(--color-text)', marginBottom:'12px', letterSpacing:'-0.03em' }}>About {station.name}</h2>
-              <p style={{ color:'var(--color-text-muted)', lineHeight:1.75, fontSize:'15px' }}>{station.description}</p>
-            </div>
-          )}
+          <div style={{ marginBottom:'40px' }}>
+            <h2 style={{ fontFamily:'var(--font-display)', fontSize:'22px', fontWeight:700, color:'var(--color-text)', marginBottom:'12px', letterSpacing:'-0.03em' }}>About {station.name}</h2>
+            {station.description
+              ? <p style={{ color:'var(--color-text-muted)', lineHeight:1.75, fontSize:'15px' }}>{station.description}</p>
+              : <p style={{ color:'var(--color-text-dim)', lineHeight:1.75, fontSize:'15px', fontStyle:'italic' }}>{station.name} is one of the Radio Nigeria network stations serving listeners across the region with news, music, and community programming around the clock.</p>
+            }
+          </div>
 
           {/* Social media */}
           {(station.social_facebook || station.social_twitter || station.social_instagram || station.social_youtube) && (
@@ -129,28 +130,32 @@ export default function StationDetail() {
           )}
 
           {/* Articles */}
-          {articles.length > 0 && (
-            <div>
-              <h2 style={{ fontFamily:'var(--font-display)', fontSize:'22px', fontWeight:700, color:'var(--color-text)', marginBottom:'20px', letterSpacing:'-0.03em' }}>Latest from {station.name}</h2>
-              <div className="station-articles-grid" style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:'14px' }}>
-                {articles.map(a => (
-                  <Link key={a.id} to={`/news/${a.slug}`} style={{ display:'block', background:'var(--color-surface)', borderRadius:'12px', overflow:'hidden', border:'1px solid var(--color-border)', transition:'all 0.2s' }}
-                    onMouseEnter={e=>{e.currentTarget.style.transform='translateY(-3px)';e.currentTarget.style.borderColor='var(--color-border-light)'}}
-                    onMouseLeave={e=>{e.currentTarget.style.transform='none';e.currentTarget.style.borderColor='var(--color-border)'}}
-                  >
-                    <div style={{ height:'120px', background:'var(--color-surface-2)', overflow:'hidden' }}>
-                      {a.cover_image ? <img src={a.cover_image} alt={a.title} style={{width:'100%',height:'100%',objectFit:'cover'}}/> : <div style={{display:'flex',alignItems:'center',justifyContent:'center',height:'100%',opacity:0.1,fontSize:'28px'}}>📻</div>}
-                    </div>
-                    <div style={{ padding:'14px' }}>
-                      <Badge label={a.category||'General'} category={a.category} />
-                      <p style={{ fontFamily:'var(--font-display)', fontWeight:700, fontSize:'14px', color:'var(--color-text)', marginTop:'8px', lineHeight:1.3 }}>{a.title}</p>
-                      <p style={{ fontSize:'11px', color:'var(--color-text-dim)', marginTop:'6px' }}>{timeAgo(a.published_at||a.created_at)}</p>
-                    </div>
-                  </Link>
-                ))}
-              </div>
-            </div>
-          )}
+          <div>
+            <h2 style={{ fontFamily:'var(--font-display)', fontSize:'22px', fontWeight:700, color:'var(--color-text)', marginBottom:'20px', letterSpacing:'-0.03em' }}>Latest from {station.name}</h2>
+            {articles.length === 0
+              ? <div style={{ padding:'32px', background:'var(--color-surface)', borderRadius:'12px', border:'1px solid var(--color-border)', textAlign:'center' }}>
+                  <p style={{ fontSize:'28px', marginBottom:'10px', opacity:0.4 }}>📻</p>
+                  <p style={{ fontSize:'13px', color:'var(--color-text-muted)' }}>No articles published yet.</p>
+                </div>
+              : <div className="station-articles-grid" style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:'14px' }}>
+                  {articles.map(a => (
+                    <Link key={a.id} to={`/news/${a.slug}`} style={{ display:'block', background:'var(--color-surface)', borderRadius:'12px', overflow:'hidden', border:'1px solid var(--color-border)', transition:'all 0.2s' }}
+                      onMouseEnter={e=>{e.currentTarget.style.transform='translateY(-3px)';e.currentTarget.style.borderColor='var(--color-border-light)'}}
+                      onMouseLeave={e=>{e.currentTarget.style.transform='none';e.currentTarget.style.borderColor='var(--color-border)'}}
+                    >
+                      <div style={{ height:'120px', background:'var(--color-surface-2)', overflow:'hidden' }}>
+                        {a.cover_image ? <img src={a.cover_image} alt={a.title} style={{width:'100%',height:'100%',objectFit:'cover'}}/> : <div style={{display:'flex',alignItems:'center',justifyContent:'center',height:'100%',opacity:0.1,fontSize:'28px'}}>📻</div>}
+                      </div>
+                      <div style={{ padding:'14px' }}>
+                        <Badge label={a.category||'General'} category={a.category} />
+                        <p style={{ fontFamily:'var(--font-display)', fontWeight:700, fontSize:'14px', color:'var(--color-text)', marginTop:'8px', lineHeight:1.3 }}>{a.title}</p>
+                        <p style={{ fontSize:'11px', color:'var(--color-text-dim)', marginTop:'6px' }}>{timeAgo(a.published_at||a.created_at)}</p>
+                      </div>
+                    </Link>
+                  ))}
+                </div>
+            }
+          </div>
         </div>
 
         {/* Right — Today's schedule */}

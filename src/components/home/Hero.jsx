@@ -9,8 +9,6 @@ export default function Hero() {
 
         {/* LEFT */}
         <div style={{ animation: 'fade-up 0.7s var(--ease-out-expo) both', maxWidth: '600px' }}>
-          <img src="https://tfxpqxxzopsycpnmdyke.supabase.co/storage/v1/object/public/images/IZS%20Logo.png" alt="Radio Nigeria Ibadan" className="hero-logo" style={{ height: '90px', width: 'auto', objectFit: 'contain', marginBottom: '20px', display: 'block' }} />
-
           <div style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', padding: '5px 14px', borderRadius: '999px', background: 'rgba(0,92,46,0.15)', border: '1px solid rgba(0,92,46,0.35)', fontSize: '11px', color: 'var(--color-brand-light)', fontWeight: 600, letterSpacing: '0.06em', textTransform: 'uppercase', marginBottom: '24px' }}>
             <span style={{ width: '6px', height: '6px', borderRadius: '50%', background: '#4EFF8C', animation: 'pulse-live 1.4s infinite' }} />
             Broadcasting Since 1955 · Dugbe, Ibadan

@@ -22,6 +22,7 @@ const YoutubeIcon = () => (
   </svg>
 );
 
+
 function WaveIcon({ active }) {
   return (
     <span
@@ -95,6 +96,7 @@ export default function Navbar() {
         borderBottom: scrolled
           ? "1px solid var(--color-border)"
           : "1px solid transparent",
+        overflow: "visible",
       }}
     >
       <div
@@ -120,10 +122,10 @@ export default function Navbar() {
             }}
           >
             <img
-              src="https://tfxpqxxzopsycpnmdyke.supabase.co/storage/v1/object/public/images/RN%20Logo%20(1).png"
+              src="https://tfxpqxxzopsycpnmdyke.supabase.co/storage/v1/object/public/images/Logo%201.png"
               alt="Radio Nigeria Ibadan"
               style={{
-                height: "56px",
+                height: "88px",
                 width: "auto",
                 objectFit: "contain",
                 filter:
@@ -193,45 +195,7 @@ export default function Navbar() {
               >
                 <FacebookIcon />
               </a>
-              <a
-                href={SOCIAL_LINKS.twitter}
-                target="_blank"
-                rel="noopener noreferrer"
-                style={socialStyle}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.background = "#00000022";
-                  e.currentTarget.style.color = "var(--color-text)";
-                  e.currentTarget.style.borderColor = "#ffffff33";
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.background = "var(--color-surface)";
-                  e.currentTarget.style.color = "var(--color-text-muted)";
-                  e.currentTarget.style.borderColor = "var(--color-border)";
-                }}
-                title="X / Twitter"
-              >
-                <TwitterIcon />
-              </a>
-              <a
-                href={SOCIAL_LINKS.instagram}
-                target="_blank"
-                rel="noopener noreferrer"
-                style={socialStyle}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.background = "#E114514 22";
-                  e.currentTarget.style.color = "#E1306C";
-                  e.currentTarget.style.borderColor = "#E1306C44";
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.background = "var(--color-surface)";
-                  e.currentTarget.style.color = "var(--color-text-muted)";
-                  e.currentTarget.style.borderColor = "var(--color-border)";
-                }}
-                title="Instagram"
-              >
-                <InstagramIcon />
-              </a>
-              <a
+<a
                 href={SOCIAL_LINKS.youtube}
                 target="_blank"
                 rel="noopener noreferrer"
@@ -462,16 +426,6 @@ export default function Navbar() {
                 href: SOCIAL_LINKS.facebook,
                 icon: <FacebookIcon />,
                 label: "Facebook",
-              },
-              {
-                href: SOCIAL_LINKS.twitter,
-                icon: <TwitterIcon />,
-                label: "Twitter",
-              },
-              {
-                href: SOCIAL_LINKS.instagram,
-                icon: <InstagramIcon />,
-                label: "Instagram",
               },
               {
                 href: SOCIAL_LINKS.youtube,
