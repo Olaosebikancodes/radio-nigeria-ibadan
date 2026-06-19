@@ -21,14 +21,8 @@ export default function AdminLayout({ children }) {
 
       {/* Desktop Sidebar */}
       <aside className="admin-sidebar" style={{ width:'220px', background:'var(--color-surface)', borderRight:'1px solid var(--color-border)', display:'flex', flexDirection:'column', position:'fixed', top:0, left:0, bottom:0, zIndex:50 }}>
-        <div style={{ padding:'20px 20px 16px', borderBottom:'1px solid var(--color-border)' }}>
-          <div style={{ display:'flex', alignItems:'center', gap:'10px' }}>
-            <div style={{ width:'32px', height:'32px', borderRadius:'8px', background:'linear-gradient(135deg, var(--color-brand-light), var(--color-brand-dark))', display:'flex', alignItems:'center', justifyContent:'center', fontSize:'12px', fontWeight:900, color:'#fff', fontFamily:'var(--font-display)' }}>RN</div>
-            <div>
-              <p style={{ fontFamily:'var(--font-display)', fontWeight:700, fontSize:'13px', color:'var(--color-text)', lineHeight:1 }}>Radio Nigeria</p>
-              <p style={{ fontSize:'10px', color:'var(--color-text-dim)', marginTop:'2px' }}>Admin Panel</p>
-            </div>
-          </div>
+        <div style={{ padding:'16px 20px', borderBottom:'1px solid var(--color-border)', display:'flex', alignItems:'center', justifyContent:'center' }}>
+          <img src="https://tfxpqxxzopsycpnmdyke.supabase.co/storage/v1/object/public/images/Logo%201.png" alt="Radio Nigeria" style={{ height:'52px', width:'auto', objectFit:'contain' }} />
         </div>
         <nav style={{ flex:1, padding:'12px 10px', display:'flex', flexDirection:'column', gap:'2px', overflowY:'auto' }}>
           {LINKS.map(({ to, label, icon, exact }) => (
@@ -53,9 +47,8 @@ export default function AdminLayout({ children }) {
 
       {/* Mobile Top Bar */}
       <div className="admin-topbar" style={{ display:'none', position:'fixed', top:0, left:0, right:0, zIndex:100, background:'var(--color-surface)', borderBottom:'1px solid var(--color-border)', padding:'0 16px', height:'56px', alignItems:'center', justifyContent:'space-between' }}>
-        <div style={{ display:'flex', alignItems:'center', gap:'10px' }}>
-          <div style={{ width:'28px', height:'28px', borderRadius:'7px', background:'linear-gradient(135deg, var(--color-brand-light), var(--color-brand-dark))', display:'flex', alignItems:'center', justifyContent:'center', fontSize:'11px', fontWeight:900, color:'#fff', fontFamily:'var(--font-display)' }}>RN</div>
-          <p style={{ fontFamily:'var(--font-display)', fontWeight:700, fontSize:'13px', color:'var(--color-text)' }}>Admin</p>
+        <div style={{ display:'flex', alignItems:'center' }}>
+          <img src="https://tfxpqxxzopsycpnmdyke.supabase.co/storage/v1/object/public/images/Logo%201.png" alt="Radio Nigeria" style={{ height:'36px', width:'auto', objectFit:'contain' }} />
         </div>
         <button onClick={() => setMenuOpen(o => !o)} style={{ background:'none', border:'1px solid var(--color-border)', borderRadius:'8px', padding:'6px 10px', cursor:'pointer', color:'var(--color-text)', fontSize:'18px', lineHeight:1 }}>☰</button>
       </div>
