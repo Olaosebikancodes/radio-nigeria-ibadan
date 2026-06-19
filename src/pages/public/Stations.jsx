@@ -19,9 +19,9 @@ export default function Stations() {
     <main style={{ paddingTop:'104px' }}>
       <div style={{ background:`linear-gradient(to bottom, rgba(0,92,46,0.12), transparent)`, borderBottom:'1px solid var(--color-border)', padding:'60px 24px 48px' }}>
         <div style={{ maxWidth:'1280px', margin:'0 auto' }}>
-          <p style={{ fontSize:'11px', fontWeight:600, color:'var(--color-brand-light)', textTransform:'uppercase', letterSpacing:'0.1em', marginBottom:'10px' }}>FRCN South West Zone</p>
+          <p style={{ fontSize:'17px', fontWeight:600, color:'var(--color-brand-light)', textTransform:'uppercase', letterSpacing:'0.1em', marginBottom:'10px' }}>FRCN South West Zone</p>
           <h1 style={{ fontFamily:'var(--font-display)', fontSize:'clamp(32px,5vw,56px)', fontWeight:900, color:'var(--color-text)', letterSpacing:'-0.04em', marginBottom:'12px' }}>Our Stations</h1>
-          <p style={{ fontSize:'16px', color:'var(--color-text-muted)', maxWidth:'560px' }}>8 FM stations serving Oyo, Ogun, Ondo, Osun, Ekiti and the broader South West region.</p>
+          <p style={{ fontSize:'18px', color:'var(--color-text-muted)', maxWidth:'560px' }}>8 FM stations serving Oyo, Ogun, Ondo, Osun, Ekiti and the broader South West region.</p>
         </div>
       </div>
 
@@ -40,7 +40,7 @@ export default function Stations() {
                       <div style={{ width:'64px', height:'64px', borderRadius:'14px', background:`${s.color_hex}12`, border:`1px solid ${s.color_hex}30`, display:'flex', alignItems:'center', justifyContent:'center', overflow:'hidden', flexShrink:0 }}>
                         {s.cover_image
                           ? <img src={s.cover_image} alt={s.name} style={{ width:'100%', height:'100%', objectFit:'contain', padding:'4px' }} />
-                          : <span style={{ fontFamily:'var(--font-display)', fontWeight:900, fontSize:'14px', color:s.color_hex }}>{s.frequency}</span>
+                          : <span style={{ fontFamily:'var(--font-display)', fontWeight:900, fontSize:'18px', color:s.color_hex }}>{s.frequency}</span>
                         }
                       </div>
                       {isActive && (
@@ -53,14 +53,14 @@ export default function Stations() {
                     </div>
 
                     <h3 style={{ fontFamily:'var(--font-display)', fontWeight:700, fontSize:'20px', color:'var(--color-text)', letterSpacing:'-0.03em', marginBottom:'6px' }}>{s.name}</h3>
-                    <p style={{ fontSize:'13px', color:'var(--color-text-muted)', marginBottom:'4px', fontStyle:'italic' }}>"{s.tagline}"</p>
-                    <p style={{ fontSize:'12px', color:'var(--color-text-dim)', marginBottom:'20px' }}>📍 {s.location}</p>
+                    <p style={{ fontSize:'17px', color:'var(--color-text-muted)', marginBottom:'4px', fontStyle:'italic' }}>"{s.tagline}"</p>
+                    <p style={{ fontSize:'18px', color:'var(--color-text-dim)', marginBottom:'20px' }}>📍 {s.location}</p>
 
                     <div style={{ display:'flex', gap:'8px' }}>
-                      <button onClick={()=>play(s)} style={{ flex:1, padding:'10px', borderRadius:'10px', fontSize:'13px', fontWeight:600, cursor:'pointer', background:isPlaying?s.color_hex:`${s.color_hex}15`, color:isPlaying?'#fff':s.color_hex, border:`1px solid ${s.color_hex}44`, transition:'all 0.2s' }}>
+                      <button onClick={()=>play(s)} style={{ flex:1, padding:'10px', borderRadius:'10px', fontSize:'17px', fontWeight:600, cursor:'pointer', background:isPlaying?s.color_hex:`${s.color_hex}15`, color:isPlaying?'#fff':s.color_hex, border:`1px solid ${s.color_hex}44`, transition:'all 0.2s' }}>
                         {isPlaying ? '❙❙ Pause' : '▶ Listen Live'}
                       </button>
-                      <Link to={`/stations/${s.slug}`} style={{ display:'flex', alignItems:'center', justifyContent:'center', padding:'10px 16px', borderRadius:'10px', fontSize:'13px', fontWeight:500, background:'var(--color-surface-2)', color:'var(--color-text-muted)', border:'1px solid var(--color-border)', transition:'all 0.2s' }}>More →</Link>
+                      <Link to={`/stations/${s.slug}`} style={{ display:'flex', alignItems:'center', justifyContent:'center', padding:'10px 16px', borderRadius:'10px', fontSize:'17px', fontWeight:500, background:'var(--color-surface-2)', color:'var(--color-text-muted)', border:'1px solid var(--color-border)', transition:'all 0.2s' }}>More →</Link>
                     </div>
                   </div>
                 )

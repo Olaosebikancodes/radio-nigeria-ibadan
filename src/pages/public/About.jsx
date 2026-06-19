@@ -26,11 +26,11 @@ export default function About() {
   ]
 
   return (
-    <main style={{ paddingTop:'104px' }}>
+    <main style={{ paddingTop:'140px' }}>
       {/* Hero */}
       <div style={{ background:`linear-gradient(to bottom, rgba(0,92,46,0.15), transparent)`, borderBottom:'1px solid var(--color-border)', padding:'80px 24px 60px' }}>
         <div style={{ maxWidth:'800px', margin:'0 auto', textAlign:'center' }}>
-          <p style={{ fontSize:'11px', fontWeight:600, color:'var(--color-brand-light)', textTransform:'uppercase', letterSpacing:'0.1em', marginBottom:'16px' }}>Est. 1955 · Dugbe, Ibadan</p>
+          <p style={{ fontSize:'17px', fontWeight:600, color:'var(--color-brand-light)', textTransform:'uppercase', letterSpacing:'0.1em', marginBottom:'16px' }}>Est. 1955 · Dugbe, Ibadan</p>
           <h1 style={{ fontFamily:'var(--font-display)', fontSize:'clamp(36px,6vw,64px)', fontWeight:900, color:'var(--color-text)', letterSpacing:'-0.04em', marginBottom:'20px' }}>
             Broadcasting Nigeria's Voice, <em style={{ color:'var(--color-accent)', fontStyle:'italic' }}>Since 1955</em>
           </h1>
@@ -48,8 +48,8 @@ export default function About() {
             { label:'Our Vision', color:'var(--color-accent)', text:'To be an impartial, credible, creative, and digitized medium in the forefront of Nigeria\'s national development, unity, and progress.' },
           ].map(({ label, color, text }) => (
             <div key={label} style={{ background:'var(--color-surface)', borderRadius:'16px', padding:'32px', border:'1px solid var(--color-border)', borderLeft:`3px solid ${color}` }}>
-              <p style={{ fontSize:'11px', fontWeight:700, color, textTransform:'uppercase', letterSpacing:'0.1em', marginBottom:'14px' }}>{label}</p>
-              <p style={{ fontSize:'15px', color:'var(--color-text-muted)', lineHeight:1.75 }}>{text}</p>
+              <p style={{ fontSize:'17px', fontWeight:700, color, textTransform:'uppercase', letterSpacing:'0.1em', marginBottom:'14px' }}>{label}</p>
+              <p style={{ fontSize:'17px', color:'var(--color-text-muted)', lineHeight:1.75 }}>{text}</p>
             </div>
           ))}
         </div>
@@ -64,8 +64,8 @@ export default function About() {
             {timeline.map(({ year, event }) => (
               <div key={year} style={{ position:'relative', marginBottom:'36px' }}>
                 <div style={{ position:'absolute', left:'-29px', top:'3px', width:'14px', height:'14px', borderRadius:'50%', background:'var(--color-brand)', border:'2px solid var(--color-bg)', boxShadow:'0 0 8px rgba(0,92,46,0.4)' }} />
-                <p style={{ fontSize:'11px', fontWeight:700, color:'var(--color-accent)', letterSpacing:'0.08em', marginBottom:'6px' }}>{year}</p>
-                <p style={{ fontSize:'14px', color:'var(--color-text-muted)', lineHeight:1.7 }}>{event}</p>
+                <p style={{ fontSize:'17px', fontWeight:700, color:'var(--color-accent)', letterSpacing:'0.08em', marginBottom:'6px' }}>{year}</p>
+                <p style={{ fontSize:'18px', color:'var(--color-text-muted)', lineHeight:1.7 }}>{event}</p>
               </div>
             ))}
           </div>
@@ -75,7 +75,7 @@ export default function About() {
       {/* Departments */}
       <div style={{ maxWidth:'1280px', margin:'0 auto', padding:'64px 24px 80px' }}>
         <div style={{ textAlign:'center', marginBottom:'48px' }}>
-          <p style={{ fontSize:'11px', fontWeight:600, color:'var(--color-brand-light)', textTransform:'uppercase', letterSpacing:'0.1em', marginBottom:'10px' }}>Structure</p>
+          <p style={{ fontSize:'17px', fontWeight:600, color:'var(--color-brand-light)', textTransform:'uppercase', letterSpacing:'0.1em', marginBottom:'10px' }}>Structure</p>
           <h2 style={{ fontFamily:'var(--font-display)', fontSize:'clamp(26px,4vw,40px)', fontWeight:900, color:'var(--color-text)', letterSpacing:'-0.04em' }}>Our Departments</h2>
         </div>
         <div style={{ display:'grid', gridTemplateColumns:'repeat(auto-fill,minmax(260px,1fr))', gap:'16px' }}>
@@ -85,8 +85,8 @@ export default function About() {
               onMouseLeave={e=>e.currentTarget.style.borderColor='var(--color-border)'}
             >
               <div style={{ color:'var(--color-brand-light)', marginBottom:'14px' }}>{icon}</div>
-              <h3 style={{ fontFamily:'var(--font-display)', fontWeight:700, fontSize:'16px', color:'var(--color-text)', marginBottom:'8px', letterSpacing:'-0.02em' }}>{name}</h3>
-              <p style={{ fontSize:'13px', color:'var(--color-text-muted)', lineHeight:1.65 }}>{desc}</p>
+              <h3 style={{ fontFamily:'var(--font-display)', fontWeight:700, fontSize:'18px', color:'var(--color-text)', marginBottom:'8px', letterSpacing:'-0.02em' }}>{name}</h3>
+              <p style={{ fontSize:'17px', color:'var(--color-text-muted)', lineHeight:1.65 }}>{desc}</p>
             </div>
           ))}
         </div>

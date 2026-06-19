@@ -19,28 +19,25 @@ const SOCIALS = [
 
 export default function Footer() {
   return (
-    <footer style={{ background:'var(--color-surface)', borderTop:'1px solid var(--color-border)', marginTop:'80px' }}>
+    <footer style={{ borderTop:'1px solid var(--color-border)', marginTop:'80px', backgroundImage:'url(https://tfxpqxxzopsycpnmdyke.supabase.co/storage/v1/object/public/images/IZS%20Building.JPG.jpeg)', backgroundSize:'cover', backgroundPosition:'center', backgroundRepeat:'no-repeat', color:'var(--color-text)' }}>
       <div style={{ maxWidth:'1280px', margin:'0 auto', padding:'56px 24px 32px' }}>
 
-        {/* Top grid */}
         <div style={{ display:'grid', gridTemplateColumns:'1.4fr 1fr 1.2fr', gap:'40px', marginBottom:'48px' }}>
 
-          {/* Brand + social */}
           <div>
             <div style={{ marginBottom:'14px' }}>
               <img src="https://tfxpqxxzopsycpnmdyke.supabase.co/storage/v1/object/public/images/Logo%201.png" alt="Radio Nigeria" style={{ height:'56px', width:'auto', objectFit:'contain' }} />
             </div>
-            <p style={{ fontSize:'13px', color:'var(--color-text-muted)', lineHeight:1.7, marginBottom:'16px', maxWidth:'220px' }}>
+            <p style={{ fontSize:'15px', color:'var(--color-text-muted)', lineHeight:1.7, marginBottom:'16px', maxWidth:'240px' }}>
               Uplifting the People & Uniting the Nation. Broadcasting from Dugbe, Ibadan since 1955.
             </p>
-            <p style={{ fontSize:'11px', color:'var(--color-text-dim)', lineHeight:1.7, marginBottom:'20px' }}>
+            <p style={{ fontSize:'13px', color:'var(--color-text-dim)', lineHeight:1.7, marginBottom:'20px' }}>
               Broadcasting House,<br />Oba-Adebimpe Road, Dugbe,<br />Ibadan, Oyo State.
             </p>
 
-            {/* Social icons */}
             <div style={{ display:'flex', gap:'8px' }}>
               {SOCIALS.map(s => (
-                <a key={s.label} href={s.href} target="_blank" rel="noopener noreferrer" title={s.label} style={{ display:'flex', alignItems:'center', justifyContent:'center', width:'34px', height:'34px', borderRadius:'8px', background:'var(--color-surface-2)', border:'1px solid var(--color-border)', color:'var(--color-text-muted)', transition:'all 0.2s', cursor:'pointer' }}
+                <a key={s.label} href={s.href} target="_blank" rel="noopener noreferrer" title={s.label} style={{ display:'flex', alignItems:'center', justifyContent:'center', width:'36px', height:'36px', borderRadius:'8px', background:'var(--color-surface-2)', border:'1px solid var(--color-border)', color:'var(--color-text-muted)', transition:'all 0.2s', cursor:'pointer' }}
                   onMouseEnter={e=>{ e.currentTarget.style.color=s.hoverColor; e.currentTarget.style.borderColor=s.hoverColor+'55'; e.currentTarget.style.background=s.hoverColor+'15'; e.currentTarget.style.transform='translateY(-2px)' }}
                   onMouseLeave={e=>{ e.currentTarget.style.color='var(--color-text-muted)'; e.currentTarget.style.borderColor='var(--color-border)'; e.currentTarget.style.background='var(--color-surface-2)'; e.currentTarget.style.transform='none' }}
                 >{s.icon}</a>
@@ -48,16 +45,15 @@ export default function Footer() {
             </div>
           </div>
 
-          {/* Nav link columns */}
           {Object.entries(LINKS).map(([heading, items]) => (
             <div key={heading}>
-              <p style={{ fontSize:'10px', fontWeight:700, color:'var(--color-text-dim)', textTransform:'uppercase', letterSpacing:'0.1em', marginBottom:'14px' }}>{heading}</p>
-              <ul style={{ listStyle:'none', display:'flex', flexDirection:'column', gap:'9px' }}>
+              <p style={{ fontSize:'12px', fontWeight:700, color:'var(--color-text-dim)', textTransform:'uppercase', letterSpacing:'0.1em', marginBottom:'14px' }}>{heading}</p>
+              <ul style={{ listStyle:'none', display:'flex', flexDirection:'column', gap:'10px' }}>
                 {items.map(({ label, to, ext }) => (
                   <li key={label}>
                     {ext
-                      ? <a href={to} target="_blank" rel="noopener noreferrer" style={{ fontSize:'13px', color:'var(--color-text-muted)', transition:'color 0.2s' }} onMouseEnter={e=>e.target.style.color='var(--color-accent)'} onMouseLeave={e=>e.target.style.color='var(--color-text-muted)'}>{label} ↗</a>
-                      : <Link to={to} style={{ fontSize:'13px', color:'var(--color-text-muted)', transition:'color 0.2s' }} onMouseEnter={e=>e.target.style.color='var(--color-accent)'} onMouseLeave={e=>e.target.style.color='var(--color-text-muted)'}>{label}</Link>
+                      ? <a href={to} target="_blank" rel="noopener noreferrer" style={{ fontSize:'15px', color:'var(--color-text-muted)', transition:'color 0.2s' }} onMouseEnter={e=>e.target.style.color='var(--color-accent)'} onMouseLeave={e=>e.target.style.color='var(--color-text-muted)'}>{label} ↗</a>
+                      : <Link to={to} style={{ fontSize:'15px', color:'var(--color-text-muted)', transition:'color 0.2s' }} onMouseEnter={e=>e.target.style.color='var(--color-accent)'} onMouseLeave={e=>e.target.style.color='var(--color-text-muted)'}>{label}</Link>
                     }
                   </li>
                 ))}
@@ -65,17 +61,16 @@ export default function Footer() {
             </div>
           ))}
 
-          {/* Stations */}
           <div>
-            <p style={{ fontSize:'10px', fontWeight:700, color:'var(--color-text-dim)', textTransform:'uppercase', letterSpacing:'0.1em', marginBottom:'14px' }}>Our Stations</p>
-            <div style={{ display:'flex', flexDirection:'column', gap:'7px' }}>
+            <p style={{ fontSize:'12px', fontWeight:700, color:'var(--color-text-dim)', textTransform:'uppercase', letterSpacing:'0.1em', marginBottom:'14px' }}>Our Stations</p>
+            <div style={{ display:'flex', flexDirection:'column', gap:'8px' }}>
               {STATIONS_SEED.map(s => (
                 <Link key={s.slug} to={`/stations/${s.slug}`} style={{ display:'flex', alignItems:'center', gap:'9px' }}
                   onMouseEnter={e => e.currentTarget.querySelector('.sname').style.color='var(--color-accent)'}
                   onMouseLeave={e => e.currentTarget.querySelector('.sname').style.color='var(--color-text-muted)'}
                 >
                   <div style={{ width:'8px', height:'8px', borderRadius:'50%', background:s.color, flexShrink:0 }} />
-                  <p className="sname" style={{ fontSize:'12px', color:'var(--color-text-muted)', fontWeight:500, transition:'color 0.2s' }}>{s.name}</p>
+                  <p className="sname" style={{ fontSize:'14px', color:'var(--color-text-muted)', fontWeight:500, transition:'color 0.2s' }}>{s.name}</p>
                 </Link>
               ))}
             </div>
@@ -84,12 +79,11 @@ export default function Footer() {
 
         <div style={{ height:'1px', background:'var(--color-border)', marginBottom:'24px' }} />
 
-        {/* Bottom bar */}
         <div style={{ display:'flex', alignItems:'center', justifyContent:'space-between', flexWrap:'wrap', gap:'10px' }}>
-          <p style={{ fontSize:'11px', color:'var(--color-text-dim)' }}>
+          <p style={{ fontSize:'13px', color:'var(--color-text-dim)' }}>
             © {new Date().getFullYear()} Federal Radio Corporation of Nigeria — Ibadan Zonal Station. All rights reserved.
           </p>
-          <p style={{ fontSize:'11px', color:'var(--color-text-dim)' }}>
+          <p style={{ fontSize:'13px', color:'var(--color-text-dim)' }}>
             Built by <span style={{ color:'var(--color-accent)' }}>Prisac Labs</span>
           </p>
         </div>

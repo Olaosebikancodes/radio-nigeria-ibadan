@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
+import { Play, Pause, MoreHorizontal } from 'lucide-react'
 import { supabase } from '../../lib/supabase'
 import { STATIONS_SEED } from '../../lib/utils'
 import { usePlayer } from '../../context/PlayerContext'
@@ -38,24 +39,25 @@ function StationChip({ station }) {
         )}
       </div>
 
-      <p style={{ fontSize: '11px', fontWeight: 700, color: 'var(--color-text)', textAlign: 'center', lineHeight: 1.3, letterSpacing: '-0.01em' }}>{station.name.replace(' FM','')}<span style={{ color: station.color }}> FM</span></p>
-      <p style={{ fontSize: '9px', color: 'var(--color-text-dim)', textAlign: 'center', lineHeight: 1.3 }}>{station.location.split(',')[0]}</p>
+      <p style={{ fontSize: '13px', fontWeight: 700, color: 'var(--color-text)', textAlign: 'center', lineHeight: 1.3, letterSpacing: '-0.01em' }}>{station.name.replace(' FM','')}<span style={{ color: station.color }}> FM</span></p>
+      <p style={{ fontSize: '11px', color: 'var(--color-text-dim)', textAlign: 'center', lineHeight: 1.3 }}>{station.location.split(',')[0]}</p>
 
       <div style={{ display: 'flex', gap: '4px', width: '100%' }}>
         <button onClick={() => play(station)} style={{
-          flex: 1, padding: '5px 0', borderRadius: '6px', fontSize: '11px', fontWeight: 700, cursor: 'pointer',
+          flex: 1, padding: '6px 0', borderRadius: '6px', fontSize: '12px', fontWeight: 700, cursor: 'pointer',
+          display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '4px',
           background: isPlaying ? station.color : `${station.color}18`,
           color: isPlaying ? '#fff' : station.color,
           border: `1px solid ${station.color}44`, transition: 'all 0.2s',
         }}>
-          {isPlaying ? '❙❙' : '▶'}
+          {isPlaying ? <><Pause size={11}/>Pause</> : <><Play size={11}/>Listen</>}
         </button>
         <Link to={`/stations/${station.slug}`} onClick={e => e.stopPropagation()} style={{
-          display: 'flex', alignItems: 'center', justifyContent: 'center',
-          width: '28px', borderRadius: '6px', fontSize: '11px',
+          display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '3px',
+          padding: '6px 8px', borderRadius: '6px', fontSize: '12px', fontWeight: 600,
           background: 'var(--color-surface-2)', border: '1px solid var(--color-border)',
           color: 'var(--color-text-dim)', transition: 'all 0.2s',
-        }}>→</Link>
+        }}><MoreHorizontal size={12}/>More</Link>
       </div>
     </div>
   )
@@ -74,10 +76,10 @@ export default function StationsCarousel() {
     <section style={{ maxWidth: '1280px', margin: '0 auto', padding: '48px 24px 56px' }}>
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '20px' }}>
         <div>
-          <p style={{ fontSize: '11px', fontWeight: 600, color: 'var(--color-brand-light)', textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: '4px' }}>Our Frequencies</p>
+          <p style={{ fontSize: '13px', fontWeight: 600, color: 'var(--color-brand-light)', textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: '4px' }}>Our Frequencies</p>
           <h2 style={{ fontFamily: 'var(--font-display)', fontSize: 'clamp(22px,3vw,30px)', fontWeight: 900, color: 'var(--color-text)', letterSpacing: '-0.04em' }}>8 Stations, One Network</h2>
         </div>
-        <Link to="/stations" style={{ fontSize: '12px', color: 'var(--color-accent)', fontWeight: 600, whiteSpace: 'nowrap' }}>View all →</Link>
+        <Link to="/stations" style={{ fontSize: '14px', color: 'var(--color-accent)', fontWeight: 600, whiteSpace: 'nowrap' }}>View all →</Link>
       </div>
 
       <div className="stations-home-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '12px' }}>

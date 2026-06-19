@@ -4,10 +4,10 @@ import { useAuth } from '../../context/AuthContext'
 import { LayoutDashboard, Megaphone, Radio, Users } from 'lucide-react'
 
 const LINKS = [
-  { to:'/admin',           label:'Dashboard', icon:<LayoutDashboard size={16}/>, exact:true },
-  { to:'/admin/adverts',   label:'Adverts',   icon:<Megaphone size={16}/> },
-  { to:'/admin/stations',  label:'Stations',  icon:<Radio size={16}/> },
-  { to:'/admin/users',     label:'Staff',     icon:<Users size={16}/> },
+  { to:'/admin',           label:'Dashboard', Icon: LayoutDashboard, exact:true },
+  { to:'/admin/adverts',   label:'Adverts',   Icon: Megaphone },
+  { to:'/admin/stations',  label:'Stations',  Icon: Radio },
+  { to:'/admin/users',     label:'Staff',     Icon: Users },
 ]
 
 export default function AdminLayout({ children }) {
@@ -25,13 +25,13 @@ export default function AdminLayout({ children }) {
           <img src="https://tfxpqxxzopsycpnmdyke.supabase.co/storage/v1/object/public/images/Logo%201.png" alt="Radio Nigeria" style={{ height:'52px', width:'auto', objectFit:'contain' }} />
         </div>
         <nav style={{ flex:1, padding:'12px 10px', display:'flex', flexDirection:'column', gap:'2px', overflowY:'auto' }}>
-          {LINKS.map(({ to, label, icon, exact }) => (
+          {LINKS.map(({ to, label, Icon, exact }) => (
             <NavLink key={to} to={to} end={exact} style={({ isActive }) => ({
               display:'flex', alignItems:'center', gap:'10px', padding:'10px 12px', borderRadius:'8px', fontSize:'13px', fontWeight:500,
               color: isActive ? 'var(--color-accent)' : 'var(--color-text-muted)',
               background: isActive ? 'rgba(240,165,0,0.08)' : 'transparent',
               transition:'all 0.15s',
-            }}>{icon}{label}</NavLink>
+            })}><Icon size={16}/>{label}</NavLink>
           ))}
         </nav>
         <div style={{ padding:'16px', borderTop:'1px solid var(--color-border)' }}>
@@ -61,12 +61,12 @@ export default function AdminLayout({ children }) {
               <button onClick={() => setMenuOpen(false)} style={{ background:'none', border:'none', color:'var(--color-text-muted)', fontSize:'20px', cursor:'pointer' }}>✕</button>
             </div>
             <nav style={{ flex:1, padding:'12px 10px', display:'flex', flexDirection:'column', gap:'4px' }}>
-              {LINKS.map(({ to, label, icon, exact }) => (
+              {LINKS.map(({ to, label, Icon, exact }) => (
                 <NavLink key={to} to={to} end={exact} onClick={() => setMenuOpen(false)} style={({ isActive }) => ({
                   display:'flex', alignItems:'center', gap:'12px', padding:'12px 14px', borderRadius:'8px', fontSize:'14px', fontWeight:500,
                   color: isActive ? 'var(--color-accent)' : 'var(--color-text-muted)',
                   background: isActive ? 'rgba(240,165,0,0.08)' : 'transparent',
-                }}>{icon}{label}</NavLink>
+                })}><Icon size={16}/>{label}</NavLink>
               ))}
             </nav>
             <div style={{ padding:'16px', borderTop:'1px solid var(--color-border)' }}>

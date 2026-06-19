@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import { useParams, Link } from 'react-router-dom'
+import { MapPin, Play, Pause, Radio as RadioIcon } from 'lucide-react'
 import { supabase } from '../../lib/supabase'
 import { usePlayer } from '../../context/PlayerContext'
 import { Skeleton } from '../../components/ui/Skeleton'
@@ -13,7 +14,7 @@ function AdvertCard({ ad }) {
   const href = normalizeUrl(ad.link_url)
   const inner = ad.image_url
     ? <img src={ad.image_url} alt={ad.title} style={{ width:'100%', height:'180px', objectFit:'cover', display:'block' }} />
-    : <div style={{ height:'180px', display:'flex', alignItems:'center', justifyContent:'center', background:'var(--color-surface-2)', fontSize:'13px', color:'var(--color-text-muted)' }}>{ad.title}</div>
+    : <div style={{ height:'180px', display:'flex', alignItems:'center', justifyContent:'center', background:'var(--color-surface-2)', fontSize:'17px', color:'var(--color-text-muted)' }}>{ad.title}</div>
   const cardStyle = { borderRadius:'14px', overflow:'hidden', border:'1px solid var(--color-border)', background:'var(--color-surface)', display:'block', textDecoration:'none', transition:'transform 0.2s' }
   if (href) {
     return (
@@ -53,17 +54,17 @@ export default function StationDetail() {
   }, [slug])
 
   if (loading) return <main style={{ paddingTop:'104px', maxWidth:'1280px', margin:'0 auto', padding:'100px 24px' }}><Skeleton height="60px" width="50%" style={{marginBottom:'16px'}}/><Skeleton height="20px" width="30%"/></main>
-  if (!station) return <main style={{ paddingTop:'104px', display:'flex', flexDirection:'column', alignItems:'center', justifyContent:'center', minHeight:'60vh', gap:'16px' }}><p style={{fontSize:'48px'}}>📻</p><h2 style={{fontFamily:'var(--font-display)',fontSize:'28px',color:'var(--color-text)'}}>Station not found</h2><Link to="/stations" style={{color:'var(--color-accent)',fontSize:'14px'}}>← All Stations</Link></main>
+  if (!station) return <main style={{ paddingTop:'104px', display:'flex', flexDirection:'column', alignItems:'center', justifyContent:'center', minHeight:'60vh', gap:'16px' }}><RadioIcon size={48} color="var(--color-text-dim)"/><h2 style={{fontFamily:'var(--font-display)',fontSize:'28px',color:'var(--color-text)'}}>Station not found</h2><Link to="/stations" style={{color:'var(--color-accent)',fontSize:'18px'}}>← All Stations</Link></main>
 
   const isActive  = activeStation?.id === station.id
   const isPlaying = isActive && playing
 
   return (
-    <main style={{ paddingTop:'104px' }}>
+    <main style={{ paddingTop:'140px' }}>
       {/* Hero */}
       <div style={{ background:`linear-gradient(135deg, ${station.color_hex}22 0%, rgba(0,0,0,0) 60%), var(--color-surface)`, borderBottom:'1px solid var(--color-border)', padding:'48px 24px 40px' }}>
         <div style={{ maxWidth:'1280px', margin:'0 auto' }}>
-          <Link to="/stations" style={{ fontSize:'12px', color:'var(--color-text-dim)', display:'inline-flex', alignItems:'center', gap:'6px', marginBottom:'24px' }}>← All Stations</Link>
+          <Link to="/stations" style={{ fontSize:'18px', color:'var(--color-text-dim)', display:'inline-flex', alignItems:'center', gap:'6px', marginBottom:'24px' }}>← All Stations</Link>
           <div style={{ display:'flex', alignItems:'center', gap:'20px', marginBottom:'16px' }}>
             <div style={{ width:'80px', height:'80px', borderRadius:'18px', background:`${station.color_hex}18`, border:`2px solid ${station.color_hex}44`, display:'flex', alignItems:'center', justifyContent:'center', overflow:'hidden', flexShrink:0 }}>
               {station.cover_image
@@ -73,21 +74,21 @@ export default function StationDetail() {
             </div>
             <div>
               <h1 style={{ fontFamily:'var(--font-display)', fontSize:'clamp(28px,4vw,48px)', fontWeight:900, color:'var(--color-text)', letterSpacing:'-0.04em' }}>{station.name}</h1>
-              <p style={{ fontSize:'14px', color:'var(--color-text-muted)', fontStyle:'italic' }}>"{station.tagline}"</p>
+              <p style={{ fontSize:'18px', color:'var(--color-text-muted)', fontStyle:'italic' }}>"{station.tagline}"</p>
             </div>
           </div>
           <div style={{ display:'flex', alignItems:'center', justifyContent:'space-between', flexWrap:'wrap', gap:'16px' }}>
-            <p style={{ fontSize:'13px', color:'var(--color-text-dim)' }}>📍 {station.location}</p>
+            <p style={{ fontSize:'17px', color:'var(--color-text-dim)', display:'flex', alignItems:'center', gap:'6px' }}><MapPin size={15}/>{station.location}</p>
             <button onClick={() => play(station)} disabled={!station.stream_url} style={{
               display:'flex', alignItems:'center', gap:'10px',
-              padding:'12px 24px', borderRadius:'12px', fontSize:'14px', fontWeight:700, cursor: station.stream_url?'pointer':'not-allowed',
+              padding:'12px 24px', borderRadius:'12px', fontSize:'18px', fontWeight:700, cursor: station.stream_url?'pointer':'not-allowed',
               background:isPlaying ? station.color_hex : `${station.color_hex}20`,
               color: isPlaying ? '#fff' : station.color_hex,
               border:`2px solid ${station.color_hex}55`,
               transition:'all 0.25s', opacity: station.stream_url ? 1 : 0.5,
               boxShadow: isPlaying ? `0 0 24px ${station.color_hex}44` : 'none',
             }}>
-              {isPlaying ? '❙❙ Pause Stream' : '▶ Listen Live'}
+              {isPlaying ? <><Pause size={16}/>Pause Stream</> : <><Play size={16}/>Listen Live</>}
               {isActive && <span style={{ width:'8px', height:'8px', borderRadius:'50%', background: isPlaying?'#4EFF8C':station.color_hex, animation:'pulse-live 1.4s infinite' }} />}
             </button>
           </div>
@@ -99,8 +100,8 @@ export default function StationDetail() {
         <div style={{ marginBottom:'40px' }}>
           <h2 style={{ fontFamily:'var(--font-display)', fontSize:'22px', fontWeight:700, color:'var(--color-text)', marginBottom:'12px', letterSpacing:'-0.03em' }}>About {station.name}</h2>
           {station.description
-            ? <p style={{ color:'var(--color-text-muted)', lineHeight:1.75, fontSize:'15px' }}>{station.description}</p>
-            : <p style={{ color:'var(--color-text-dim)', lineHeight:1.75, fontSize:'15px', fontStyle:'italic' }}>{station.name} is one of the Radio Nigeria network stations serving listeners across the region with news, music, and community programming around the clock.</p>
+            ? <p style={{ color:'var(--color-text-muted)', lineHeight:1.75, fontSize:'17px' }}>{station.description}</p>
+            : <p style={{ color:'var(--color-text-dim)', lineHeight:1.75, fontSize:'17px', fontStyle:'italic' }}>{station.name} is one of the Radio Nigeria network stations serving listeners across the region with news, music, and community programming around the clock.</p>
           }
         </div>
 
@@ -110,7 +111,7 @@ export default function StationDetail() {
             <h2 style={{ fontFamily:'var(--font-display)', fontSize:'22px', fontWeight:700, color:'var(--color-text)', marginBottom:'16px', letterSpacing:'-0.03em' }}>Follow {station.name}</h2>
             <div style={{ display:'flex', flexWrap:'wrap', gap:'12px' }}>
               {station.social_facebook && (
-                <a href={station.social_facebook} target="_blank" rel="noopener noreferrer" style={{ display:'flex', alignItems:'center', gap:'10px', padding:'10px 18px', borderRadius:'10px', background:'var(--color-surface)', border:'1px solid var(--color-border)', color:'var(--color-text-muted)', fontSize:'13px', fontWeight:500, transition:'all 0.2s', textDecoration:'none' }}
+                <a href={station.social_facebook} target="_blank" rel="noopener noreferrer" style={{ display:'flex', alignItems:'center', gap:'10px', padding:'10px 18px', borderRadius:'10px', background:'var(--color-surface)', border:'1px solid var(--color-border)', color:'var(--color-text-muted)', fontSize:'17px', fontWeight:500, transition:'all 0.2s', textDecoration:'none' }}
                   onMouseEnter={e=>{e.currentTarget.style.color='#1877F2';e.currentTarget.style.borderColor='#1877F244';e.currentTarget.style.background='#1877F211';e.currentTarget.style.transform='translateY(-2px)'}}
                   onMouseLeave={e=>{e.currentTarget.style.color='var(--color-text-muted)';e.currentTarget.style.borderColor='var(--color-border)';e.currentTarget.style.background='var(--color-surface)';e.currentTarget.style.transform='none'}}
                 >
@@ -119,7 +120,7 @@ export default function StationDetail() {
                 </a>
               )}
               {station.social_youtube && (
-                <a href={station.social_youtube} target="_blank" rel="noopener noreferrer" style={{ display:'flex', alignItems:'center', gap:'10px', padding:'10px 18px', borderRadius:'10px', background:'var(--color-surface)', border:'1px solid var(--color-border)', color:'var(--color-text-muted)', fontSize:'13px', fontWeight:500, transition:'all 0.2s', textDecoration:'none' }}
+                <a href={station.social_youtube} target="_blank" rel="noopener noreferrer" style={{ display:'flex', alignItems:'center', gap:'10px', padding:'10px 18px', borderRadius:'10px', background:'var(--color-surface)', border:'1px solid var(--color-border)', color:'var(--color-text-muted)', fontSize:'17px', fontWeight:500, transition:'all 0.2s', textDecoration:'none' }}
                   onMouseEnter={e=>{e.currentTarget.style.color='#FF0000';e.currentTarget.style.borderColor='#FF000044';e.currentTarget.style.background='#FF000011';e.currentTarget.style.transform='translateY(-2px)'}}
                   onMouseLeave={e=>{e.currentTarget.style.color='var(--color-text-muted)';e.currentTarget.style.borderColor='var(--color-border)';e.currentTarget.style.background='var(--color-surface)';e.currentTarget.style.transform='none'}}
                 >
