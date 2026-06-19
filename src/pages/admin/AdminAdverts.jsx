@@ -102,7 +102,6 @@ export default function AdminAdverts() {
           <button onClick={openNew} style={{ padding:'10px 20px', borderRadius:'10px', fontSize:'13px', fontWeight:600, cursor:'pointer', background:'var(--color-brand)', color:'#fff', border:'none' }}>+ New Advert</button>
         </div>
 
-        {/* Form */}
         {showForm && (
           <div style={{ background:'var(--color-surface)', borderRadius:'14px', border:'1px solid var(--color-border-light)', padding:'24px', marginBottom:'28px' }}>
             <h2 style={{ fontFamily:'var(--font-display)', fontSize:'17px', fontWeight:700, color:'var(--color-text)', marginBottom:'20px' }}>{editing ? 'Edit Advert' : 'New Advert'}</h2>
@@ -164,7 +163,6 @@ export default function AdminAdverts() {
           </div>
         )}
 
-        {/* List */}
         {adverts.length === 0 && !showForm
           ? <div style={{ padding:'48px', textAlign:'center', background:'var(--color-surface)', borderRadius:'14px', border:'1px solid var(--color-border)' }}>
               <p style={{ fontSize:'32px', marginBottom:'10px', opacity:0.3 }}>📢</p>

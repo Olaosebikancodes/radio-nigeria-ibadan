@@ -57,7 +57,6 @@ export default function LatestNews() {
       .then(({ data }) => { setArticles(data || []); setLoading(false) })
   }, [])
 
-  // Auto-advance one card at a time, loop back (desktop only)
   useEffect(() => {
     if (articles.length <= 4 || isMobile) return
     const t = setInterval(() => {
@@ -78,7 +77,6 @@ export default function LatestNews() {
             <h2 style={{ fontFamily: 'var(--font-display)', fontSize: 'clamp(24px,3.5vw,36px)', fontWeight: 900, color: 'var(--color-text)', letterSpacing: '-0.04em' }}>News & Updates</h2>
           </div>
           <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-            {/* Manual nav dots */}
             {articles.length > 4 && (
               <div style={{ display: 'flex', gap: '6px' }}>
                 {Array.from({ length: Math.max(1, articles.length - 3) }).map((_, i) => (
@@ -93,7 +91,6 @@ export default function LatestNews() {
               </div>
         </div>
 
-        {/* Carousel / grid */}
         {loading ? (
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(220px, 1fr))', gap: '16px' }}>
             {Array(4).fill(0).map((_, i) => <ArticleCardSkeleton key={i} />)}

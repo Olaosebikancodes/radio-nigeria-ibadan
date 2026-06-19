@@ -41,7 +41,6 @@ export default function TodaysSchedule() {
         </div>
       </div>
 
-      {/* Station filter */}
       <div style={{ display:'flex', gap:'8px', flexWrap:'wrap', marginBottom:'24px' }}>
         {[{ id:'all', name:'All Stations' }, ...stations].map(s => (
           <button key={s.id} onClick={() => setStation(s.id)} style={{
@@ -54,7 +53,6 @@ export default function TodaysSchedule() {
         ))}
       </div>
 
-      {/* List */}
       <div style={{ display:'flex', flexDirection:'column', gap:'8px' }}>
         {loading
           ? Array(5).fill(0).map((_,i) => <Skeleton key={i} height="64px" radius="10px" />)
@@ -70,19 +68,16 @@ export default function TodaysSchedule() {
                     border:`1px solid ${live ? 'rgba(0,92,46,0.35)' : 'var(--color-border)'}`,
                     transition:'all 0.2s',
                   }}>
-                    {/* Time */}
                     <div style={{ minWidth:'100px' }}>
                       <p style={{ fontSize:'12px', fontWeight:600, color: live ? 'var(--color-accent)' : 'var(--color-text-muted)' }}>
                         {formatTime(p.start_time)} — {formatTime(p.end_time)}
                       </p>
                     </div>
 
-                    {/* Station dot */}
                     {p.stations?.color_hex && (
                       <div style={{ width:'8px', height:'8px', borderRadius:'50%', background:p.stations.color_hex, flexShrink:0 }} />
                     )}
 
-                    {/* Programme info */}
                     <div style={{ flex:1, minWidth:0 }}>
                       <p style={{ fontWeight:600, fontSize:'14px', color:'var(--color-text)', overflow:'hidden', textOverflow:'ellipsis', whiteSpace:'nowrap' }}>{p.title}</p>
                       <p style={{ fontSize:'12px', color:'var(--color-text-dim)' }}>
@@ -90,7 +85,6 @@ export default function TodaysSchedule() {
                       </p>
                     </div>
 
-                    {/* Station name */}
                     <p style={{ fontSize:'11px', color:'var(--color-text-dim)', flexShrink:0 }}>{p.stations?.name}</p>
 
                     {live && <LiveBadge />}

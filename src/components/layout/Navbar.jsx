@@ -111,7 +111,6 @@ export default function Navbar() {
             gap: "12px",
           }}
         >
-          {/* Logo */}
           <Link
             to="/"
             style={{
@@ -134,7 +133,6 @@ export default function Navbar() {
             />
           </Link>
 
-          {/* Desktop nav */}
           <nav
             style={{ display: "flex", alignItems: "center", gap: "2px" }}
             className="desktop-nav"
@@ -162,7 +160,6 @@ export default function Navbar() {
             ))}
           </nav>
 
-          {/* Right */}
           <div
             style={{
               display: "flex",
@@ -171,7 +168,6 @@ export default function Navbar() {
               flexShrink: 0,
             }}
           >
-            {/* Social icons — desktop */}
             <div
               style={{ display: "flex", gap: "6px" }}
               className="social-icons"
@@ -216,7 +212,6 @@ export default function Navbar() {
               </a>
             </div>
 
-            {/* Mini player — hidden on mobile, shown inside hamburger menu */}
             {activeStation && (
               <button
                 onClick={toggle}
@@ -264,7 +259,6 @@ export default function Navbar() {
               </button>
             )}
 
-            {/* Hamburger */}
             <button
               onClick={() => setOpen((o) => !o)}
               className="hamburger"
@@ -311,7 +305,6 @@ export default function Navbar() {
         </div>
       </div>
 
-      {/* Mobile menu */}
       {open && (
         <div
           style={{
@@ -328,7 +321,6 @@ export default function Navbar() {
             gap: "2px",
           }}
         >
-          {/* Mini player — only shown here on mobile when a stream is active */}
           {activeStation && (
             <button
               onClick={toggle}
@@ -411,7 +403,6 @@ export default function Navbar() {
               {label}
             </NavLink>
           ))}
-          {/* Mobile social */}
           <div
             style={{
               display: "flex",
