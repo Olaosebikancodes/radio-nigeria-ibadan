@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { supabase } from '../../lib/supabase'
 import toast from 'react-hot-toast'
+import { MapPin, Phone, Mail, Radio } from 'lucide-react'
 
 export default function Contact() {
   const [form, setForm] = useState({ name:'', email:'', subject:'', message:'' })
@@ -74,13 +75,13 @@ export default function Contact() {
           <h2 style={{ fontFamily:'var(--font-display)', fontSize:'22px', fontWeight:700, color:'var(--color-text)', letterSpacing:'-0.03em' }}>Station Information</h2>
 
           {[
-            { icon:'📍', label:'Address', value:'Broadcasting House, Oba-Adebimpe Road, Dugbe, Ibadan, Oyo State, Nigeria' },
-            { icon:'📞', label:'Phone', value:'+234 (0)2 241 2345' },
-            { icon:'📧', label:'Email', value:'info@radionigeriaibadan.gov.ng' },
-            { icon:'📻', label:'Headquarters', value:'Federal Radio Corporation of Nigeria, Abuja' },
+            { icon:<MapPin size={20}/>,  label:'Address',       value:'Broadcasting House, Oba-Adebimpe Road, Dugbe, Ibadan, Oyo State, Nigeria' },
+            { icon:<Phone size={20}/>,   label:'Phone',         value:'+234 (0)2 241 2345' },
+            { icon:<Mail size={20}/>,    label:'Email',         value:'info@radionigeriaibadan.gov.ng' },
+            { icon:<Radio size={20}/>,   label:'Headquarters',  value:'Federal Radio Corporation of Nigeria, Abuja' },
           ].map(({ icon, label, value }) => (
             <div key={label} style={{ display:'flex', gap:'16px', padding:'20px', background:'var(--color-surface)', borderRadius:'14px', border:'1px solid var(--color-border)' }}>
-              <span style={{ fontSize:'22px', flexShrink:0 }}>{icon}</span>
+              <div style={{ color:'var(--color-brand-light)', flexShrink:0, marginTop:'2px' }}>{icon}</div>
               <div>
                 <p style={{ fontSize:'11px', fontWeight:700, color:'var(--color-text-dim)', textTransform:'uppercase', letterSpacing:'0.08em', marginBottom:'4px' }}>{label}</p>
                 <p style={{ fontSize:'14px', color:'var(--color-text-muted)', lineHeight:1.5 }}>{value}</p>

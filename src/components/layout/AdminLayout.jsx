@@ -1,12 +1,13 @@
 import { useState } from 'react'
 import { NavLink, useNavigate } from 'react-router-dom'
 import { useAuth } from '../../context/AuthContext'
+import { LayoutDashboard, Megaphone, Radio, Users } from 'lucide-react'
 
 const LINKS = [
-  { to:'/admin',           label:'Dashboard', icon:'📊', exact:true },
-  { to:'/admin/adverts',   label:'Adverts',   icon:'📢' },
-  { to:'/admin/stations',  label:'Stations',  icon:'📻' },
-  { to:'/admin/users',     label:'Staff',     icon:'👥' },
+  { to:'/admin',           label:'Dashboard', icon:<LayoutDashboard size={16}/>, exact:true },
+  { to:'/admin/adverts',   label:'Adverts',   icon:<Megaphone size={16}/> },
+  { to:'/admin/stations',  label:'Stations',  icon:<Radio size={16}/> },
+  { to:'/admin/users',     label:'Staff',     icon:<Users size={16}/> },
 ]
 
 export default function AdminLayout({ children }) {
@@ -30,7 +31,7 @@ export default function AdminLayout({ children }) {
               color: isActive ? 'var(--color-accent)' : 'var(--color-text-muted)',
               background: isActive ? 'rgba(240,165,0,0.08)' : 'transparent',
               transition:'all 0.15s',
-            })}><span style={{ fontSize:'16px' }}>{icon}</span>{label}</NavLink>
+            }}>{icon}{label}</NavLink>
           ))}
         </nav>
         <div style={{ padding:'16px', borderTop:'1px solid var(--color-border)' }}>
@@ -65,7 +66,7 @@ export default function AdminLayout({ children }) {
                   display:'flex', alignItems:'center', gap:'12px', padding:'12px 14px', borderRadius:'8px', fontSize:'14px', fontWeight:500,
                   color: isActive ? 'var(--color-accent)' : 'var(--color-text-muted)',
                   background: isActive ? 'rgba(240,165,0,0.08)' : 'transparent',
-                })}><span style={{ fontSize:'18px' }}>{icon}</span>{label}</NavLink>
+                }}>{icon}{label}</NavLink>
               ))}
             </nav>
             <div style={{ padding:'16px', borderTop:'1px solid var(--color-border)' }}>

@@ -1,6 +1,6 @@
 export default function Hero() {
   return (
-    <section style={{ paddingTop: '104px' }}>
+    <section style={{ paddingTop: '160px', paddingBottom: '32px'}}>
       <img
         src="https://tfxpqxxzopsycpnmdyke.supabase.co/storage/v1/object/public/images/izs-ts1552243779(1).png"
         alt="Radio Nigeria Ibadan Zonal Station"

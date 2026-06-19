@@ -1,3 +1,5 @@
+import { Mic, Newspaper, Wrench, Monitor, TrendingUp, FolderOpen, Wallet, ClipboardList, Package } from 'lucide-react'
+
 export default function About() {
   const timeline = [
     { year:'1933', event:'Colonial government introduces Radio Distribution System in Nigeria via Dept. of Post & Telegraph.' },
@@ -12,15 +14,15 @@ export default function About() {
   ]
 
   const departments = [
-    { name:'Programmes', icon:'🎙️', desc:'Develops, produces, and schedules all on-air content including music, talk shows, dramas, documentaries, and community programming.' },
-    { name:'News & Current Affairs', icon:'📰', desc:'Gathers, reports, edits, and broadcasts news bulletins in English and Yoruba. Covers local, national, and international stories.' },
-    { name:'Engineering Services', icon:'⚙️', desc:'Maintains all broadcast equipment — transmitters, studio consoles, recording gear, and transmission infrastructure.' },
-    { name:'ICT', icon:'💻', desc:'Manages digital infrastructure including servers, computers, digital audio workstations, streaming, and internal networks.' },
-    { name:'Marketing', icon:'📊', desc:'Handles advertising sales, sponsorships, commercial spots, and all revenue generation for the station.' },
-    { name:'Administration', icon:'🗂️', desc:'Manages HR, correspondence, office operations, staff welfare, and general management functions.' },
-    { name:'Finance & Accounts', icon:'💰', desc:'Handles budgeting, payroll, expenditure tracking, and financial reporting to FRCN headquarters.' },
-    { name:'Audit', icon:'🔍', desc:'Internal oversight of financial transactions and compliance with regulatory and government financial standards.' },
-    { name:'Procurement', icon:'📦', desc:'Manages purchasing of equipment, supplies, and services following due government process.' },
+    { name:'Programmes',          icon:<Mic size={22}/>,         desc:'Develops, produces, and schedules all on-air content including music, talk shows, dramas, documentaries, and community programming.' },
+    { name:'News & Current Affairs', icon:<Newspaper size={22}/>,  desc:'Gathers, reports, edits, and broadcasts news bulletins in English and Yoruba. Covers local, national, and international stories.' },
+    { name:'Engineering Services',icon:<Wrench size={22}/>,      desc:'Maintains all broadcast equipment — transmitters, studio consoles, recording gear, and transmission infrastructure.' },
+    { name:'ICT',                 icon:<Monitor size={22}/>,     desc:'Manages digital infrastructure including servers, computers, digital audio workstations, streaming, and internal networks.' },
+    { name:'Marketing',           icon:<TrendingUp size={22}/>,  desc:'Handles advertising sales, sponsorships, commercial spots, and all revenue generation for the station.' },
+    { name:'Administration',      icon:<FolderOpen size={22}/>,  desc:'Manages HR, correspondence, office operations, staff welfare, and general management functions.' },
+    { name:'Finance & Accounts',  icon:<Wallet size={22}/>,      desc:'Handles budgeting, payroll, expenditure tracking, and financial reporting to FRCN headquarters.' },
+    { name:'Audit',               icon:<ClipboardList size={22}/>, desc:'Internal oversight of financial transactions and compliance with regulatory and government financial standards.' },
+    { name:'Procurement',         icon:<Package size={22}/>,     desc:'Manages purchasing of equipment, supplies, and services following due government process.' },
   ]
 
   return (
@@ -82,7 +84,7 @@ export default function About() {
               onMouseEnter={e=>e.currentTarget.style.borderColor='var(--color-border-light)'}
               onMouseLeave={e=>e.currentTarget.style.borderColor='var(--color-border)'}
             >
-              <span style={{ fontSize:'28px', display:'block', marginBottom:'14px' }}>{icon}</span>
+              <div style={{ color:'var(--color-brand-light)', marginBottom:'14px' }}>{icon}</div>
               <h3 style={{ fontFamily:'var(--font-display)', fontWeight:700, fontSize:'16px', color:'var(--color-text)', marginBottom:'8px', letterSpacing:'-0.02em' }}>{name}</h3>
               <p style={{ fontSize:'13px', color:'var(--color-text-muted)', lineHeight:1.65 }}>{desc}</p>
             </div>

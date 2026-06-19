@@ -22,7 +22,6 @@ const YoutubeIcon = () => (
   </svg>
 );
 
-
 function WaveIcon({ active }) {
   return (
     <span
@@ -70,16 +69,10 @@ const socialStyle = {
 };
 
 export default function Navbar() {
-  const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
   const { activeStation, playing, toggle } = usePlayer();
   const location = useLocation();
 
-  useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 40);
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
   useEffect(() => setOpen(false), [location]);
 
   return (
@@ -90,12 +83,8 @@ export default function Navbar() {
         left: 0,
         right: 0,
         zIndex: 100,
-        transition: "background 0.35s, border-color 0.35s",
-        background: scrolled ? "rgba(8,14,10,0.92)" : "transparent",
-        backdropFilter: scrolled ? "blur(16px)" : "none",
-        borderBottom: scrolled
-          ? "1px solid var(--color-border)"
-          : "1px solid transparent",
+        background: "var(--color-surface)",
+        borderBottom: "1px solid var(--color-border)",
         overflow: "visible",
       }}
     >
@@ -107,7 +96,7 @@ export default function Navbar() {
             display: "flex",
             alignItems: "center",
             justifyContent: "space-between",
-            height: "72px",
+            height: "120px",
             gap: "12px",
           }}
         >
@@ -121,14 +110,13 @@ export default function Navbar() {
             }}
           >
             <img
-              src="https://tfxpqxxzopsycpnmdyke.supabase.co/storage/v1/object/public/images/Logo%201.png"
+              src="https://tfxpqxxzopsycpnmdyke.supabase.co/storage/v1/object/public/images/Untitled%20design(8).png"
               alt="Radio Nigeria Ibadan"
               style={{
-                height: "88px",
+                height: "120px",
                 width: "auto",
                 objectFit: "contain",
-                filter:
-                  "drop-shadow(0 0 8px rgba(0,92,46,0.4)) brightness(1.15)",
+                filter: "brightness(1.15)",
               }}
             />
           </Link>
@@ -191,7 +179,7 @@ export default function Navbar() {
               >
                 <FacebookIcon />
               </a>
-<a
+              <a
                 href={SOCIAL_LINKS.youtube}
                 target="_blank"
                 rel="noopener noreferrer"
@@ -312,8 +300,7 @@ export default function Navbar() {
             top: "104px",
             left: 0,
             right: 0,
-            background: "rgba(8,14,10,0.97)",
-            backdropFilter: "blur(20px)",
+            background: "rgba(255,255,255,0.82)",
             borderBottom: "1px solid var(--color-border)",
             padding: "12px 20px 20px",
             display: "flex",
