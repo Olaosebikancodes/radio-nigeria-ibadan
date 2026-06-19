@@ -66,7 +66,5 @@ export const STATIONS_SEED = [
 
 export const SOCIAL_LINKS = {
   facebook:  'https://facebook.com/radionigeriaibadan',
-  twitter:   'https://twitter.com/radionigeriaibadan',
-  instagram: 'https://instagram.com/radionigeriaibadan',
-  youtube:   'https://youtube.com/@radionigeriaibadan',
+  youtube:   'https://www.youtube.com/@pfm935ibadan',
 }
