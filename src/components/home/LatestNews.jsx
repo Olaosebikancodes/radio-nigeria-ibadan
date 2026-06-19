@@ -90,8 +90,7 @@ export default function LatestNews() {
                 ))}
               </div>
             )}
-            <Link to="/news" style={{ fontSize: '12px', color: 'var(--color-accent)', fontWeight: 600 }}>All news →</Link>
-          </div>
+              </div>
         </div>
 
         {/* Carousel / grid */}

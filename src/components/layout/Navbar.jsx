@@ -4,14 +4,10 @@ import { usePlayer } from '../../context/PlayerContext'
 import { SOCIAL_LINKS } from '../../lib/utils'
 
 const NAV = [
-  { label:'Home',       to:'/' },
-  { label:'Stations',   to:'/stations' },
-  { label:'Live',       to:'/live' },
-  { label:'News',       to:'/news' },
-  { label:'Programmes', to:'/programmes' },
-  { label:'Audio',      to:'/audio' },
-  { label:'About',      to:'/about' },
-  { label:'Contact',    to:'/contact' },
+  { label:'Home',     to:'/' },
+  { label:'Stations', to:'/stations' },
+  { label:'About',    to:'/about' },
+  { label:'Contact',  to:'/contact' },
 ]
 
 const FacebookIcon = () => (
@@ -103,14 +99,6 @@ export default function Navbar() {
                 <span style={{ color:'var(--color-text-muted)', fontSize:'10px' }}>{playing ? '❙❙' : '▶'}</span>
               </button>
             )}
-
-            <Link to="/live" style={{ display:'flex', alignItems:'center', gap:'6px', padding:'7px 14px', borderRadius:'8px', fontSize:'12px', fontWeight:600, background:'var(--color-brand)', color:'#fff', transition:'background 0.2s', whiteSpace:'nowrap' }}
-              onMouseEnter={e=>e.currentTarget.style.background='var(--color-brand-light)'}
-              onMouseLeave={e=>e.currentTarget.style.background='var(--color-brand)'}
-            >
-              <span style={{ width:'5px', height:'5px', borderRadius:'50%', background:'#4EFF8C', animation:'pulse-live 1.4s infinite' }} />
-              Live
-            </Link>
 
             {/* Hamburger */}
             <button onClick={() => setOpen(o=>!o)} className="hamburger" style={{ display:'none', flexDirection:'column', gap:'5px', padding:'6px', background:'none', border:'none', cursor:'pointer', position:'relative' }}>

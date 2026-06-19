@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react'
-import { Link } from 'react-router-dom'
 import { supabase } from '../../lib/supabase'
 import { todayName, formatTime, isOnAir } from '../../lib/utils'
 import { LiveBadge } from '../ui/Badge'
@@ -40,7 +39,6 @@ export default function TodaysSchedule() {
           </p>
           <h2 style={{ fontFamily:'var(--font-display)', fontSize:'clamp(28px,4vw,40px)', fontWeight:900, color:'var(--color-text)', letterSpacing:'-0.04em' }}>Today on Air</h2>
         </div>
-        <Link to="/programmes" style={{ fontSize:'13px', color:'var(--color-accent)', fontWeight:600 }}>Full schedule →</Link>
       </div>
 
       {/* Station filter */}

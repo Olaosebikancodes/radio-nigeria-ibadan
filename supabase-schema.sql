@@ -15,6 +15,10 @@ CREATE TABLE IF NOT EXISTS stations (
   stream_url  TEXT,
   cover_image TEXT,
   color_hex   TEXT DEFAULT '#005C2E',
+  social_facebook  TEXT,
+  social_twitter   TEXT,
+  social_instagram TEXT,
+  social_youtube   TEXT,
   active      BOOLEAN DEFAULT true,
   sort_order  INTEGER DEFAULT 0,
   created_at  TIMESTAMPTZ DEFAULT now()
@@ -99,6 +103,21 @@ ALTER TABLE audio_content    ENABLE ROW LEVEL SECURITY;
 ALTER TABLE staff            ENABLE ROW LEVEL SECURITY;
 ALTER TABLE contact_messages ENABLE ROW LEVEL SECURITY;
 
+-- Drop existing policies before recreating (safe to re-run)
+DROP POLICY IF EXISTS "Public insert contact"         ON contact_messages;
+DROP POLICY IF EXISTS "Staff read contact"            ON contact_messages;
+DROP POLICY IF EXISTS "Staff manage contact"          ON contact_messages;
+DROP POLICY IF EXISTS "Public read stations"          ON stations;
+DROP POLICY IF EXISTS "Public read articles"          ON articles;
+DROP POLICY IF EXISTS "Public read programmes"        ON programmes;
+DROP POLICY IF EXISTS "Public read audio"             ON audio_content;
+DROP POLICY IF EXISTS "Staff full access articles"    ON articles;
+DROP POLICY IF EXISTS "Staff full access programmes"  ON programmes;
+DROP POLICY IF EXISTS "Staff full access audio"       ON audio_content;
+DROP POLICY IF EXISTS "Staff full access stations"    ON stations;
+DROP POLICY IF EXISTS "Staff read staff"              ON staff;
+DROP POLICY IF EXISTS "Staff manage staff"            ON staff;
+
 -- Anyone can submit a contact message
 CREATE POLICY "Public insert contact" ON contact_messages FOR INSERT WITH CHECK (true);
 -- Only authenticated staff can read messages
@@ -153,7 +172,7 @@ INSERT INTO stations (name, slug, frequency, tagline, location, color_hex, strea
   ('Paramount 94.5 FM', 'paramount-94-5', '94.5',  'Our integrity is paramount','Abeokuta, Ogun State',   '#5A3B9A', 'https://centova57.instainternet.com/proxy/paramount?mp=/stream', 'https://tfxpqxxzopsycpnmdyke.supabase.co/storage/v1/object/public/images/Paramount%20FM.png', 3),
   ('Positive 102.5 FM', 'positive-102-5', '102.5', 'The Positive Station',      'Akure, Ondo State',      '#C0392B', 'https://centova57.instainternet.com/proxy/positive?mp=/stream',  'https://tfxpqxxzopsycpnmdyke.supabase.co/storage/v1/object/public/images/Positive%20FM.png',  4),
   ('Progress 100.5 FM', 'progress-100-5', '100.5', 'Your Partner In Progress',  'Ado Ekiti, Ekiti State', '#8B2020', 'https://centova57.instainternet.com/proxy/progress?mp=/stream',  'https://tfxpqxxzopsycpnmdyke.supabase.co/storage/v1/object/public/images/Progress%20FM.png',  5),
-  ('Gold 95.5 FM',      'gold-95-5',      '95.5',  'The Jewel of Osun State',   'Ilesha, Osun State',     '#B8860B', 'https://centova57.instainternet.com/proxy/gold?mp=/stream',      'https://tfxpqxxzopsycpnmdyke.supabase.co/storage/v1/object/public/images/Gold%20FM.jpg.jpeg', 6),
+  ('Gold 95.5 FM',      'gold-95-5',      '95.5',  'The Jewel of Osun State',   'Ilesha, Osun State',     '#B8860B', 'https://centova57.instainternet.com/proxy/gold?mp=/stream',      'https://tfxpqxxzopsycpnmdyke.supabase.co/storage/v1/object/public/images/Gold_FM.jpg-removebg-preview.png', 6),
   ('Ogo-Ilu 89.3 FM',   'ogo-ilu-89-3',   '89.3',  'The society''s pride',      'Oko, Anambra State',     '#2D7A3A', 'https://centova57.instainternet.com/proxy/ogoilu?mp=/stream',    'https://tfxpqxxzopsycpnmdyke.supabase.co/storage/v1/object/public/images/Ogo-Ilu%20FM.png',   7),
   ('Asabari 88.3 FM',   'asabari-88-3',   '88.3',  'Ti wan tiwa',               'Southwest Zone',         '#6B4A9A', 'https://centova57.instainternet.com/proxy/asabari?mp=/stream',   'https://tfxpqxxzopsycpnmdyke.supabase.co/storage/v1/object/public/images/Asabari%20FM.jpeg',  8)
 ON CONFLICT (slug) DO UPDATE SET
@@ -168,3 +187,13 @@ ON CONFLICT (slug) DO UPDATE SET
 
 -- Remove old stations that no longer exist
 DELETE FROM stations WHERE slug IN ('progress-105-5', 'choice-95-9');
+
+-- ══════════════════════════════════════════════
+-- Migration: Add social media columns to stations
+-- Run this in Supabase SQL Editor if upgrading an existing database
+-- ══════════════════════════════════════════════
+ALTER TABLE stations
+  ADD COLUMN IF NOT EXISTS social_facebook  TEXT,
+  ADD COLUMN IF NOT EXISTS social_twitter   TEXT,
+  ADD COLUMN IF NOT EXISTS social_instagram TEXT,
+  ADD COLUMN IF NOT EXISTS social_youtube   TEXT;

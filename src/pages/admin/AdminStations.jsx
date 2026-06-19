@@ -17,7 +17,7 @@ export default function AdminStations() {
   }
   useEffect(() => { fetchAll() }, [])
 
-  const startEdit = (s) => { setEditing(s.id); setForm({ name:s.name, frequency:s.frequency||'', tagline:s.tagline||'', description:s.description||'', location:s.location||'', stream_url:s.stream_url||'', color_hex:s.color_hex||'#005C2E' }) }
+  const startEdit = (s) => { setEditing(s.id); setForm({ name:s.name, frequency:s.frequency||'', tagline:s.tagline||'', description:s.description||'', location:s.location||'', stream_url:s.stream_url||'', color_hex:s.color_hex||'#005C2E', social_facebook:s.social_facebook||'', social_twitter:s.social_twitter||'', social_instagram:s.social_instagram||'', social_youtube:s.social_youtube||'' }) }
 
   const save = async () => {
     setSaving(true)
@@ -86,6 +86,29 @@ export default function AdminStations() {
                       <div style={{ display:'flex', alignItems:'center', gap:'10px' }}>
                         <input type="color" value={form.color_hex||'#005C2E'} onChange={e=>setForm(f=>({...f,color_hex:e.target.value}))} style={{ width:'40px', height:'36px', borderRadius:'6px', border:'1px solid var(--color-border)', cursor:'pointer', background:'none', padding:'2px' }} />
                         <input value={form.color_hex||''} onChange={e=>setForm(f=>({...f,color_hex:e.target.value}))} style={{ ...inputStyle, flex:1 }} placeholder="#005C2E" />
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Social media */}
+                  <div style={{ borderTop:'1px solid var(--color-border)', paddingTop:'14px' }}>
+                    <p style={{ fontSize:'12px', fontWeight:700, color:'var(--color-text-dim)', textTransform:'uppercase', letterSpacing:'0.08em', marginBottom:'12px' }}>Social Media Handles</p>
+                    <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:'14px' }}>
+                      <div>
+                        <label style={{ fontSize:'12px', fontWeight:600, color:'var(--color-text-muted)', display:'block', marginBottom:'6px' }}>Facebook</label>
+                        <input value={form.social_facebook||''} onChange={e=>setForm(f=>({...f,social_facebook:e.target.value}))} style={inputStyle} placeholder="https://facebook.com/stationname" />
+                      </div>
+                      <div>
+                        <label style={{ fontSize:'12px', fontWeight:600, color:'var(--color-text-muted)', display:'block', marginBottom:'6px' }}>X / Twitter</label>
+                        <input value={form.social_twitter||''} onChange={e=>setForm(f=>({...f,social_twitter:e.target.value}))} style={inputStyle} placeholder="https://x.com/stationname" />
+                      </div>
+                      <div>
+                        <label style={{ fontSize:'12px', fontWeight:600, color:'var(--color-text-muted)', display:'block', marginBottom:'6px' }}>Instagram</label>
+                        <input value={form.social_instagram||''} onChange={e=>setForm(f=>({...f,social_instagram:e.target.value}))} style={inputStyle} placeholder="https://instagram.com/stationname" />
+                      </div>
+                      <div>
+                        <label style={{ fontSize:'12px', fontWeight:600, color:'var(--color-text-muted)', display:'block', marginBottom:'6px' }}>YouTube</label>
+                        <input value={form.social_youtube||''} onChange={e=>setForm(f=>({...f,social_youtube:e.target.value}))} style={inputStyle} placeholder="https://youtube.com/@stationname" />
                       </div>
                     </div>
                   </div>
