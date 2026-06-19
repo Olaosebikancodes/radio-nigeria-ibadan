@@ -16,7 +16,7 @@ export default function Stations() {
   }, [])
 
   return (
-    <main style={{ paddingTop:'68px' }}>
+    <main style={{ paddingTop:'104px' }}>
       <div style={{ background:`linear-gradient(to bottom, rgba(0,92,46,0.12), transparent)`, borderBottom:'1px solid var(--color-border)', padding:'60px 24px 48px' }}>
         <div style={{ maxWidth:'1280px', margin:'0 auto' }}>
           <p style={{ fontSize:'11px', fontWeight:600, color:'var(--color-brand-light)', textTransform:'uppercase', letterSpacing:'0.1em', marginBottom:'10px' }}>FRCN South West Zone</p>
@@ -27,8 +27,8 @@ export default function Stations() {
 
       <div style={{ maxWidth:'1280px', margin:'0 auto', padding:'48px 24px 80px' }}>
         {loading
-          ? <div style={{ display:'grid', gridTemplateColumns:'repeat(auto-fill,minmax(300px,1fr))', gap:'20px' }}>{Array(7).fill(0).map((_,i)=><StationCardSkeleton key={i}/>)}</div>
-          : <div style={{ display:'grid', gridTemplateColumns:'repeat(auto-fill,minmax(300px,1fr))', gap:'20px' }}>
+          ? <div style={{ display:'grid', gridTemplateColumns:'repeat(4,1fr)', gap:'20px' }} className="stations-grid">{Array(7).fill(0).map((_,i)=><StationCardSkeleton key={i}/>)}</div>
+          : <div style={{ display:'grid', gridTemplateColumns:'repeat(4,1fr)', gap:'20px' }} className="stations-grid">
               {stations.map(s => {
                 const isActive = activeStation?.id===s.id || activeStation?.slug===s.slug
                 const isPlaying = isActive && playing
@@ -56,8 +56,6 @@ export default function Stations() {
                     <p style={{ fontSize:'13px', color:'var(--color-text-muted)', marginBottom:'4px', fontStyle:'italic' }}>"{s.tagline}"</p>
                     <p style={{ fontSize:'12px', color:'var(--color-text-dim)', marginBottom:'20px' }}>📍 {s.location}</p>
 
-                    {s.description && <p style={{ fontSize:'13px', color:'var(--color-text-muted)', lineHeight:1.65, marginBottom:'20px' }}>{s.description}</p>}
-
                     <div style={{ display:'flex', gap:'8px' }}>
                       <button onClick={()=>play(s)} style={{ flex:1, padding:'10px', borderRadius:'10px', fontSize:'13px', fontWeight:600, cursor:'pointer', background:isPlaying?s.color_hex:`${s.color_hex}15`, color:isPlaying?'#fff':s.color_hex, border:`1px solid ${s.color_hex}44`, transition:'all 0.2s' }}>
                         {isPlaying ? '❙❙ Pause' : '▶ Listen Live'}
@@ -70,6 +68,11 @@ export default function Stations() {
             </div>
         }
       </div>
+      <style>{`
+        @media(max-width:1100px){ .stations-grid{ grid-template-columns:repeat(3,1fr) !important; } }
+        @media(max-width:760px) { .stations-grid{ grid-template-columns:repeat(2,1fr) !important; } }
+        @media(max-width:480px) { .stations-grid{ grid-template-columns:1fr !important; } }
+      `}</style>
     </main>
   )
 }

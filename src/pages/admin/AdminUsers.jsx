@@ -5,7 +5,7 @@ import { useAuth } from '../../context/AuthContext'
 import toast from 'react-hot-toast'
 
 const inputStyle = { width:'100%', padding:'9px 12px', borderRadius:'8px', fontSize:'13px', background:'var(--color-surface-2)', border:'1px solid var(--color-border)', color:'var(--color-text)', outline:'none', fontFamily:'var(--font-body)' }
-const EMPTY = { name:'', role:'editor', station_id:'', email:'', password:'' }
+const EMPTY = { name:'', role:'station_manager', station_id:'', email:'', password:'' }
 
 export default function AdminUsers() {
   const [staff, setStaff]       = useState([])
@@ -45,8 +45,8 @@ export default function AdminUsers() {
     toast.success('Staff removed'); fetchAll()
   }
 
-  const ROLE_COLORS = { admin:'rgba(240,165,0,0.15)', editor:'rgba(52,199,89,0.1)', station_manager:'rgba(26,107,154,0.12)' }
-  const ROLE_TEXT   = { admin:'var(--color-accent)', editor:'var(--color-success)', station_manager:'#5BA8D4' }
+  const ROLE_COLORS = { admin:'rgba(240,165,0,0.15)', station_manager:'rgba(26,107,154,0.12)' }
+  const ROLE_TEXT   = { admin:'var(--color-accent)', station_manager:'#5BA8D4' }
 
   return (
     <AdminLayout>
@@ -61,10 +61,10 @@ export default function AdminUsers() {
 
         {/* Role legend */}
         <div style={{ display:'flex', gap:'12px', marginBottom:'20px', flexWrap:'wrap' }}>
-          {Object.entries(ROLE_COLORS).map(([role,bg])=>(
-            <div key={role} style={{ display:'flex', alignItems:'center', gap:'6px', padding:'4px 12px', borderRadius:'999px', background:bg, border:`1px solid ${ROLE_TEXT[role]}33` }}>
+          {[['admin','Admin — full access'],['station_manager','Station Manager — own station only']].map(([role,desc])=>(
+            <div key={role} style={{ display:'flex', alignItems:'center', gap:'6px', padding:'4px 12px', borderRadius:'999px', background:ROLE_COLORS[role], border:`1px solid ${ROLE_TEXT[role]}33` }}>
               <span style={{ width:'6px', height:'6px', borderRadius:'50%', background:ROLE_TEXT[role] }} />
-              <span style={{ fontSize:'11px', fontWeight:600, color:ROLE_TEXT[role], textTransform:'capitalize' }}>{role.replace('_',' ')}</span>
+              <span style={{ fontSize:'11px', fontWeight:600, color:ROLE_TEXT[role] }}>{desc}</span>
             </div>
           ))}
         </div>
@@ -89,8 +89,7 @@ export default function AdminUsers() {
               <div>
                 <label style={{ fontSize:'12px', fontWeight:600, color:'var(--color-text-muted)', display:'block', marginBottom:'6px' }}>Role</label>
                 <select value={form.role} onChange={e=>setForm(f=>({...f,role:e.target.value}))} style={inputStyle}>
-                  <option value="editor">Editor — news &amp; audio only</option>
-                  <option value="station_manager">Station Manager — own station</option>
+                  <option value="station_manager">Station Manager — own station only</option>
                   <option value="admin">Admin — full access</option>
                 </select>
               </div>

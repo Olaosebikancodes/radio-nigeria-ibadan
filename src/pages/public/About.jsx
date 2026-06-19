@@ -24,7 +24,7 @@ export default function About() {
   ]
 
   return (
-    <main style={{ paddingTop:'68px' }}>
+    <main style={{ paddingTop:'104px' }}>
       {/* Hero */}
       <div style={{ background:`linear-gradient(to bottom, rgba(0,92,46,0.15), transparent)`, borderBottom:'1px solid var(--color-border)', padding:'80px 24px 60px' }}>
         <div style={{ maxWidth:'800px', margin:'0 auto', textAlign:'center' }}>

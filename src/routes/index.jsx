@@ -10,10 +10,11 @@ const StationDetail  = lazy(() => import('../pages/public/StationDetail'))
 const Contact        = lazy(() => import('../pages/public/Contact'))
 
 // Admin pages — lazy loaded
-const AdminLogin         = lazy(() => import('../pages/admin/AdminLogin'))
-const AdminDashboard     = lazy(() => import('../pages/admin/AdminDashboard'))
-const AdminStations      = lazy(() => import('../pages/admin/AdminStations'))
-const AdminUsers         = lazy(() => import('../pages/admin/AdminUsers'))
+const AdminLogin      = lazy(() => import('../pages/admin/AdminLogin'))
+const AdminDashboard  = lazy(() => import('../pages/admin/AdminDashboard'))
+const AdminAdverts    = lazy(() => import('../pages/admin/AdminAdverts'))
+const AdminStations   = lazy(() => import('../pages/admin/AdminStations'))
+const AdminUsers      = lazy(() => import('../pages/admin/AdminUsers'))
 
 function PageLoader() {
   return (
@@ -44,6 +45,7 @@ export default function AppRoutes() {
         {/* Admin */}
         <Route path="/admin/login"    element={<AdminLogin />} />
         <Route path="/admin"          element={<ProtectedRoute><AdminDashboard /></ProtectedRoute>} />
+        <Route path="/admin/adverts"  element={<ProtectedRoute><AdminAdverts /></ProtectedRoute>} />
         <Route path="/admin/stations" element={<ProtectedRoute><AdminStations /></ProtectedRoute>} />
         <Route path="/admin/users"    element={<ProtectedRoute><AdminUsers /></ProtectedRoute>} />
 

@@ -23,7 +23,7 @@ export default function Contact() {
   const inputStyle = { width:'100%', padding:'11px 14px', borderRadius:'10px', fontSize:'14px', background:'var(--color-surface-2)', border:'1px solid var(--color-border)', color:'var(--color-text)', outline:'none', transition:'border-color 0.2s', fontFamily:'var(--font-body)' }
 
   return (
-    <main style={{ paddingTop:'68px' }}>
+    <main style={{ paddingTop:'104px' }}>
       <div style={{ background:`linear-gradient(to bottom, rgba(0,92,46,0.12), transparent)`, borderBottom:'1px solid var(--color-border)', padding:'60px 24px 48px' }}>
         <div style={{ maxWidth:'1280px', margin:'0 auto' }}>
           <p style={{ fontSize:'11px', fontWeight:600, color:'var(--color-brand-light)', textTransform:'uppercase', letterSpacing:'0.1em', marginBottom:'10px' }}>Reach Us</p>

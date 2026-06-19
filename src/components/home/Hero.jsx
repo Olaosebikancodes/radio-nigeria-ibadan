@@ -1,6 +1,6 @@
 export default function Hero() {
   return (
-    <section style={{ position: 'relative', paddingTop: '68px', minHeight: '100vh', display: 'flex', alignItems: 'center', overflow: 'hidden' }}>
+    <section style={{ position: 'relative', paddingTop: '104px', minHeight: '100vh', display: 'flex', alignItems: 'center', overflow: 'hidden' }}>
       {/* Background */}
       <div style={{ position: 'absolute', inset: 0, background: `radial-gradient(ellipse 70% 60% at 30% 50%, rgba(0,92,46,0.2) 0%, transparent 65%), radial-gradient(ellipse 50% 50% at 80% 30%, rgba(240,165,0,0.05) 0%, transparent 60%), var(--color-bg)` }} />
       <div style={{ position: 'absolute', inset: 0, opacity: 0.025, backgroundImage: `linear-gradient(var(--color-text) 1px, transparent 1px), linear-gradient(90deg, var(--color-text) 1px, transparent 1px)`, backgroundSize: '60px 60px' }} />

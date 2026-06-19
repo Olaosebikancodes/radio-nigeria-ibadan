@@ -28,20 +28,18 @@ export default function AdminDashboard() {
   useEffect(() => {
     const load = async () => {
       const [
-        { count: totalArticles },
-        { count: published },
-        { count: totalAudio },
-        { count: totalProgs },
-        { data: recentArts },
+        { count: totalAdverts },
+        { count: activeAdverts },
+        { count: totalStations },
+        { data: recentAdverts },
       ] = await Promise.all([
-        supabase.from('articles').select('*',{count:'exact',head:true}),
-        supabase.from('articles').select('*',{count:'exact',head:true}).eq('published',true),
-        supabase.from('audio_content').select('*',{count:'exact',head:true}),
-        supabase.from('programmes').select('*',{count:'exact',head:true}),
-        supabase.from('articles').select('id,title,slug,published,created_at').order('created_at',{ascending:false}).limit(5),
+        supabase.from('adverts').select('*',{count:'exact',head:true}),
+        supabase.from('adverts').select('*',{count:'exact',head:true}).eq('active',true),
+        supabase.from('stations').select('*',{count:'exact',head:true}).eq('active',true),
+        supabase.from('adverts').select('id,title,active,stations(name),created_at').order('created_at',{ascending:false}).limit(5),
       ])
-      setStats({ totalArticles, published, drafts:(totalArticles-published), totalAudio, totalProgs })
-      setRecent(recentArts||[])
+      setStats({ totalAdverts, activeAdverts, totalStations })
+      setRecent(recentAdverts||[])
       setLoading(false)
     }
     load()
@@ -57,33 +55,28 @@ export default function AdminDashboard() {
 
         {/* Stats */}
         <div style={{ display:'grid', gridTemplateColumns:'repeat(auto-fill,minmax(200px,1fr))', gap:'16px', marginBottom:'40px' }}>
-          {loading ? Array(4).fill(0).map((_,i)=><Skeleton key={i} height="130px" radius="14px"/>) : <>
-            <StatCard label="Total Articles"     value={stats.totalArticles} icon="📰" color="#1A6B9A" to="/admin/news" />
-            <StatCard label="Published"          value={stats.published}     icon="✅" color="#27AE60" to="/admin/news" />
-            <StatCard label="Drafts"             value={stats.drafts}        icon="📝" color="#F39C12" to="/admin/news" />
-            <StatCard label="Audio Uploads"      value={stats.totalAudio}    icon="🎙️" color="#8E44AD" to="/admin/audio" />
-            <StatCard label="Programme Slots"    value={stats.totalProgs}    icon="📅" color="#E74C3C" to="/admin/programmes" />
+          {loading ? Array(3).fill(0).map((_,i)=><Skeleton key={i} height="130px" radius="14px"/>) : <>
+            <StatCard label="Total Adverts"   value={stats.totalAdverts}  icon="📢" color="#F39C12" to="/admin/adverts" />
+            <StatCard label="Active Adverts"  value={stats.activeAdverts} icon="✅" color="#27AE60" to="/admin/adverts" />
+            <StatCard label="Live Stations"   value={stats.totalStations} icon="📻" color="#1A6B9A" to="/admin/stations" />
           </>}
         </div>
 
-        {/* Recent articles */}
+        {/* Recent adverts */}
         <div style={{ background:'var(--color-surface)', borderRadius:'16px', border:'1px solid var(--color-border)', overflow:'hidden' }}>
           <div style={{ padding:'20px 24px', borderBottom:'1px solid var(--color-border)', display:'flex', alignItems:'center', justifyContent:'space-between' }}>
-            <h2 style={{ fontFamily:'var(--font-display)', fontSize:'16px', fontWeight:700, color:'var(--color-text)' }}>Recent Articles</h2>
-            <Link to="/admin/news/create" style={{ padding:'7px 16px', borderRadius:'8px', fontSize:'12px', fontWeight:600, background:'var(--color-brand)', color:'#fff' }}>+ New Article</Link>
+            <h2 style={{ fontFamily:'var(--font-display)', fontSize:'16px', fontWeight:700, color:'var(--color-text)' }}>Recent Adverts</h2>
+            <Link to="/admin/adverts" style={{ padding:'7px 16px', borderRadius:'8px', fontSize:'12px', fontWeight:600, background:'var(--color-brand)', color:'#fff' }}>Manage Adverts</Link>
           </div>
           {loading ? <div style={{padding:'20px'}}><Skeleton height="40px"/></div>
-            : recent.length===0 ? <p style={{padding:'24px',color:'var(--color-text-muted)',fontSize:'13px'}}>No articles yet.</p>
+            : recent.length===0 ? <p style={{padding:'24px',color:'var(--color-text-muted)',fontSize:'13px'}}>No adverts yet.</p>
             : recent.map(a => (
               <div key={a.id} style={{ display:'flex', alignItems:'center', justifyContent:'space-between', padding:'14px 24px', borderBottom:'1px solid var(--color-border)', gap:'12px', flexWrap:'wrap' }}>
                 <div style={{ minWidth:0, flex:1 }}>
                   <p style={{ fontSize:'14px', fontWeight:500, color:'var(--color-text)', overflow:'hidden', textOverflow:'ellipsis', whiteSpace:'nowrap' }}>{a.title}</p>
-                  <p style={{ fontSize:'11px', color:'var(--color-text-dim)', marginTop:'2px' }}>{new Date(a.created_at).toLocaleDateString('en-NG')}</p>
+                  <p style={{ fontSize:'11px', color:'var(--color-text-dim)', marginTop:'2px' }}>{a.stations?.name ?? 'All Stations'} · {new Date(a.created_at).toLocaleDateString('en-NG')}</p>
                 </div>
-                <div style={{ display:'flex', alignItems:'center', gap:'10px', flexShrink:0 }}>
-                  <span style={{ fontSize:'11px', fontWeight:600, padding:'3px 10px', borderRadius:'999px', background: a.published?'rgba(52,199,89,0.12)':'rgba(255,165,0,0.12)', color: a.published?'var(--color-success)':'var(--color-warning)' }}>{a.published?'Published':'Draft'}</span>
-                  <Link to={`/admin/news/${a.id}/edit`} style={{ fontSize:'12px', color:'var(--color-accent)' }}>Edit</Link>
-                </div>
+                <span style={{ fontSize:'11px', fontWeight:600, padding:'3px 10px', borderRadius:'999px', background: a.active?'rgba(52,199,89,0.12)':'rgba(255,59,48,0.1)', color: a.active?'var(--color-success)':'var(--color-live)', flexShrink:0 }}>{a.active ? 'Active' : 'Inactive'}</span>
               </div>
             ))
           }

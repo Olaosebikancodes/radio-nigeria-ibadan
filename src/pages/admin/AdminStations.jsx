@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { supabase } from '../../lib/supabase'
 import AdminLayout from '../../components/layout/AdminLayout'
+import { useAuth } from '../../context/AuthContext'
 import toast from 'react-hot-toast'
 
 const inputStyle = { width:'100%', padding:'9px 12px', borderRadius:'8px', fontSize:'13px', background:'var(--color-surface-2)', border:'1px solid var(--color-border)', color:'var(--color-text)', outline:'none', fontFamily:'var(--font-body)' }
@@ -10,14 +11,18 @@ export default function AdminStations() {
   const [editing, setEditing]   = useState(null)
   const [form, setForm]         = useState({})
   const [saving, setSaving]     = useState(false)
+  const { staff } = useAuth()
+  const isAdmin = staff?.role === 'admin'
 
   const fetchAll = async () => {
-    const { data } = await supabase.from('stations').select('*').order('sort_order')
+    let query = supabase.from('stations').select('*').order('sort_order')
+    if (!isAdmin && staff?.station_id) query = query.eq('id', staff.station_id)
+    const { data } = await query
     setStations(data||[])
   }
-  useEffect(() => { fetchAll() }, [])
+  useEffect(() => { if (staff) fetchAll() }, [staff])
 
-  const startEdit = (s) => { setEditing(s.id); setForm({ name:s.name, frequency:s.frequency||'', tagline:s.tagline||'', description:s.description||'', location:s.location||'', stream_url:s.stream_url||'', color_hex:s.color_hex||'#005C2E', social_facebook:s.social_facebook||'', social_twitter:s.social_twitter||'', social_instagram:s.social_instagram||'', social_youtube:s.social_youtube||'' }) }
+  const startEdit = (s) => { setEditing(s.id); setForm({ name:s.name, frequency:s.frequency||'', tagline:s.tagline||'', description:s.description||'', location:s.location||'', stream_url:s.stream_url||'', color_hex:s.color_hex||'#005C2E', social_facebook:s.social_facebook||'', social_youtube:s.social_youtube||'' }) }
 
   const save = async () => {
     setSaving(true)
@@ -39,7 +44,7 @@ export default function AdminStations() {
           {stations.map(s => (
             <div key={s.id} style={{ background:'var(--color-surface)', borderRadius:'14px', border:`1px solid ${editing===s.id?s.color_hex+'55':'var(--color-border)'}`, overflow:'hidden', transition:'border-color 0.2s' }}>
               {/* Header row */}
-              <div style={{ display:'flex', alignItems:'center', justifyContent:'space-between', padding:'18px 20px', cursor:'pointer' }} onClick={()=>editing===s.id?setEditing(null):startEdit(s)}>
+              <div style={{ display:'flex', alignItems:'center', justifyContent:'space-between', padding:'18px 20px', cursor: isAdmin||s.id===staff?.station_id?'pointer':'default' }} onClick={()=>{ if(!isAdmin&&s.id!==staff?.station_id) return; editing===s.id?setEditing(null):startEdit(s) }}>
                 <div style={{ display:'flex', alignItems:'center', gap:'14px' }}>
                   <div style={{ width:'40px', height:'40px', borderRadius:'10px', background:`${s.color_hex}25`, border:`1px solid ${s.color_hex}40`, display:'flex', alignItems:'center', justifyContent:'center' }}>
                     <span style={{ fontFamily:'var(--font-display)', fontWeight:900, fontSize:'12px', color:s.color_hex }}>{s.frequency}</span>
@@ -49,7 +54,9 @@ export default function AdminStations() {
                     <p style={{ fontSize:'12px', color:'var(--color-text-muted)' }}>{s.location} · {s.stream_url ? '🟢 Stream set' : '🔴 No stream URL'}</p>
                   </div>
                 </div>
-                <span style={{ fontSize:'12px', color:'var(--color-accent)', fontWeight:600 }}>{editing===s.id ? 'Cancel ✕' : 'Edit →'}</span>
+                {(isAdmin || s.id===staff?.station_id) && (
+                  <span style={{ fontSize:'12px', color:'var(--color-accent)', fontWeight:600 }}>{editing===s.id ? 'Cancel ✕' : 'Edit →'}</span>
+                )}
               </div>
 
               {/* Edit form */}
@@ -97,14 +104,6 @@ export default function AdminStations() {
                       <div>
                         <label style={{ fontSize:'12px', fontWeight:600, color:'var(--color-text-muted)', display:'block', marginBottom:'6px' }}>Facebook</label>
                         <input value={form.social_facebook||''} onChange={e=>setForm(f=>({...f,social_facebook:e.target.value}))} style={inputStyle} placeholder="https://facebook.com/stationname" />
-                      </div>
-                      <div>
-                        <label style={{ fontSize:'12px', fontWeight:600, color:'var(--color-text-muted)', display:'block', marginBottom:'6px' }}>X / Twitter</label>
-                        <input value={form.social_twitter||''} onChange={e=>setForm(f=>({...f,social_twitter:e.target.value}))} style={inputStyle} placeholder="https://x.com/stationname" />
-                      </div>
-                      <div>
-                        <label style={{ fontSize:'12px', fontWeight:600, color:'var(--color-text-muted)', display:'block', marginBottom:'6px' }}>Instagram</label>
-                        <input value={form.social_instagram||''} onChange={e=>setForm(f=>({...f,social_instagram:e.target.value}))} style={inputStyle} placeholder="https://instagram.com/stationname" />
                       </div>
                       <div>
                         <label style={{ fontSize:'12px', fontWeight:600, color:'var(--color-text-muted)', display:'block', marginBottom:'6px' }}>YouTube</label>

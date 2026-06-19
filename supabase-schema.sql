@@ -189,6 +189,29 @@ ON CONFLICT (slug) DO UPDATE SET
 DELETE FROM stations WHERE slug IN ('progress-105-5', 'choice-95-9');
 
 -- ══════════════════════════════════════════════
+-- ══════════════════════════════════════════════
+-- Adverts
+-- ══════════════════════════════════════════════
+
+CREATE TABLE IF NOT EXISTS adverts (
+  id          UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  title       TEXT NOT NULL,
+  image_url   TEXT,
+  link_url    TEXT,
+  station_id  UUID REFERENCES stations(id) ON DELETE SET NULL,
+  active      BOOLEAN DEFAULT true,
+  sort_order  INTEGER DEFAULT 0,
+  created_at  TIMESTAMPTZ DEFAULT now()
+);
+
+ALTER TABLE adverts ENABLE ROW LEVEL SECURITY;
+
+DROP POLICY IF EXISTS "Public read adverts"   ON adverts;
+DROP POLICY IF EXISTS "Staff manage adverts"  ON adverts;
+
+CREATE POLICY "Public read adverts"  ON adverts FOR SELECT USING (active = true);
+CREATE POLICY "Staff manage adverts" ON adverts FOR ALL   USING (auth.role() = 'authenticated');
+
 -- Migration: Add social media columns to stations
 -- Run this in Supabase SQL Editor if upgrading an existing database
 -- ══════════════════════════════════════════════

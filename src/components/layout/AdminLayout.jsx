@@ -3,12 +3,10 @@ import { NavLink, useNavigate } from 'react-router-dom'
 import { useAuth } from '../../context/AuthContext'
 
 const LINKS = [
-  { to:'/admin',            label:'Dashboard',  icon:'📊', exact:true },
-  { to:'/admin/news',       label:'News',       icon:'📰' },
-  { to:'/admin/programmes', label:'Programmes', icon:'📅' },
-  { to:'/admin/audio',      label:'Audio',      icon:'🎙️' },
-  { to:'/admin/stations',   label:'Stations',   icon:'📻' },
-  { to:'/admin/users',      label:'Staff',      icon:'👥' },
+  { to:'/admin',           label:'Dashboard', icon:'📊', exact:true },
+  { to:'/admin/adverts',   label:'Adverts',   icon:'📢' },
+  { to:'/admin/stations',  label:'Stations',  icon:'📻' },
+  { to:'/admin/users',     label:'Staff',     icon:'👥' },
 ]
 
 export default function AdminLayout({ children }) {

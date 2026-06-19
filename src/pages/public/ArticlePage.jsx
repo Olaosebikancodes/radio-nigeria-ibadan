@@ -68,7 +68,7 @@ export default function ArticlePage() {
   }, [slug])
 
   if (loading) return (
-    <main style={{ paddingTop:'68px', maxWidth:'760px', margin:'0 auto', padding:'120px 24px' }}>
+    <main style={{ paddingTop:'104px', maxWidth:'760px', margin:'0 auto', padding:'120px 24px' }}>
       <Skeleton height="40px" width="70%" style={{ marginBottom:'16px' }} />
       <Skeleton height="20px" width="40%" style={{ marginBottom:'32px' }} />
       <Skeleton height="360px" radius="12px" style={{ marginBottom:'32px' }} />
@@ -77,7 +77,7 @@ export default function ArticlePage() {
   )
 
   if (notFound) return (
-    <main style={{ paddingTop:'68px', display:'flex', flexDirection:'column', alignItems:'center', justifyContent:'center', minHeight:'60vh', gap:'16px' }}>
+    <main style={{ paddingTop:'104px', display:'flex', flexDirection:'column', alignItems:'center', justifyContent:'center', minHeight:'60vh', gap:'16px' }}>
       <p style={{ fontSize:'48px' }}>📰</p>
       <h2 style={{ fontFamily:'var(--font-display)', fontSize:'28px', color:'var(--color-text)' }}>Article not found</h2>
       <Link to="/news" style={{ color:'var(--color-accent)', fontSize:'14px' }}>← Back to News</Link>
@@ -85,7 +85,7 @@ export default function ArticlePage() {
   )
 
   return (
-    <main style={{ paddingTop:'68px' }}>
+    <main style={{ paddingTop:'104px' }}>
       {/* Cover */}
       {article.cover_image && (
         <div style={{ width:'100%', height:'400px', position:'relative', overflow:'hidden' }}>
