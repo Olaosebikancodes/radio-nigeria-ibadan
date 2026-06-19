@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
+import { Megaphone, CheckCircle, Radio } from 'lucide-react'
 import { supabase } from '../../lib/supabase'
 import AdminLayout from '../../components/layout/AdminLayout'
 import { Skeleton } from '../../components/ui/Skeleton'
@@ -11,7 +12,7 @@ function StatCard({ label, value, icon, color, to }) {
       onMouseLeave={e=>{ e.currentTarget.style.borderColor='var(--color-border)'; e.currentTarget.style.transform='none' }}
     >
       <div style={{ display:'flex', alignItems:'flex-start', justifyContent:'space-between', marginBottom:'16px' }}>
-        <div style={{ width:'40px', height:'40px', borderRadius:'10px', background:`${color}20`, display:'flex', alignItems:'center', justifyContent:'center', fontSize:'18px' }}>{icon}</div>
+        <div style={{ width:'40px', height:'40px', borderRadius:'10px', background:`${color}20`, display:'flex', alignItems:'center', justifyContent:'center', color }}>{icon}</div>
         <span style={{ fontSize:'11px', color:'var(--color-text-dim)', fontWeight:500 }}>View all →</span>
       </div>
       <p style={{ fontFamily:'var(--font-display)', fontWeight:900, fontSize:'32px', color:'var(--color-text)', letterSpacing:'-0.04em' }}>{value ?? '—'}</p>
@@ -56,9 +57,9 @@ export default function AdminDashboard() {
         {/* Stats */}
         <div style={{ display:'grid', gridTemplateColumns:'repeat(auto-fill,minmax(200px,1fr))', gap:'16px', marginBottom:'40px' }}>
           {loading ? Array(3).fill(0).map((_,i)=><Skeleton key={i} height="130px" radius="14px"/>) : <>
-            <StatCard label="Total Adverts"   value={stats.totalAdverts}  icon="📢" color="#F39C12" to="/admin/adverts" />
-            <StatCard label="Active Adverts"  value={stats.activeAdverts} icon="✅" color="#27AE60" to="/admin/adverts" />
-            <StatCard label="Live Stations"   value={stats.totalStations} icon="📻" color="#1A6B9A" to="/admin/stations" />
+            <StatCard label="Total Adverts"   value={stats.totalAdverts}  icon={<Megaphone size={18}/>}    color="#F39C12" to="/admin/adverts" />
+            <StatCard label="Active Adverts"  value={stats.activeAdverts} icon={<CheckCircle size={18}/>}  color="#27AE60" to="/admin/adverts" />
+            <StatCard label="Live Stations"   value={stats.totalStations} icon={<Radio size={18}/>}        color="#1A6B9A" to="/admin/stations" />
           </>}
         </div>
 

@@ -18,11 +18,11 @@ export default function AdminLayout({ children }) {
   const handleSignOut = async () => { await signOut(); navigate('/admin/login') }
 
   return (
-    <div style={{ display:'flex', minHeight:'100vh', background:'var(--color-bg)' }}>
+    <div style={{ display:'flex', minHeight:'100vh' }}>
 
       <aside className="admin-sidebar" style={{ width:'220px', background:'var(--color-surface)', borderRight:'1px solid var(--color-border)', display:'flex', flexDirection:'column', position:'fixed', top:0, left:0, bottom:0, zIndex:50 }}>
         <div style={{ padding:'16px 20px', borderBottom:'1px solid var(--color-border)', display:'flex', alignItems:'center', justifyContent:'center' }}>
-          <img src="https://tfxpqxxzopsycpnmdyke.supabase.co/storage/v1/object/public/images/Logo%201.png" alt="Radio Nigeria" style={{ height:'52px', width:'auto', objectFit:'contain' }} />
+          <img src="https://tfxpqxxzopsycpnmdyke.supabase.co/storage/v1/object/public/images/Untitled%20design(8).png" alt="Radio Nigeria" style={{ height:'52px', width:'auto', objectFit:'contain' }} />
         </div>
         <nav style={{ flex:1, padding:'12px 10px', display:'flex', flexDirection:'column', gap:'2px', overflowY:'auto' }}>
           {LINKS.map(({ to, label, Icon, exact }) => (
@@ -47,7 +47,7 @@ export default function AdminLayout({ children }) {
 
       <div className="admin-topbar" style={{ display:'none', position:'fixed', top:0, left:0, right:0, zIndex:100, background:'var(--color-surface)', borderBottom:'1px solid var(--color-border)', padding:'0 16px', height:'56px', alignItems:'center', justifyContent:'space-between' }}>
         <div style={{ display:'flex', alignItems:'center' }}>
-          <img src="https://tfxpqxxzopsycpnmdyke.supabase.co/storage/v1/object/public/images/Logo%201.png" alt="Radio Nigeria" style={{ height:'36px', width:'auto', objectFit:'contain' }} />
+          <img src="https://tfxpqxxzopsycpnmdyke.supabase.co/storage/v1/object/public/images/Untitled%20design(8).png" alt="Radio Nigeria" style={{ height:'36px', width:'auto', objectFit:'contain' }} />
         </div>
         <button onClick={() => setMenuOpen(o => !o)} style={{ background:'none', border:'1px solid var(--color-border)', borderRadius:'8px', padding:'6px 10px', cursor:'pointer', color:'var(--color-text)', fontSize:'18px', lineHeight:1 }}>☰</button>
       </div>
