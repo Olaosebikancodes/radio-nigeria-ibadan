@@ -2,7 +2,12 @@ import { MapPin, Phone, Mail, Radio } from 'lucide-react'
 
 export default function Contact() {
   return (
-    <main style={{ paddingTop:'140px' }}>
+    <main className="inner-page-main" style={{ paddingTop:'140px' }}>
+      <style>{`
+        @media(max-width:768px){ .inner-page-main { padding-top: 104px !important; } }
+        @media(max-width:400px){ .inner-page-main { padding-top: 88px !important; } }
+        @media(max-width:640px){ .contact-info-grid { max-width: 100% !important; } }
+      `}</style>
       <div style={{ background:`linear-gradient(to bottom, rgba(0,92,46,0.12), transparent)`, borderBottom:'1px solid var(--color-border)', padding:'60px 24px 48px' }}>
         <div style={{ maxWidth:'1280px', margin:'0 auto' }}>
           <p style={{ fontSize:'17px', fontWeight:600, color:'var(--color-brand-light)', textTransform:'uppercase', letterSpacing:'0.1em', marginBottom:'10px' }}>Reach Us</p>

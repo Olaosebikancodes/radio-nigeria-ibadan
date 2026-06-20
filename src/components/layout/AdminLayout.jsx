@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { NavLink, useNavigate } from 'react-router-dom'
 import { useAuth } from '../../context/AuthContext'
-import { LayoutDashboard, Megaphone, Radio, Users } from 'lucide-react'
+import { LayoutDashboard, Megaphone, Radio, Users, Menu, X } from 'lucide-react'
 
 const LINKS = [
   { to:'/admin',           label:'Dashboard', Icon: LayoutDashboard, exact:true },
@@ -49,7 +49,7 @@ export default function AdminLayout({ children }) {
         <div style={{ display:'flex', alignItems:'center' }}>
           <img src="https://tfxpqxxzopsycpnmdyke.supabase.co/storage/v1/object/public/images/Untitled%20design(8).png" alt="Radio Nigeria" style={{ height:'36px', width:'auto', objectFit:'contain' }} />
         </div>
-        <button onClick={() => setMenuOpen(o => !o)} style={{ background:'none', border:'1px solid var(--color-border)', borderRadius:'8px', padding:'6px 10px', cursor:'pointer', color:'var(--color-text)', fontSize:'18px', lineHeight:1 }}>☰</button>
+        <button onClick={() => setMenuOpen(o => !o)} style={{ background:'none', border:'1px solid var(--color-border)', borderRadius:'8px', padding:'6px 10px', cursor:'pointer', color:'var(--color-text)', lineHeight:1, display:'flex', alignItems:'center' }}><Menu size={18}/></button>
       </div>
 
       {menuOpen && (
@@ -58,7 +58,7 @@ export default function AdminLayout({ children }) {
           <div style={{ position:'absolute', top:0, left:0, bottom:0, width:'260px', background:'var(--color-surface)', borderRight:'1px solid var(--color-border)', display:'flex', flexDirection:'column', zIndex:201 }} onClick={e => e.stopPropagation()}>
             <div style={{ padding:'20px 16px 16px', borderBottom:'1px solid var(--color-border)', display:'flex', alignItems:'center', justifyContent:'space-between' }}>
               <p style={{ fontFamily:'var(--font-display)', fontWeight:700, fontSize:'15px', color:'var(--color-text)' }}>Menu</p>
-              <button onClick={() => setMenuOpen(false)} style={{ background:'none', border:'none', color:'var(--color-text-muted)', fontSize:'20px', cursor:'pointer' }}>✕</button>
+              <button onClick={() => setMenuOpen(false)} style={{ background:'none', border:'none', color:'var(--color-text-muted)', cursor:'pointer', display:'flex', alignItems:'center' }}><X size={20}/></button>
             </div>
             <nav style={{ flex:1, padding:'12px 10px', display:'flex', flexDirection:'column', gap:'4px' }}>
               {LINKS.map(({ to, label, Icon, exact }) => (

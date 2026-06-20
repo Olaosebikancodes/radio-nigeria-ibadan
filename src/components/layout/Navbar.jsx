@@ -1,5 +1,6 @@
-import { useState, useEffect } from "react";
-import { Link, NavLink, useLocation } from "react-router-dom";
+import { useState } from "react";
+import { Link, NavLink } from "react-router-dom";
+import { Play, Pause } from "lucide-react";
 import { usePlayer } from "../../context/PlayerContext";
 import { SOCIAL_LINKS } from "../../lib/utils";
 
@@ -71,9 +72,7 @@ const socialStyle = {
 export default function Navbar() {
   const [open, setOpen] = useState(false);
   const { activeStation, playing, toggle } = usePlayer();
-  const location = useLocation();
 
-  useEffect(() => setOpen(false), [location]);
 
   return (
     <header
@@ -92,6 +91,7 @@ export default function Navbar() {
         style={{ maxWidth: "1280px", margin: "0 auto", padding: "16px 24px" }}
       >
         <div
+          className="nav-inner"
           style={{
             display: "flex",
             alignItems: "center",
@@ -112,6 +112,7 @@ export default function Navbar() {
             <img
               src="https://tfxpqxxzopsycpnmdyke.supabase.co/storage/v1/object/public/images/Untitled%20design(8).png"
               alt="Radio Nigeria Ibadan"
+              className="nav-logo-img"
               style={{
                 height: "120px",
                 width: "auto",
@@ -239,10 +240,8 @@ export default function Navbar() {
                 >
                   {activeStation.name}
                 </span>
-                <span
-                  style={{ color: "var(--color-text-muted)", fontSize: "10px" }}
-                >
-                  {playing ? "❙❙" : "▶"}
+                <span style={{ color: "var(--color-text-muted)", display:'flex', alignItems:'center' }}>
+                  {playing ? <Pause size={10}/> : <Play size={10}/>}
                 </span>
               </button>
             )}
@@ -297,10 +296,11 @@ export default function Navbar() {
         <div
           style={{
             position: "absolute",
-            top: "104px",
+            top: "100%",
             left: 0,
             right: 0,
-            background: "rgba(255,255,255,0.82)",
+            background: "rgba(255,255,255,0.96)",
+            backdropFilter: "blur(12px)",
             borderBottom: "1px solid var(--color-border)",
             padding: "12px 20px 20px",
             display: "flex",
@@ -368,7 +368,7 @@ export default function Navbar() {
                   flexShrink: 0,
                 }}
               >
-                {playing ? "❙❙" : "▶"}
+                {playing ? <Pause size={16}/> : <Play size={16}/>}
               </span>
             </button>
           )}
@@ -378,6 +378,7 @@ export default function Navbar() {
               key={to}
               to={to}
               end={to === "/"}
+              onClick={() => setOpen(false)}
               style={({ isActive }) => ({
                 padding: "11px 14px",
                 borderRadius: "8px",
@@ -433,7 +434,8 @@ export default function Navbar() {
       <style>{`
         @media (max-width: 1024px) { .desktop-nav { display: none !important; } .hamburger { display: flex !important; } }
         @media (max-width: 768px)  { .social-icons { display: none !important; } .nav-mini-player { display: none !important; } }
-        @media (max-width: 400px)  { .nav-logo-text { display: none !important; } }
+        @media (max-width: 768px)  { .nav-logo-img { height: 72px !important; } .nav-inner { height: 72px !important; } }
+        @media (max-width: 400px)  { .nav-logo-img { height: 56px !important; } .nav-inner { height: 56px !important; } .nav-logo-text { display: none !important; } }
       `}</style>
     </header>
   );

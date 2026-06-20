@@ -60,7 +60,15 @@ export default function StationDetail() {
   const isPlaying = isActive && playing
 
   return (
-    <main style={{ paddingTop:'140px' }}>
+    <main className="inner-page-main" style={{ paddingTop:'140px' }}>
+      <style>{`
+        .inner-page-main { padding-top: 140px; }
+        @media(max-width:768px){ .inner-page-main { padding-top: 104px !important; } }
+        @media(max-width:400px){ .inner-page-main { padding-top: 88px !important; } }
+        @media(max-width:640px){ .station-detail-header { flex-direction: column !important; align-items: flex-start !important; } }
+        @media(max-width:640px){ .station-detail-actions { flex-direction: column !important; align-items: stretch !important; } }
+        @media(max-width:600px){ .advert-grid { grid-template-columns: 1fr !important; } }
+      `}</style>
       {/* Hero */}
       <div style={{ background:`linear-gradient(135deg, ${station.color_hex}22 0%, rgba(0,0,0,0) 60%), var(--color-surface)`, borderBottom:'1px solid var(--color-border)', padding:'48px 24px 40px' }}>
         <div style={{ maxWidth:'1280px', margin:'0 auto' }}>
@@ -77,7 +85,7 @@ export default function StationDetail() {
               <p style={{ fontSize:'18px', color:'var(--color-text-muted)', fontStyle:'italic' }}>"{station.tagline}"</p>
             </div>
           </div>
-          <div style={{ display:'flex', alignItems:'center', justifyContent:'space-between', flexWrap:'wrap', gap:'16px' }}>
+          <div className="station-detail-actions" style={{ display:'flex', alignItems:'center', justifyContent:'space-between', flexWrap:'wrap', gap:'16px' }}>
             <p style={{ fontSize:'17px', color:'var(--color-text-dim)', display:'flex', alignItems:'center', gap:'6px' }}><MapPin size={15}/>{station.location}</p>
             <button onClick={() => play(station)} disabled={!station.stream_url} style={{
               display:'flex', alignItems:'center', gap:'10px',
@@ -140,9 +148,6 @@ export default function StationDetail() {
         )}
       </div>
 
-      <style>{`
-        @media(max-width:600px){ .advert-grid{ grid-template-columns:1fr !important; } }
-      `}</style>
     </main>
   )
 }

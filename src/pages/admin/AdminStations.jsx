@@ -34,7 +34,15 @@ export default function AdminStations() {
 
   return (
     <AdminLayout>
-      <div style={{ padding:'32px' }}>
+      <div className="admin-content">
+        <style>{`
+          .admin-content { padding: 32px; }
+          @media(max-width:640px){ .admin-content { padding: 16px; } }
+          @media(max-width:640px){ .station-edit-grid { grid-template-columns: 1fr !important; } }
+          @media(max-width:640px){ .station-edit-grid > div[style*="span 2"] { grid-column: span 1 !important; } }
+          @media(max-width:640px){ .social-grid { grid-template-columns: 1fr !important; } }
+          @media(max-width:640px){ .station-header-row { flex-wrap: wrap; gap: 12px; } }
+        `}</style>
         <div style={{ marginBottom:'28px' }}>
           <h1 style={{ fontFamily:'var(--font-display)', fontSize:'28px', fontWeight:700, color:'var(--color-text)', letterSpacing:'-0.03em' }}>Stations</h1>
           <p style={{ fontSize:'13px', color:'var(--color-text-muted)', marginTop:'4px' }}>Update station info, stream URLs, and descriptions.</p>
@@ -51,7 +59,7 @@ export default function AdminStations() {
                   </div>
                   <div>
                     <p style={{ fontSize:'15px', fontWeight:700, color:'var(--color-text)', fontFamily:'var(--font-display)' }}>{s.name}</p>
-                    <p style={{ fontSize:'12px', color:'var(--color-text-muted)' }}>{s.location} · {s.stream_url ? '🟢 Stream set' : '🔴 No stream URL'}</p>
+                    <p style={{ fontSize:'12px', color:'var(--color-text-muted)' }}>{s.location} · <span style={{ color: s.stream_url ? 'var(--color-success)' : 'var(--color-live)', fontWeight:600 }}>{s.stream_url ? '● Stream set' : '● No stream URL'}</span></p>
                   </div>
                 </div>
                 {(isAdmin || s.id===staff?.station_id) && (
@@ -62,7 +70,7 @@ export default function AdminStations() {
               {/* Edit form */}
               {editing===s.id && (
                 <div style={{ borderTop:'1px solid var(--color-border)', padding:'20px', display:'flex', flexDirection:'column', gap:'14px' }}>
-                  <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:'14px' }}>
+                  <div className="station-edit-grid" style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:'14px' }}>
                     <div>
                       <label style={{ fontSize:'12px', fontWeight:600, color:'var(--color-text-muted)', display:'block', marginBottom:'6px' }}>Station Name</label>
                       <input value={form.name||''} onChange={e=>setForm(f=>({...f,name:e.target.value}))} style={inputStyle} />
@@ -100,7 +108,7 @@ export default function AdminStations() {
                   {/* Social media */}
                   <div style={{ borderTop:'1px solid var(--color-border)', paddingTop:'14px' }}>
                     <p style={{ fontSize:'12px', fontWeight:700, color:'var(--color-text-dim)', textTransform:'uppercase', letterSpacing:'0.08em', marginBottom:'12px' }}>Social Media Handles</p>
-                    <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:'14px' }}>
+                    <div className="social-grid" style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:'14px' }}>
                       <div>
                         <label style={{ fontSize:'12px', fontWeight:600, color:'var(--color-text-muted)', display:'block', marginBottom:'6px' }}>Facebook</label>
                         <input value={form.social_facebook||''} onChange={e=>setForm(f=>({...f,social_facebook:e.target.value}))} style={inputStyle} placeholder="https://facebook.com/stationname" />

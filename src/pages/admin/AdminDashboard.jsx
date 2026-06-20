@@ -48,14 +48,19 @@ export default function AdminDashboard() {
 
   return (
     <AdminLayout>
-      <div style={{ padding:'32px' }}>
+      <div className="admin-content">
+        <style>{`
+          .admin-content { padding: 32px; }
+          @media(max-width:640px){ .admin-content { padding: 16px; } }
+          @media(max-width:640px){ .admin-stat-grid { grid-template-columns: 1fr !important; } }
+        `}</style>
         <div style={{ marginBottom:'32px', display:'flex', flexWrap:'wrap', gap:'8px', justifyContent:'space-between' }}>
           <h1 style={{ fontFamily:'var(--font-display)', fontSize:'28px', fontWeight:700, color:'var(--color-text)', letterSpacing:'-0.03em' }}>Dashboard</h1>
           <p style={{ fontSize:'13px', color:'var(--color-text-muted)', marginTop:'4px' }}>{new Date().toLocaleDateString('en-NG',{weekday:'long',day:'numeric',month:'long',year:'numeric'})}</p>
         </div>
 
         {/* Stats */}
-        <div style={{ display:'grid', gridTemplateColumns:'repeat(auto-fill,minmax(200px,1fr))', gap:'16px', marginBottom:'40px' }}>
+        <div className="admin-stat-grid" style={{ display:'grid', gridTemplateColumns:'repeat(auto-fill,minmax(200px,1fr))', gap:'16px', marginBottom:'40px' }}>
           {loading ? Array(3).fill(0).map((_,i)=><Skeleton key={i} height="130px" radius="14px"/>) : <>
             <StatCard label="Total Adverts"   value={stats.totalAdverts}  icon={<Megaphone size={18}/>}    color="#F39C12" to="/admin/adverts" />
             <StatCard label="Active Adverts"  value={stats.activeAdverts} icon={<CheckCircle size={18}/>}  color="#27AE60" to="/admin/adverts" />

@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
+import { Megaphone, Image } from 'lucide-react'
 import { supabase } from '../../lib/supabase'
 import AdminLayout from '../../components/layout/AdminLayout'
 import { useAuth } from '../../context/AuthContext'
@@ -93,7 +94,15 @@ export default function AdminAdverts() {
 
   return (
     <AdminLayout>
-      <div style={{ padding:'32px' }}>
+      <div className="admin-content">
+        <style>{`
+          .admin-content { padding: 32px; }
+          @media(max-width:640px){ .admin-content { padding: 16px; } }
+          @media(max-width:640px){ .advert-form-grid { grid-template-columns: 1fr !important; } }
+          @media(max-width:640px){ .advert-form-grid > div[style*="span 2"] { grid-column: span 1 !important; } }
+          @media(max-width:600px){ .advert-list-item { flex-wrap: wrap; } }
+          @media(max-width:600px){ .advert-list-actions { flex-wrap: wrap; width: 100%; } }
+        `}</style>
         <div style={{ display:'flex', alignItems:'center', justifyContent:'space-between', marginBottom:'28px', flexWrap:'wrap', gap:'12px' }} className="admin-page-header">
           <div>
             <h1 style={{ fontFamily:'var(--font-display)', fontSize:'28px', fontWeight:700, color:'var(--color-text)', letterSpacing:'-0.03em' }}>Adverts</h1>
@@ -105,7 +114,7 @@ export default function AdminAdverts() {
         {showForm && (
           <div style={{ background:'var(--color-surface)', borderRadius:'14px', border:'1px solid var(--color-border-light)', padding:'24px', marginBottom:'28px' }}>
             <h2 style={{ fontFamily:'var(--font-display)', fontSize:'17px', fontWeight:700, color:'var(--color-text)', marginBottom:'20px' }}>{editing ? 'Edit Advert' : 'New Advert'}</h2>
-            <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:'14px' }}>
+            <div className="advert-form-grid" style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:'14px' }}>
               <div style={{ gridColumn:'span 2' }}>
                 <label style={{ fontSize:'12px', fontWeight:600, color:'var(--color-text-muted)', display:'block', marginBottom:'6px' }}>Title <span style={{ color:'var(--color-live)' }}>*</span></label>
                 <input value={form.title} onChange={e=>setForm(f=>({...f,title:e.target.value}))} style={inputStyle} placeholder="e.g. Zenith Bank — Brand Awareness" />
@@ -127,7 +136,7 @@ export default function AdminAdverts() {
                       style={{ display:'flex', flexDirection:'column', alignItems:'center', justifyContent:'center', gap:'10px', width:'100%', height:'120px', borderRadius:'10px', border:'2px dashed var(--color-border)', background:'var(--color-surface-2)', color:'var(--color-text-muted)', cursor:'pointer', fontSize:'13px', transition:'all 0.2s' }}
                       onMouseEnter={e=>{ e.currentTarget.style.borderColor='var(--color-brand)'; e.currentTarget.style.color='var(--color-brand-light)' }}
                       onMouseLeave={e=>{ e.currentTarget.style.borderColor='var(--color-border)'; e.currentTarget.style.color='var(--color-text-muted)' }}>
-                      <span style={{ fontSize:'28px', opacity:0.5 }}>🖼️</span>
+                      <Image size={28} style={{ opacity:0.4 }}/>
                       <span style={{ fontWeight:500 }}>{uploading ? 'Uploading…' : 'Click to upload image'}</span>
                       <span style={{ fontSize:'11px', opacity:0.6 }}>JPG, PNG, WebP — recommended 1200×400px</span>
                     </button>
@@ -165,17 +174,17 @@ export default function AdminAdverts() {
 
         {adverts.length === 0 && !showForm
           ? <div style={{ padding:'48px', textAlign:'center', background:'var(--color-surface)', borderRadius:'14px', border:'1px solid var(--color-border)' }}>
-              <p style={{ fontSize:'32px', marginBottom:'10px', opacity:0.3 }}>📢</p>
+              <div style={{ marginBottom:'10px', opacity:0.3, display:'flex', justifyContent:'center' }}><Megaphone size={32} color="var(--color-text-dim)"/></div>
               <p style={{ fontSize:'14px', color:'var(--color-text-muted)' }}>No adverts yet. Click <strong>+ New Advert</strong> to create one.</p>
             </div>
           : <div style={{ display:'flex', flexDirection:'column', gap:'12px' }}>
               {adverts.map(a => (
-                <div key={a.id} style={{ display:'flex', alignItems:'center', gap:'16px', background:'var(--color-surface)', borderRadius:'12px', border:`1px solid ${a.active?'var(--color-border)':'var(--color-border)'}`, padding:'16px 20px', opacity:a.active?1:0.5, flexWrap:'wrap' }}>
+                <div key={a.id} className="advert-list-item" style={{ display:'flex', alignItems:'center', gap:'16px', background:'var(--color-surface)', borderRadius:'12px', border:'1px solid var(--color-border)', padding:'16px 20px', opacity:a.active?1:0.5, flexWrap:'wrap' }}>
                   {a.image_url && (
                     <img src={a.image_url} alt={a.title} style={{ width:'80px', height:'48px', objectFit:'cover', borderRadius:'6px', flexShrink:0, border:'1px solid var(--color-border)' }} onError={e=>e.target.style.display='none'} />
                   )}
                   {!a.image_url && (
-                    <div style={{ width:'80px', height:'48px', borderRadius:'6px', background:'var(--color-surface-2)', border:'1px solid var(--color-border)', display:'flex', alignItems:'center', justifyContent:'center', fontSize:'20px', flexShrink:0 }}>📢</div>
+                    <div style={{ width:'80px', height:'48px', borderRadius:'6px', background:'var(--color-surface-2)', border:'1px solid var(--color-border)', display:'flex', alignItems:'center', justifyContent:'center', flexShrink:0, color:'var(--color-text-dim)' }}><Megaphone size={20}/></div>
                   )}
                   <div style={{ flex:1, minWidth:0 }}>
                     <p style={{ fontSize:'14px', fontWeight:600, color:'var(--color-text)', overflow:'hidden', textOverflow:'ellipsis', whiteSpace:'nowrap' }}>{a.title}</p>
@@ -184,7 +193,7 @@ export default function AdminAdverts() {
                       {a.link_url && <span> · <a href={a.link_url} target="_blank" rel="noopener noreferrer" style={{ color:'var(--color-accent)' }}>Link ↗</a></span>}
                     </p>
                   </div>
-                  <div style={{ display:'flex', alignItems:'center', gap:'8px', flexShrink:0 }}>
+                  <div className="advert-list-actions" style={{ display:'flex', alignItems:'center', gap:'8px', flexShrink:0 }}>
                     <span style={{ fontSize:'11px', fontWeight:600, padding:'3px 10px', borderRadius:'999px', background: a.active?'rgba(52,199,89,0.12)':'rgba(255,59,48,0.1)', color: a.active?'var(--color-success)':'var(--color-live)' }}>{a.active ? 'Active' : 'Inactive'}</span>
                     <button onClick={() => toggleActive(a)} style={{ padding:'5px 12px', borderRadius:'7px', fontSize:'12px', fontWeight:500, cursor:'pointer', background:'var(--color-surface-2)', color:'var(--color-text-muted)', border:'1px solid var(--color-border)' }}>{a.active ? 'Pause' : 'Activate'}</button>
                     <button onClick={() => openEdit(a)} style={{ padding:'5px 12px', borderRadius:'7px', fontSize:'12px', fontWeight:500, cursor:'pointer', background:'var(--color-surface-2)', color:'var(--color-accent)', border:'1px solid var(--color-border)' }}>Edit</button>

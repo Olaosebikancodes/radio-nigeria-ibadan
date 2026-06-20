@@ -26,7 +26,7 @@ export default function About() {
   ]
 
   return (
-    <main style={{ paddingTop:'140px' }}>
+    <main className="inner-page-main" style={{ paddingTop:'140px' }}>
       {/* Hero */}
       <div style={{ background:`linear-gradient(to bottom, rgba(0,92,46,0.15), transparent)`, borderBottom:'1px solid var(--color-border)', padding:'80px 24px 60px' }}>
         <div style={{ maxWidth:'800px', margin:'0 auto', textAlign:'center' }}>
@@ -92,7 +92,13 @@ export default function About() {
         </div>
       </div>
 
-      <style>{`@media(max-width:640px){main>div:nth-child(2)>div{grid-template-columns:1fr !important;}}`}</style>
+      <style>{`
+        @media(max-width:768px){ .inner-page-main { padding-top: 104px !important; } }
+        @media(max-width:400px){ .inner-page-main { padding-top: 88px !important; } }
+        @media(max-width:640px){ main>div:nth-child(2)>div{ grid-template-columns:1fr !important; } }
+        @media(max-width:768px){ main>div:nth-child(4)>div:last-child>div{ grid-template-columns:repeat(2,1fr) !important; } }
+        @media(max-width:480px){ main>div:nth-child(4)>div:last-child>div{ grid-template-columns:1fr !important; } }
+      `}</style>
     </main>
   )
 }

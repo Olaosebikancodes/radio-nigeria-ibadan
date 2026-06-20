@@ -50,8 +50,16 @@ export default function AdminUsers() {
 
   return (
     <AdminLayout>
-      <div style={{ padding:'32px' }}>
-        <div style={{ display:'flex', alignItems:'center', justifyContent:'space-between', marginBottom:'28px' }}>
+      <div className="admin-content">
+        <style>{`
+          .admin-content { padding: 32px; }
+          @media(max-width:640px){ .admin-content { padding: 16px; } }
+          @media(max-width:640px){ .staff-form-grid { grid-template-columns: 1fr !important; } }
+          @media(max-width:640px){ .staff-header { flex-wrap: wrap; gap: 12px; } }
+          @media(max-width:480px){ .staff-row { flex-wrap: wrap; gap: 10px; } }
+          @media(max-width:480px){ .staff-row-right { flex-wrap: wrap; } }
+        `}</style>
+        <div className="staff-header" style={{ display:'flex', alignItems:'center', justifyContent:'space-between', marginBottom:'28px' }}>
           <div>
             <h1 style={{ fontFamily:'var(--font-display)', fontSize:'28px', fontWeight:700, color:'var(--color-text)', letterSpacing:'-0.03em' }}>Staff Accounts</h1>
             <p style={{ fontSize:'13px', color:'var(--color-text-muted)', marginTop:'4px' }}>{staff.length} staff member{staff.length!==1?'s':''}</p>
@@ -73,7 +81,7 @@ export default function AdminUsers() {
         {showForm && (
           <div style={{ background:'var(--color-surface)', borderRadius:'16px', border:'1px solid var(--color-border)', padding:'24px', marginBottom:'24px' }}>
             <h2 style={{ fontFamily:'var(--font-display)', fontSize:'18px', fontWeight:700, color:'var(--color-text)', marginBottom:'20px' }}>New Staff Account</h2>
-            <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:'14px' }}>
+            <div className="staff-form-grid" style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:'14px' }}>
               <div>
                 <label style={{ fontSize:'12px', fontWeight:600, color:'var(--color-text-muted)', display:'block', marginBottom:'6px' }}>Full Name *</label>
                 <input value={form.name} onChange={e=>setForm(f=>({...f,name:e.target.value}))} style={inputStyle} placeholder="John Adebayo" />
@@ -113,7 +121,7 @@ export default function AdminUsers() {
           {loading ? <p style={{padding:'24px',color:'var(--color-text-muted)'}}>Loading…</p>
             : staff.length===0 ? <p style={{padding:'24px',color:'var(--color-text-muted)',textAlign:'center'}}>No staff accounts yet.</p>
             : staff.map(s=>(
-              <div key={s.id} style={{ display:'flex', alignItems:'center', justifyContent:'space-between', padding:'16px 20px', borderBottom:'1px solid var(--color-border)' }}
+              <div key={s.id} className="staff-row" style={{ display:'flex', alignItems:'center', justifyContent:'space-between', padding:'16px 20px', borderBottom:'1px solid var(--color-border)' }}
                 onMouseEnter={e=>e.currentTarget.style.background='var(--color-surface-2)'}
                 onMouseLeave={e=>e.currentTarget.style.background='transparent'}
               >
@@ -126,7 +134,7 @@ export default function AdminUsers() {
                     <p style={{ fontSize:'12px', color:'var(--color-text-dim)', marginTop:'2px' }}>{s.stations?.name ?? 'Zonal (All Stations)'}</p>
                   </div>
                 </div>
-                <div style={{ display:'flex', alignItems:'center', gap:'12px' }}>
+                <div className="staff-row-right" style={{ display:'flex', alignItems:'center', gap:'12px' }}>
                   <span style={{ fontSize:'11px', fontWeight:600, padding:'4px 12px', borderRadius:'999px', background:ROLE_COLORS[s.role], color:ROLE_TEXT[s.role], textTransform:'capitalize' }}>{s.role?.replace('_',' ')}</span>
                   {me?.role==='admin' && s.user_id!==me?.user_id && (
                     <button onClick={()=>removeStaff(s.id,s.name)} style={{ fontSize:'11px', fontWeight:600, color:'var(--color-live)', background:'none', border:'none', cursor:'pointer' }}>Remove</button>

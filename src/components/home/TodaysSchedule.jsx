@@ -32,6 +32,11 @@ export default function TodaysSchedule() {
 
   return (
     <section style={{ maxWidth:'1280px', margin:'0 auto', padding:'80px 24px' }}>
+      <style>{`
+        @media(max-width:480px){ .schedule-station-name { display: none !important; } }
+        @media(max-width:480px){ .schedule-time { min-width: 72px !important; } }
+        @media(max-width:480px){ .schedule-row { padding: 10px 12px !important; gap: 10px !important; } }
+      `}</style>
       <div style={{ display:'flex', alignItems:'flex-end', justifyContent:'space-between', marginBottom:'32px', flexWrap:'wrap', gap:'16px' }}>
         <div>
           <p style={{ fontSize:'11px', fontWeight:600, color:'var(--color-brand-light)', textTransform:'uppercase', letterSpacing:'0.1em', marginBottom:'8px' }}>
@@ -61,14 +66,14 @@ export default function TodaysSchedule() {
             : filtered.map(p => {
                 const live = isOnAir(p.start_time, p.end_time)
                 return (
-                  <div key={p.id} style={{
+                  <div key={p.id} className="schedule-row" style={{
                     display:'flex', alignItems:'center', gap:'16px',
                     padding:'14px 20px', borderRadius:'10px',
                     background: live ? 'rgba(0,92,46,0.1)' : 'var(--color-surface)',
                     border:`1px solid ${live ? 'rgba(0,92,46,0.35)' : 'var(--color-border)'}`,
                     transition:'all 0.2s',
                   }}>
-                    <div style={{ minWidth:'100px' }}>
+                    <div className="schedule-time" style={{ minWidth:'100px' }}>
                       <p style={{ fontSize:'12px', fontWeight:600, color: live ? 'var(--color-accent)' : 'var(--color-text-muted)' }}>
                         {formatTime(p.start_time)} — {formatTime(p.end_time)}
                       </p>
@@ -85,7 +90,7 @@ export default function TodaysSchedule() {
                       </p>
                     </div>
 
-                    <p style={{ fontSize:'11px', color:'var(--color-text-dim)', flexShrink:0 }}>{p.stations?.name}</p>
+                    <p className="schedule-station-name" style={{ fontSize:'11px', color:'var(--color-text-dim)', flexShrink:0 }}>{p.stations?.name}</p>
 
                     {live && <LiveBadge />}
                   </div>

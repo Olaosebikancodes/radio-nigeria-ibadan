@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
+import { Radio } from 'lucide-react'
 import { supabase } from '../../lib/supabase'
 import { timeAgo, truncate } from '../../lib/utils'
 import { Badge } from '../ui/Badge'
@@ -8,7 +9,7 @@ import { ArticleCardSkeleton } from '../ui/Skeleton'
 function ArticleCard({ article }) {
   return (
     <Link to={`/news/${article.slug}`} style={{
-      flex: '0 0 calc(25% - 12px)', display: 'block',
+      flex: '0 0 280px', minWidth: 0, display: 'block',
       background: 'var(--color-surface)', borderRadius: '14px',
       overflow: 'hidden', border: '1px solid var(--color-border)',
       transition: 'all 0.3s var(--ease-out-expo)',
@@ -19,7 +20,7 @@ function ArticleCard({ article }) {
       <div style={{ height: '160px', background: 'var(--color-surface-2)', position: 'relative', overflow: 'hidden' }}>
         {article.cover_image
           ? <img src={article.cover_image} alt={article.title} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
-          : <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100%', opacity: 0.12, fontSize: '32px' }}>📻</div>
+          : <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100%', opacity: 0.2 }}><Radio size={32} color="var(--color-text-dim)"/></div>
         }
         <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to top, rgba(0,0,0,0.5) 0%, transparent 60%)' }} />
       </div>

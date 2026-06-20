@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
+import { MapPin, Play, Pause } from 'lucide-react'
 import { supabase } from '../../lib/supabase'
 import { STATIONS_SEED } from '../../lib/utils'
 import { usePlayer } from '../../context/PlayerContext'
@@ -16,7 +17,12 @@ export default function Stations() {
   }, [])
 
   return (
-    <main style={{ paddingTop:'104px' }}>
+    <main className="inner-page-main">
+      <style>{`
+        .inner-page-main { padding-top: 140px; }
+        @media (max-width: 768px) { .inner-page-main { padding-top: 104px; } }
+        @media (max-width: 400px) { .inner-page-main { padding-top: 88px; } }
+      `}</style>
       <div style={{ background:`linear-gradient(to bottom, rgba(0,92,46,0.12), transparent)`, borderBottom:'1px solid var(--color-border)', padding:'60px 24px 48px' }}>
         <div style={{ maxWidth:'1280px', margin:'0 auto' }}>
           <p style={{ fontSize:'17px', fontWeight:600, color:'var(--color-brand-light)', textTransform:'uppercase', letterSpacing:'0.1em', marginBottom:'10px' }}>FRCN South West Zone</p>
@@ -54,13 +60,13 @@ export default function Stations() {
 
                     <h3 style={{ fontFamily:'var(--font-display)', fontWeight:700, fontSize:'20px', color:'var(--color-text)', letterSpacing:'-0.03em', marginBottom:'6px' }}>{s.name}</h3>
                     <p style={{ fontSize:'17px', color:'var(--color-text-muted)', marginBottom:'4px', fontStyle:'italic' }}>"{s.tagline}"</p>
-                    <p style={{ fontSize:'18px', color:'var(--color-text-dim)', marginBottom:'20px' }}>📍 {s.location}</p>
+                    <p style={{ fontSize:'15px', color:'var(--color-text-dim)', marginBottom:'20px', display:'flex', alignItems:'center', gap:'5px' }}><MapPin size={14}/>{s.location}</p>
 
                     <div style={{ display:'flex', gap:'8px' }}>
-                      <button onClick={()=>play(s)} style={{ flex:1, padding:'10px', borderRadius:'10px', fontSize:'17px', fontWeight:600, cursor:'pointer', background:isPlaying?s.color_hex:`${s.color_hex}15`, color:isPlaying?'#fff':s.color_hex, border:`1px solid ${s.color_hex}44`, transition:'all 0.2s' }}>
-                        {isPlaying ? '❙❙ Pause' : '▶ Listen Live'}
+                      <button onClick={()=>play(s)} style={{ flex:1, padding:'10px', borderRadius:'10px', fontSize:'14px', fontWeight:600, cursor:'pointer', background:isPlaying?s.color_hex:`${s.color_hex}15`, color:isPlaying?'#fff':s.color_hex, border:`1px solid ${s.color_hex}44`, transition:'all 0.2s', display:'flex', alignItems:'center', justifyContent:'center', gap:'6px' }}>
+                        {isPlaying ? <><Pause size={14}/>Pause</> : <><Play size={14}/>Listen Live</>}
                       </button>
-                      <Link to={`/stations/${s.slug}`} style={{ display:'flex', alignItems:'center', justifyContent:'center', padding:'10px 16px', borderRadius:'10px', fontSize:'17px', fontWeight:500, background:'var(--color-surface-2)', color:'var(--color-text-muted)', border:'1px solid var(--color-border)', transition:'all 0.2s' }}>More →</Link>
+                      <Link to={`/stations/${s.slug}`} style={{ display:'flex', alignItems:'center', justifyContent:'center', padding:'10px 14px', borderRadius:'10px', fontSize:'14px', fontWeight:500, background:'var(--color-surface-2)', color:'var(--color-text-muted)', border:'1px solid var(--color-border)', transition:'all 0.2s', whiteSpace:'nowrap' }}>More</Link>
                     </div>
                   </div>
                 )
