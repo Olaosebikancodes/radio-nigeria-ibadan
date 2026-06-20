@@ -74,7 +74,7 @@ export default function TodaysSchedule() {
                     transition:'all 0.2s',
                   }}>
                     <div className="schedule-time" style={{ minWidth:'100px' }}>
-                      <p style={{ fontSize:'12px', fontWeight:600, color: live ? 'var(--color-accent)' : 'var(--color-text-muted)' }}>
+                      <p style={{ fontSize:'15px', fontWeight:600, color: live ? 'var(--color-accent)' : 'var(--color-text-muted)' }}>
                         {formatTime(p.start_time)} — {formatTime(p.end_time)}
                       </p>
                     </div>
@@ -84,13 +84,13 @@ export default function TodaysSchedule() {
                     )}
 
                     <div style={{ flex:1, minWidth:0 }}>
-                      <p style={{ fontWeight:600, fontSize:'14px', color:'var(--color-text)', overflow:'hidden', textOverflow:'ellipsis', whiteSpace:'nowrap' }}>{p.title}</p>
-                      <p style={{ fontSize:'12px', color:'var(--color-text-dim)' }}>
+                      <p style={{ fontWeight:600, fontSize:'17px', color:'var(--color-text)', overflow:'hidden', textOverflow:'ellipsis', whiteSpace:'nowrap' }}>{p.title}</p>
+                      <p style={{ fontSize:'14px', color:'var(--color-text-dim)' }}>
                         {p.host && `Hosted by ${p.host} · `}{p.language && p.language}
                       </p>
                     </div>
 
-                    <p className="schedule-station-name" style={{ fontSize:'11px', color:'var(--color-text-dim)', flexShrink:0 }}>{p.stations?.name}</p>
+                    <p className="schedule-station-name" style={{ fontSize:'14px', color:'var(--color-text-dim)', flexShrink:0 }}>{p.stations?.name}</p>
 
                     {live && <LiveBadge />}
                   </div>

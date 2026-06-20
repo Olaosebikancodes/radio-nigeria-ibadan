@@ -27,9 +27,9 @@ function ArticleCard({ article }) {
       <div style={{ padding: '14px' }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '6px', marginBottom: '8px' }}>
           <Badge label={article.category || 'General'} category={article.category} />
-          <span style={{ fontSize: '10px', color: 'var(--color-text-dim)' }}>{timeAgo(article.published_at || article.created_at)}</span>
+          <span style={{ fontSize: '13px', color: 'var(--color-text-dim)' }}>{timeAgo(article.published_at || article.created_at)}</span>
         </div>
-        <h3 style={{ fontFamily: 'var(--font-display)', fontSize: '14px', fontWeight: 700, color: 'var(--color-text)', lineHeight: 1.35, letterSpacing: '-0.02em' }}>
+        <h3 style={{ fontFamily: 'var(--font-display)', fontSize: '17px', fontWeight: 700, color: 'var(--color-text)', lineHeight: 1.35, letterSpacing: '-0.02em' }}>
           {truncate(article.title, 70)}
         </h3>
       </div>

@@ -39,25 +39,25 @@ function StationChip({ station }) {
         )}
       </div>
 
-      <p style={{ fontSize: '13px', fontWeight: 700, color: 'var(--color-text)', textAlign: 'center', lineHeight: 1.3, letterSpacing: '-0.01em' }}>{station.name.replace(' FM','')}<span style={{ color: station.color }}> FM</span></p>
-      <p style={{ fontSize: '11px', color: 'var(--color-text-dim)', textAlign: 'center', lineHeight: 1.3 }}>{station.location.split(',')[0]}</p>
+      <p style={{ fontSize: '16px', fontWeight: 700, color: 'var(--color-text)', textAlign: 'center', lineHeight: 1.3, letterSpacing: '-0.01em' }}>{station.name.replace(' FM','')}<span style={{ color: station.color }}> FM</span></p>
+      <p style={{ fontSize: '14px', color: 'var(--color-text-dim)', textAlign: 'center', lineHeight: 1.3 }}>{station.location.split(',')[0]}</p>
 
       <div style={{ display: 'flex', gap: '4px', width: '100%' }}>
         <button onClick={() => play(station)} style={{
-          flex: 1, padding: '6px 0', borderRadius: '6px', fontSize: '12px', fontWeight: 700, cursor: 'pointer',
-          display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '4px',
+          flex: 1, padding: '8px 0', borderRadius: '6px', fontSize: '14px', fontWeight: 700, cursor: 'pointer',
+          display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '5px',
           background: isPlaying ? station.color : `${station.color}18`,
           color: isPlaying ? '#fff' : station.color,
           border: `1px solid ${station.color}44`, transition: 'all 0.2s',
         }}>
-          {isPlaying ? <><Pause size={11}/>Pause</> : <><Play size={11}/>Listen</>}
+          {isPlaying ? <><Pause size={13}/>Pause</> : <><Play size={13}/>Listen</>}
         </button>
         <Link to={`/stations/${station.slug}`} onClick={e => e.stopPropagation()} style={{
-          display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '3px',
-          padding: '6px 8px', borderRadius: '6px', fontSize: '12px', fontWeight: 600,
+          display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '4px',
+          padding: '8px 10px', borderRadius: '6px', fontSize: '14px', fontWeight: 600,
           background: 'var(--color-surface-2)', border: '1px solid var(--color-border)',
           color: 'var(--color-text-dim)', transition: 'all 0.2s',
-        }}><MoreHorizontal size={12}/>More</Link>
+        }}><MoreHorizontal size={13}/>More</Link>
       </div>
     </div>
   )

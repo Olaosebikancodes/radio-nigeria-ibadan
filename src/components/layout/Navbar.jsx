@@ -134,7 +134,7 @@ export default function Navbar() {
                 style={({ isActive }) => ({
                   padding: "6px 10px",
                   borderRadius: "8px",
-                  fontSize: "14px",
+                  fontSize: "17px",
                   fontWeight: 500,
                   color: isActive
                     ? "var(--color-accent)"
