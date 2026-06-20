@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+﻿import { useEffect, useState } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import { useEditor, EditorContent } from '@tiptap/react'
 import StarterKit from '@tiptap/starter-kit'
@@ -80,23 +80,21 @@ export default function AdminArticleEditor() {
           <h1 style={{ fontFamily:'var(--font-display)', fontSize:'24px', fontWeight:700, color:'var(--color-text)', letterSpacing:'-0.03em' }}>{isNew ? 'New Article' : 'Edit Article'}</h1>
           <div style={{ display:'flex', gap:'10px' }}>
             <button onClick={()=>save(false)} disabled={saving} style={{ padding:'9px 18px', borderRadius:'8px', fontSize:'13px', fontWeight:600, cursor:'pointer', background:'var(--color-surface-2)', color:'var(--color-text-muted)', border:'1px solid var(--color-border)' }}>Save Draft</button>
-            <button onClick={()=>save(true)} disabled={saving} style={{ padding:'9px 18px', borderRadius:'8px', fontSize:'13px', fontWeight:600, cursor:'pointer', background:'var(--color-brand)', color:'#fff', border:'none' }}>{saving ? 'Saving…' : 'Publish'}</button>
+            <button onClick={()=>save(true)} disabled={saving} style={{ padding:'9px 18px', borderRadius:'8px', fontSize:'13px', fontWeight:600, cursor:'pointer', background:'var(--color-brand)', color:'#fff', border:'none' }}>{saving ? 'Savingâ€¦' : 'Publish'}</button>
           </div>
         </div>
 
         <div className="editor-grid" style={{ display:'grid', gridTemplateColumns:'1fr 280px', gap:'24px' }}>
-          {/* Left — editor */}
           <div style={{ display:'flex', flexDirection:'column', gap:'16px' }}>
             <div>
               <label style={{ fontSize:'12px', fontWeight:600, color:'var(--color-text-muted)', display:'block', marginBottom:'6px' }}>Title *</label>
-              <input value={form.title} onChange={e=>setForm(f=>({...f,title:e.target.value}))} placeholder="Article title…" style={{ ...inputStyle, fontSize:'18px', fontFamily:'var(--font-display)', fontWeight:700 }} />
+              <input value={form.title} onChange={e=>setForm(f=>({...f,title:e.target.value}))} placeholder="Article titleâ€¦" style={{ ...inputStyle, fontSize:'18px', fontFamily:'var(--font-display)', fontWeight:700 }} />
             </div>
             <div>
               <label style={{ fontSize:'12px', fontWeight:600, color:'var(--color-text-muted)', display:'block', marginBottom:'6px' }}>Excerpt</label>
-              <textarea value={form.excerpt} onChange={e=>setForm(f=>({...f,excerpt:e.target.value}))} rows={2} placeholder="Brief summary…" style={{ ...inputStyle, resize:'vertical' }} />
+              <textarea value={form.excerpt} onChange={e=>setForm(f=>({...f,excerpt:e.target.value}))} rows={2} placeholder="Brief summaryâ€¦" style={{ ...inputStyle, resize:'vertical' }} />
             </div>
 
-            {/* Toolbar */}
             <div>
               <label style={{ fontSize:'12px', fontWeight:600, color:'var(--color-text-muted)', display:'block', marginBottom:'6px' }}>Content</label>
               <div style={{ display:'flex', gap:'4px', flexWrap:'wrap', padding:'8px', background:'var(--color-surface-2)', borderRadius:'10px 10px 0 0', border:'1px solid var(--color-border)', borderBottom:'none' }}>
@@ -108,7 +106,7 @@ export default function AdminArticleEditor() {
                   { label:'UL',   action:()=>editor?.chain().focus().toggleBulletList().run() },
                   { label:'OL',   action:()=>editor?.chain().focus().toggleOrderedList().run() },
                   { label:'" "',  action:()=>editor?.chain().focus().toggleBlockquote().run() },
-                  { label:'—',    action:()=>editor?.chain().focus().setHorizontalRule().run() },
+                  { label:'â€”',    action:()=>editor?.chain().focus().setHorizontalRule().run() },
                 ].map(btn=>(
                   <button key={btn.label} onClick={btn.action} style={{ padding:'4px 10px', borderRadius:'6px', fontSize:'12px', fontWeight:600, cursor:'pointer', background:'var(--color-surface)', color:'var(--color-text-muted)', border:'1px solid var(--color-border)' }}>{btn.label}</button>
                 ))}
@@ -119,7 +117,6 @@ export default function AdminArticleEditor() {
             </div>
           </div>
 
-          {/* Right — meta */}
           <div style={{ display:'flex', flexDirection:'column', gap:'16px' }}>
             <div style={{ background:'var(--color-surface)', borderRadius:'12px', border:'1px solid var(--color-border)', padding:'16px', display:'flex', flexDirection:'column', gap:'14px' }}>
               <div>
@@ -139,7 +136,7 @@ export default function AdminArticleEditor() {
                 <label style={{ fontSize:'12px', fontWeight:600, color:'var(--color-text-muted)', display:'block', marginBottom:'6px' }}>Cover Image</label>
                 {form.cover_image && <img src={form.cover_image} alt="Cover" style={{ width:'100%', height:'100px', objectFit:'cover', borderRadius:'8px', marginBottom:'8px' }} />}
                 <input type="file" accept="image/*" onChange={handleImageUpload} style={{ fontSize:'12px', color:'var(--color-text-muted)', width:'100%' }} />
-                {uploading && <p style={{ fontSize:'11px', color:'var(--color-text-dim)', marginTop:'4px' }}>Uploading…</p>}
+                {uploading && <p style={{ fontSize:'11px', color:'var(--color-text-dim)', marginTop:'4px' }}>Uploadingâ€¦</p>}
               </div>
             </div>
           </div>

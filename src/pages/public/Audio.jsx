@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+﻿import { useEffect, useState } from 'react'
 import { supabase } from '../../lib/supabase'
 import { formatDuration, timeAgo } from '../../lib/utils'
 import { usePlayer } from '../../context/PlayerContext'
@@ -18,17 +18,16 @@ function AudioCard({ item }) {
       onMouseEnter={e=>{ if (!isActive) e.currentTarget.style.borderColor='var(--color-border-light)' }}
       onMouseLeave={e=>{ if (!isActive) e.currentTarget.style.borderColor='var(--color-border)' }}
     >
-      {/* Cover */}
       <div style={{ height:'140px', background:'var(--color-surface-2)', position:'relative', overflow:'hidden' }}>
         {item.cover_image
           ? <img src={item.cover_image} alt={item.title} style={{width:'100%',height:'100%',objectFit:'cover'}}/>
-          : <div style={{display:'flex',alignItems:'center',justifyContent:'center',height:'100%',opacity:0.15,fontSize:'36px'}}>🎙️</div>
+          : <div style={{display:'flex',alignItems:'center',justifyContent:'center',height:'100%',opacity:0.15,fontSize:'36px'}}>ðŸŽ™ï¸</div>
         }
         <button onClick={handlePlay} style={{ position:'absolute', inset:0, display:'flex', alignItems:'center', justifyContent:'center', background:'rgba(0,0,0,0.35)', border:'none', cursor:'pointer', opacity: isPlaying ? 1 : 0, transition:'opacity 0.2s' }}
           onMouseEnter={e=>e.currentTarget.style.opacity=1}
           onMouseLeave={e=>{ if (!isPlaying) e.currentTarget.style.opacity=0 }}
         >
-          <div style={{ width:'48px', height:'48px', borderRadius:'50%', background:'var(--color-brand)', display:'flex', alignItems:'center', justifyContent:'center', fontSize:'18px', color:'#fff' }}>{isPlaying ? '❙❙' : '▶'}</div>
+          <div style={{ width:'48px', height:'48px', borderRadius:'50%', background:'var(--color-brand)', display:'flex', alignItems:'center', justifyContent:'center', fontSize:'18px', color:'#fff' }}>{isPlaying ? 'â™â™' : 'â–¶'}</div>
         </button>
         {isPlaying && (
           <div style={{ position:'absolute', bottom:'8px', left:'8px', display:'flex', alignItems:'flex-end', gap:'2px', height:'16px' }}>
@@ -37,22 +36,20 @@ function AudioCard({ item }) {
         )}
       </div>
 
-      {/* Info */}
       <div style={{ padding:'16px', flex:1, display:'flex', flexDirection:'column', gap:'6px' }}>
         <p style={{ fontFamily:'var(--font-display)', fontWeight:700, fontSize:'15px', color:'var(--color-text)', lineHeight:1.3 }}>{item.title}</p>
-        {item.description && <p style={{ fontSize:'12px', color:'var(--color-text-muted)', lineHeight:1.6 }}>{item.description.slice(0,80)}…</p>}
+        {item.description && <p style={{ fontSize:'12px', color:'var(--color-text-muted)', lineHeight:1.6 }}>{item.description.slice(0,80)}â€¦</p>}
         <div style={{ display:'flex', alignItems:'center', justifyContent:'space-between', marginTop:'auto', paddingTop:'8px' }}>
           <p style={{ fontSize:'11px', color:'var(--color-text-dim)' }}>{item.stations?.name || 'Radio Nigeria'}</p>
           <div style={{ display:'flex', gap:'8px' }}>
-            {item.duration_sec && <span style={{ fontSize:'11px', color:'var(--color-text-dim)' }}>⏱ {formatDuration(item.duration_sec)}</span>}
+            {item.duration_sec && <span style={{ fontSize:'11px', color:'var(--color-text-dim)' }}>â± {formatDuration(item.duration_sec)}</span>}
             <span style={{ fontSize:'11px', color:'var(--color-text-dim)' }}>{timeAgo(item.published_at||item.created_at)}</span>
           </div>
         </div>
       </div>
 
-      {/* Play button */}
       <button onClick={handlePlay} style={{ margin:'0 16px 16px', padding:'9px', borderRadius:'8px', fontSize:'13px', fontWeight:600, cursor:'pointer', background:isPlaying?'var(--color-brand)':'var(--color-surface-2)', color:isPlaying?'#fff':'var(--color-text-muted)', border:'1px solid var(--color-border)', transition:'all 0.2s' }}>
-        {isPlaying ? '❙❙  Pause' : '▶  Play Episode'}
+        {isPlaying ? 'â™â™  Pause' : 'â–¶  Play Episode'}
       </button>
     </div>
   )
@@ -93,7 +90,7 @@ export default function Audio() {
         </div>
 
         {loading
-          ? <p style={{color:'var(--color-text-muted)'}}>Loading audio…</p>
+          ? <p style={{color:'var(--color-text-muted)'}}>Loading audioâ€¦</p>
           : filtered.length===0
             ? <p style={{color:'var(--color-text-muted)',textAlign:'center',padding:'60px 0'}}>No audio content available yet.</p>
             : <div style={{ display:'grid', gridTemplateColumns:'repeat(auto-fill,minmax(260px,1fr))', gap:'16px' }}>

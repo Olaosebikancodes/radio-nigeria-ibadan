@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+﻿import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { Megaphone, CheckCircle, Radio } from 'lucide-react'
 import { supabase } from '../../lib/supabase'
@@ -13,9 +13,9 @@ function StatCard({ label, value, icon, color, to }) {
     >
       <div style={{ display:'flex', alignItems:'flex-start', justifyContent:'space-between', marginBottom:'16px' }}>
         <div style={{ width:'40px', height:'40px', borderRadius:'10px', background:`${color}20`, display:'flex', alignItems:'center', justifyContent:'center', color }}>{icon}</div>
-        <span style={{ fontSize:'11px', color:'var(--color-text-dim)', fontWeight:500 }}>View all →</span>
+        <span style={{ fontSize:'11px', color:'var(--color-text-dim)', fontWeight:500 }}>View all â†’</span>
       </div>
-      <p style={{ fontFamily:'var(--font-display)', fontWeight:900, fontSize:'32px', color:'var(--color-text)', letterSpacing:'-0.04em' }}>{value ?? '—'}</p>
+      <p style={{ fontFamily:'var(--font-display)', fontWeight:900, fontSize:'32px', color:'var(--color-text)', letterSpacing:'-0.04em' }}>{value ?? 'â€”'}</p>
       <p style={{ fontSize:'13px', color:'var(--color-text-muted)', marginTop:'4px' }}>{label}</p>
     </Link>
   )
@@ -59,7 +59,6 @@ export default function AdminDashboard() {
           <p style={{ fontSize:'13px', color:'var(--color-text-muted)', marginTop:'4px' }}>{new Date().toLocaleDateString('en-NG',{weekday:'long',day:'numeric',month:'long',year:'numeric'})}</p>
         </div>
 
-        {/* Stats */}
         <div className="admin-stat-grid" style={{ display:'grid', gridTemplateColumns:'repeat(auto-fill,minmax(200px,1fr))', gap:'16px', marginBottom:'40px' }}>
           {loading ? Array(3).fill(0).map((_,i)=><Skeleton key={i} height="130px" radius="14px"/>) : <>
             <StatCard label="Total Adverts"   value={stats.totalAdverts}  icon={<Megaphone size={18}/>}    color="#F39C12" to="/admin/adverts" />
@@ -68,7 +67,6 @@ export default function AdminDashboard() {
           </>}
         </div>
 
-        {/* Recent adverts */}
         <div style={{ background:'var(--color-surface)', borderRadius:'16px', border:'1px solid var(--color-border)', overflow:'hidden' }}>
           <div style={{ padding:'20px 24px', borderBottom:'1px solid var(--color-border)', display:'flex', alignItems:'center', justifyContent:'space-between' }}>
             <h2 style={{ fontFamily:'var(--font-display)', fontSize:'16px', fontWeight:700, color:'var(--color-text)' }}>Recent Adverts</h2>
@@ -80,7 +78,7 @@ export default function AdminDashboard() {
               <div key={a.id} style={{ display:'flex', alignItems:'center', justifyContent:'space-between', padding:'14px 24px', borderBottom:'1px solid var(--color-border)', gap:'12px', flexWrap:'wrap' }}>
                 <div style={{ minWidth:0, flex:1 }}>
                   <p style={{ fontSize:'14px', fontWeight:500, color:'var(--color-text)', overflow:'hidden', textOverflow:'ellipsis', whiteSpace:'nowrap' }}>{a.title}</p>
-                  <p style={{ fontSize:'11px', color:'var(--color-text-dim)', marginTop:'2px' }}>{a.stations?.name ?? 'All Stations'} · {new Date(a.created_at).toLocaleDateString('en-NG')}</p>
+                  <p style={{ fontSize:'11px', color:'var(--color-text-dim)', marginTop:'2px' }}>{a.stations?.name ?? 'All Stations'} Â· {new Date(a.created_at).toLocaleDateString('en-NG')}</p>
                 </div>
                 <span style={{ fontSize:'11px', fontWeight:600, padding:'3px 10px', borderRadius:'999px', background: a.active?'rgba(52,199,89,0.12)':'rgba(255,59,48,0.1)', color: a.active?'var(--color-success)':'var(--color-live)', flexShrink:0 }}>{a.active ? 'Active' : 'Inactive'}</span>
               </div>

@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+﻿import { useEffect, useState } from 'react'
 import { useParams, Link } from 'react-router-dom'
 import { MapPin, Play, Pause, Radio as RadioIcon } from 'lucide-react'
 import { supabase } from '../../lib/supabase'
@@ -54,7 +54,7 @@ export default function StationDetail() {
   }, [slug])
 
   if (loading) return <main style={{ paddingTop:'104px', maxWidth:'1280px', margin:'0 auto', padding:'100px 24px' }}><Skeleton height="60px" width="50%" style={{marginBottom:'16px'}}/><Skeleton height="20px" width="30%"/></main>
-  if (!station) return <main style={{ paddingTop:'104px', display:'flex', flexDirection:'column', alignItems:'center', justifyContent:'center', minHeight:'60vh', gap:'16px' }}><RadioIcon size={48} color="var(--color-text-dim)"/><h2 style={{fontFamily:'var(--font-display)',fontSize:'28px',color:'var(--color-text)'}}>Station not found</h2><Link to="/stations" style={{color:'var(--color-accent)',fontSize:'18px'}}>← All Stations</Link></main>
+  if (!station) return <main style={{ paddingTop:'104px', display:'flex', flexDirection:'column', alignItems:'center', justifyContent:'center', minHeight:'60vh', gap:'16px' }}><RadioIcon size={48} color="var(--color-text-dim)"/><h2 style={{fontFamily:'var(--font-display)',fontSize:'28px',color:'var(--color-text)'}}>Station not found</h2><Link to="/stations" style={{color:'var(--color-accent)',fontSize:'18px'}}>â† All Stations</Link></main>
 
   const isActive  = activeStation?.id === station.id
   const isPlaying = isActive && playing
@@ -69,10 +69,9 @@ export default function StationDetail() {
         @media(max-width:640px){ .station-detail-actions { flex-direction: column !important; align-items: stretch !important; } }
         @media(max-width:600px){ .advert-grid { grid-template-columns: 1fr !important; } }
       `}</style>
-      {/* Hero */}
       <div style={{ background:`linear-gradient(135deg, ${station.color_hex}22 0%, rgba(0,0,0,0) 60%), var(--color-surface)`, borderBottom:'1px solid var(--color-border)', padding:'48px 24px 40px' }}>
         <div style={{ maxWidth:'1280px', margin:'0 auto' }}>
-          <Link to="/stations" style={{ fontSize:'18px', color:'var(--color-text-dim)', display:'inline-flex', alignItems:'center', gap:'6px', marginBottom:'24px' }}>← All Stations</Link>
+          <Link to="/stations" style={{ fontSize:'18px', color:'var(--color-text-dim)', display:'inline-flex', alignItems:'center', gap:'6px', marginBottom:'24px' }}>â† All Stations</Link>
           <div style={{ display:'flex', alignItems:'center', gap:'20px', marginBottom:'16px' }}>
             <div style={{ width:'80px', height:'80px', borderRadius:'18px', background:`${station.color_hex}18`, border:`2px solid ${station.color_hex}44`, display:'flex', alignItems:'center', justifyContent:'center', overflow:'hidden', flexShrink:0 }}>
               {station.cover_image
@@ -104,7 +103,6 @@ export default function StationDetail() {
       </div>
 
       <div style={{ maxWidth:'1280px', margin:'0 auto', padding:'48px 24px 80px' }}>
-        {/* About */}
         <div style={{ marginBottom:'40px' }}>
           <h2 style={{ fontFamily:'var(--font-display)', fontSize:'22px', fontWeight:700, color:'var(--color-text)', marginBottom:'12px', letterSpacing:'-0.03em' }}>About {station.name}</h2>
           {station.description
@@ -113,7 +111,6 @@ export default function StationDetail() {
           }
         </div>
 
-        {/* Social media */}
         {(station.social_facebook || station.social_youtube) && (
           <div style={{ marginBottom:'40px' }}>
             <h2 style={{ fontFamily:'var(--font-display)', fontSize:'22px', fontWeight:700, color:'var(--color-text)', marginBottom:'16px', letterSpacing:'-0.03em' }}>Follow {station.name}</h2>
@@ -140,7 +137,6 @@ export default function StationDetail() {
           </div>
         )}
 
-        {/* Adverts */}
         {adverts.length > 0 && (
           <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:'20px' }} className="advert-grid">
             {adverts.map(ad => <AdvertCard key={ad.id} ad={ad} />)}

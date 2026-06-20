@@ -1,15 +1,15 @@
-import { lazy, Suspense } from 'react'
+﻿import { lazy, Suspense } from 'react'
 import { Routes, Route, Navigate } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
 
-// Public pages — lazy loaded
+// Public pages â€” lazy loaded
 const Home           = lazy(() => import('../pages/public/Home'))
 const About          = lazy(() => import('../pages/public/About'))
 const Stations       = lazy(() => import('../pages/public/Stations'))
 const StationDetail  = lazy(() => import('../pages/public/StationDetail'))
 const Contact        = lazy(() => import('../pages/public/Contact'))
 
-// Admin pages — lazy loaded
+// Admin pages â€” lazy loaded
 const AdminLogin      = lazy(() => import('../pages/admin/AdminLogin'))
 const AdminDashboard  = lazy(() => import('../pages/admin/AdminDashboard'))
 const AdminAdverts    = lazy(() => import('../pages/admin/AdminAdverts'))
@@ -35,21 +35,18 @@ export default function AppRoutes() {
   return (
     <Suspense fallback={<PageLoader />}>
       <Routes>
-        {/* Public */}
         <Route path="/"               element={<Home />} />
         <Route path="/about"          element={<About />} />
         <Route path="/stations"       element={<Stations />} />
         <Route path="/stations/:slug" element={<StationDetail />} />
         <Route path="/contact"        element={<Contact />} />
 
-        {/* Admin */}
         <Route path="/admin/login"    element={<AdminLogin />} />
         <Route path="/admin"          element={<ProtectedRoute><AdminDashboard /></ProtectedRoute>} />
         <Route path="/admin/adverts"  element={<ProtectedRoute><AdminAdverts /></ProtectedRoute>} />
         <Route path="/admin/stations" element={<ProtectedRoute><AdminStations /></ProtectedRoute>} />
         <Route path="/admin/users"    element={<ProtectedRoute><AdminUsers /></ProtectedRoute>} />
 
-        {/* Catch-all */}
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     </Suspense>

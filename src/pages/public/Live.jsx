@@ -1,11 +1,11 @@
-import { useEffect, useState } from 'react'
+﻿import { useEffect, useState } from 'react'
 import { supabase } from '../../lib/supabase'
 import { STATIONS_SEED } from '../../lib/utils'
 import { usePlayer } from '../../context/PlayerContext'
 import { LiveBadge } from '../../components/ui/Badge'
 
 function VolumeIcon({ level }) {
-  return level > 0.5 ? '🔊' : level > 0 ? '🔉' : '🔇'
+  return level > 0.5 ? 'ðŸ”Š' : level > 0 ? 'ðŸ”‰' : 'ðŸ”‡'
 }
 
 function PlayerCard({ station }) {
@@ -22,10 +22,8 @@ function PlayerCard({ station }) {
       boxShadow: isActive ? `0 0 40px ${station.color_hex}22, var(--shadow-card)` : 'var(--shadow-card)',
       position:'relative', overflow:'hidden',
     }}>
-      {/* Glow blob */}
       <div style={{ position:'absolute', top:'-40px', right:'-40px', width:'160px', height:'160px', borderRadius:'50%', background:station.color_hex, opacity:isActive ? 0.12 : 0.04, filter:'blur(40px)', transition:'opacity 0.4s' }} />
 
-      {/* Header */}
       <div style={{ display:'flex', alignItems:'flex-start', justifyContent:'space-between', marginBottom:'24px' }}>
         <div style={{ display:'flex', alignItems:'center', gap:'14px' }}>
           <div style={{
@@ -43,10 +41,8 @@ function PlayerCard({ station }) {
         {isActive && <LiveBadge />}
       </div>
 
-      {/* Location */}
-      <p style={{ fontSize:'12px', color:'var(--color-text-dim)', marginBottom:'20px' }}>📍 {station.location}</p>
+      <p style={{ fontSize:'12px', color:'var(--color-text-dim)', marginBottom:'20px' }}>ðŸ“ {station.location}</p>
 
-      {/* Waveform visual (when playing) */}
       {isPlaying && (
         <div style={{ display:'flex', alignItems:'flex-end', gap:'3px', height:'32px', marginBottom:'20px' }}>
           {Array.from({length:20}).map((_,i) => (
@@ -62,7 +58,6 @@ function PlayerCard({ station }) {
         </div>
       )}
 
-      {/* Controls */}
       <div style={{ display:'flex', flexDirection:'column', gap:'12px' }}>
         <button onClick={() => hasStream ? (isActive ? (isPlaying ? stop() : play(station)) : play(station)) : null}
           disabled={!hasStream}
@@ -78,10 +73,9 @@ function PlayerCard({ station }) {
           onMouseEnter={e=>{ if(hasStream && !isPlaying) { e.currentTarget.style.background=`${station.color_hex}33` }}}
           onMouseLeave={e=>{ if(!isPlaying) { e.currentTarget.style.background=`${station.color_hex}22` }}}
         >
-          {!hasStream ? 'Stream unavailable' : isPlaying ? '❙❙  Pause Stream' : '▶  Play Stream'}
+          {!hasStream ? 'Stream unavailable' : isPlaying ? 'â™â™  Pause Stream' : 'â–¶  Play Stream'}
         </button>
 
-        {/* Volume */}
         {isActive && (
           <div style={{ display:'flex', alignItems:'center', gap:'10px' }}>
             <span style={{ fontSize:'14px' }}><VolumeIcon level={volume} /></span>
@@ -108,7 +102,6 @@ export default function Live() {
 
   return (
     <main style={{ paddingTop:'68px' }}>
-      {/* Header */}
       <div style={{ background:`linear-gradient(to bottom, rgba(0,92,46,0.15), transparent)`, borderBottom:'1px solid var(--color-border)', padding:'60px 24px 48px' }}>
         <div style={{ maxWidth:'1280px', margin:'0 auto' }}>
           <div style={{ display:'inline-flex', alignItems:'center', gap:'8px', marginBottom:'16px',
@@ -120,15 +113,14 @@ export default function Live() {
             Listen Live
           </h1>
           <p style={{ fontSize:'16px', color:'var(--color-text-muted)', maxWidth:'520px' }}>
-            Stream any of our 7 FM stations live. Pick a station, hit play — it's that simple.
+            Stream any of our 7 FM stations live. Pick a station, hit play â€” it's that simple.
           </p>
         </div>
       </div>
 
-      {/* Grid */}
       <div style={{ maxWidth:'1280px', margin:'0 auto', padding:'48px 24px 80px' }}>
         {loading
-          ? <p style={{ color:'var(--color-text-muted)' }}>Loading stations…</p>
+          ? <p style={{ color:'var(--color-text-muted)' }}>Loading stationsâ€¦</p>
           : <div style={{ display:'grid', gridTemplateColumns:'repeat(auto-fill, minmax(300px, 1fr))', gap:'20px' }}>
               {stations.map(s => <PlayerCard key={s.id ?? s.slug} station={s} />)}
             </div>

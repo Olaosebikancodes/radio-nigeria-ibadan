@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+﻿import { useEffect, useState } from 'react'
 import { supabase } from '../../lib/supabase'
 import { DAYS, formatTime, isOnAir } from '../../lib/utils'
 import { LiveBadge } from '../../components/ui/Badge'
@@ -33,7 +33,6 @@ export default function Programmes() {
           <p style={{ fontSize:'11px', fontWeight:600, color:'var(--color-brand-light)', textTransform:'uppercase', letterSpacing:'0.1em', marginBottom:'10px' }}>On Air</p>
           <h1 style={{ fontFamily:'var(--font-display)', fontSize:'clamp(32px,5vw,56px)', fontWeight:900, color:'var(--color-text)', letterSpacing:'-0.04em', marginBottom:'28px' }}>Programme Schedule</h1>
 
-          {/* Day tabs */}
           <div style={{ display:'flex', gap:'6px', flexWrap:'wrap' }}>
             {DAYS.map(d => (
               <button key={d} onClick={() => setDay(d)} style={{
@@ -50,7 +49,6 @@ export default function Programmes() {
       </div>
 
       <div style={{ maxWidth:'1280px', margin:'0 auto', padding:'32px 24px 80px' }}>
-        {/* Station filter */}
         <div style={{ display:'flex', gap:'8px', flexWrap:'wrap', marginBottom:'28px' }}>
           {[{ id:'all', name:'All Stations' }, ...stations].map(s => (
             <button key={s.id} onClick={() => setStationId(s.id)} style={{
@@ -63,16 +61,13 @@ export default function Programmes() {
           ))}
         </div>
 
-        {/* Table */}
         <div style={{ background:'var(--color-surface)', borderRadius:'16px', border:'1px solid var(--color-border)', overflow:'hidden' }}>
-          {/* Desktop header */}
           <div className="prog-header" style={{ display:'grid', gridTemplateColumns:'140px 8px 1fr 140px 120px', gap:'0 16px', padding:'12px 24px', background:'var(--color-surface-2)', borderBottom:'1px solid var(--color-border)' }}>
             {['Time', '', 'Programme', 'Host', 'Station'].map(h => (
               <p key={h} style={{ fontSize:'10px', fontWeight:700, color:'var(--color-text-dim)', textTransform:'uppercase', letterSpacing:'0.08em' }}>{h}</p>
             ))}
           </div>
 
-          {/* Rows */}
           {loading
             ? Array(8).fill(0).map((_,i) => <div key={i} style={{ padding:'14px 24px' }}><Skeleton height="20px" /></div>)
             : filtered.length === 0
@@ -92,17 +87,17 @@ export default function Programmes() {
                       onMouseLeave={e=>{ if(!live) e.currentTarget.style.background=live?'rgba(0,92,46,0.08)':'transparent' }}
                     >
                       <p className="prog-time" style={{ fontSize:'12px', fontWeight:600, color: live ? 'var(--color-accent)' : 'var(--color-text-muted)' }}>
-                        {formatTime(p.start_time)} — {formatTime(p.end_time)}
+                        {formatTime(p.start_time)} â€” {formatTime(p.end_time)}
                       </p>
                       <div className="prog-dot" style={{ width:'4px', height:'4px', borderRadius:'50%', background: stationColor, justifySelf:'center' }} />
                       <div className="prog-main">
                         <p style={{ fontWeight:600, fontSize:'14px', color:'var(--color-text)', overflow:'hidden', textOverflow:'ellipsis', whiteSpace:'nowrap' }}>{p.title}</p>
                         <p className="prog-host-mobile" style={{ display:'none', fontSize:'11px', color:'var(--color-text-muted)', marginTop:'2px' }}>{p.host || p.stations?.name || ''}</p>
                       </div>
-                      <p className="prog-host" style={{ fontSize:'12px', color:'var(--color-text-muted)', overflow:'hidden', textOverflow:'ellipsis', whiteSpace:'nowrap' }}>{p.host || '—'}</p>
+                      <p className="prog-host" style={{ fontSize:'12px', color:'var(--color-text-muted)', overflow:'hidden', textOverflow:'ellipsis', whiteSpace:'nowrap' }}>{p.host || 'â€”'}</p>
                       <div className="prog-station" style={{ display:'flex', alignItems:'center', gap:'6px' }}>
                         {live && <LiveBadge />}
-                        <p style={{ fontSize:'11px', color:'var(--color-text-dim)', overflow:'hidden', textOverflow:'ellipsis', whiteSpace:'nowrap' }}>{p.stations?.name || '—'}</p>
+                        <p style={{ fontSize:'11px', color:'var(--color-text-dim)', overflow:'hidden', textOverflow:'ellipsis', whiteSpace:'nowrap' }}>{p.stations?.name || 'â€”'}</p>
                       </div>
                     </div>
                   )

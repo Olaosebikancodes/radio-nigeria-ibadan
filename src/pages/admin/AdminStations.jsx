@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+﻿import { useEffect, useState } from 'react'
 import { supabase } from '../../lib/supabase'
 import AdminLayout from '../../components/layout/AdminLayout'
 import { useAuth } from '../../context/AuthContext'
@@ -51,7 +51,6 @@ export default function AdminStations() {
         <div style={{ display:'flex', flexDirection:'column', gap:'16px' }}>
           {stations.map(s => (
             <div key={s.id} style={{ background:'var(--color-surface)', borderRadius:'14px', border:`1px solid ${editing===s.id?s.color_hex+'55':'var(--color-border)'}`, overflow:'hidden', transition:'border-color 0.2s' }}>
-              {/* Header row */}
               <div style={{ display:'flex', alignItems:'center', justifyContent:'space-between', padding:'18px 20px', cursor: isAdmin||s.id===staff?.station_id?'pointer':'default' }} onClick={()=>{ if(!isAdmin&&s.id!==staff?.station_id) return; editing===s.id?setEditing(null):startEdit(s) }}>
                 <div style={{ display:'flex', alignItems:'center', gap:'14px' }}>
                   <div style={{ width:'40px', height:'40px', borderRadius:'10px', background:`${s.color_hex}25`, border:`1px solid ${s.color_hex}40`, display:'flex', alignItems:'center', justifyContent:'center' }}>
@@ -59,15 +58,14 @@ export default function AdminStations() {
                   </div>
                   <div>
                     <p style={{ fontSize:'15px', fontWeight:700, color:'var(--color-text)', fontFamily:'var(--font-display)' }}>{s.name}</p>
-                    <p style={{ fontSize:'12px', color:'var(--color-text-muted)' }}>{s.location} · <span style={{ color: s.stream_url ? 'var(--color-success)' : 'var(--color-live)', fontWeight:600 }}>{s.stream_url ? '● Stream set' : '● No stream URL'}</span></p>
+                    <p style={{ fontSize:'12px', color:'var(--color-text-muted)' }}>{s.location} Â· <span style={{ color: s.stream_url ? 'var(--color-success)' : 'var(--color-live)', fontWeight:600 }}>{s.stream_url ? 'â— Stream set' : 'â— No stream URL'}</span></p>
                   </div>
                 </div>
                 {(isAdmin || s.id===staff?.station_id) && (
-                  <span style={{ fontSize:'12px', color:'var(--color-accent)', fontWeight:600 }}>{editing===s.id ? 'Cancel ✕' : 'Edit →'}</span>
+                  <span style={{ fontSize:'12px', color:'var(--color-accent)', fontWeight:600 }}>{editing===s.id ? 'Cancel âœ•' : 'Edit â†’'}</span>
                 )}
               </div>
 
-              {/* Edit form */}
               {editing===s.id && (
                 <div style={{ borderTop:'1px solid var(--color-border)', padding:'20px', display:'flex', flexDirection:'column', gap:'14px' }}>
                   <div className="station-edit-grid" style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:'14px' }}>
@@ -94,7 +92,7 @@ export default function AdminStations() {
                     </div>
                     <div style={{ gridColumn:'span 2' }}>
                       <label style={{ fontSize:'12px', fontWeight:600, color:'var(--color-text-muted)', display:'block', marginBottom:'6px' }}>Description</label>
-                      <textarea value={form.description||''} onChange={e=>setForm(f=>({...f,description:e.target.value}))} rows={3} style={{ ...inputStyle, resize:'vertical' }} placeholder="About this station…" />
+                      <textarea value={form.description||''} onChange={e=>setForm(f=>({...f,description:e.target.value}))} rows={3} style={{ ...inputStyle, resize:'vertical' }} placeholder="About this stationâ€¦" />
                     </div>
                     <div>
                       <label style={{ fontSize:'12px', fontWeight:600, color:'var(--color-text-muted)', display:'block', marginBottom:'6px' }}>Brand Color</label>
@@ -105,7 +103,6 @@ export default function AdminStations() {
                     </div>
                   </div>
 
-                  {/* Social media */}
                   <div style={{ borderTop:'1px solid var(--color-border)', paddingTop:'14px' }}>
                     <p style={{ fontSize:'12px', fontWeight:700, color:'var(--color-text-dim)', textTransform:'uppercase', letterSpacing:'0.08em', marginBottom:'12px' }}>Social Media Handles</p>
                     <div className="social-grid" style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:'14px' }}>
@@ -120,7 +117,7 @@ export default function AdminStations() {
                     </div>
                   </div>
                   <div style={{ display:'flex', gap:'10px', paddingTop:'4px' }}>
-                    <button onClick={save} disabled={saving} style={{ padding:'10px 20px', borderRadius:'8px', fontSize:'13px', fontWeight:600, cursor:'pointer', background:'var(--color-brand)', color:'#fff', border:'none', opacity:saving?0.6:1 }}>{saving?'Saving…':'Save Changes'}</button>
+                    <button onClick={save} disabled={saving} style={{ padding:'10px 20px', borderRadius:'8px', fontSize:'13px', fontWeight:600, cursor:'pointer', background:'var(--color-brand)', color:'#fff', border:'none', opacity:saving?0.6:1 }}>{saving?'Savingâ€¦':'Save Changes'}</button>
                     <button onClick={()=>{setEditing(null);setForm({})}} style={{ padding:'10px 20px', borderRadius:'8px', fontSize:'13px', fontWeight:600, cursor:'pointer', background:'var(--color-surface-2)', color:'var(--color-text-muted)', border:'1px solid var(--color-border)' }}>Cancel</button>
                   </div>
                 </div>

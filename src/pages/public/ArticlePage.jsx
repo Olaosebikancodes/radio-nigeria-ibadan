@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+﻿import { useEffect, useState } from 'react'
 import { useParams, Link } from 'react-router-dom'
 import { supabase } from '../../lib/supabase'
 import { formatDate, timeAgo } from '../../lib/utils'
@@ -16,9 +16,9 @@ function ShareBar({ title }) {
   }
 
   const shareButtons = [
-    { label: 'X / Twitter', icon: '𝕏', href: `https://twitter.com/intent/tweet?url=${encoded}&text=${text}`, color: '#000' },
+    { label: 'X / Twitter', icon: 'ð•', href: `https://twitter.com/intent/tweet?url=${encoded}&text=${text}`, color: '#000' },
     { label: 'Facebook', icon: 'f', href: `https://www.facebook.com/sharer/sharer.php?u=${encoded}`, color: '#1877F2' },
-    { label: 'WhatsApp', icon: '💬', href: `https://wa.me/?text=${text}%20${encoded}`, color: '#25D366' },
+    { label: 'WhatsApp', icon: 'ðŸ’¬', href: `https://wa.me/?text=${text}%20${encoded}`, color: '#25D366' },
   ]
 
   return (
@@ -35,7 +35,7 @@ function ShareBar({ title }) {
         style={{ display:'inline-flex', alignItems:'center', justifyContent:'center', width:'30px', height:'30px', borderRadius:'8px', background:'var(--color-surface-2)', border:'1px solid var(--color-border)', fontSize:'13px', cursor:'pointer', color:'var(--color-text)', transition:'background 0.15s' }}
         onMouseEnter={e=>{ e.currentTarget.style.background='var(--color-surface-3)' }}
         onMouseLeave={e=>{ e.currentTarget.style.background='var(--color-surface-2)' }}
-      >🔗</button>
+      >ðŸ”—</button>
     </div>
   )
 }
@@ -78,15 +78,14 @@ export default function ArticlePage() {
 
   if (notFound) return (
     <main style={{ paddingTop:'104px', display:'flex', flexDirection:'column', alignItems:'center', justifyContent:'center', minHeight:'60vh', gap:'16px' }}>
-      <p style={{ fontSize:'48px' }}>📰</p>
+      <p style={{ fontSize:'48px' }}>ðŸ“°</p>
       <h2 style={{ fontFamily:'var(--font-display)', fontSize:'28px', color:'var(--color-text)' }}>Article not found</h2>
-      <Link to="/news" style={{ color:'var(--color-accent)', fontSize:'14px' }}>← Back to News</Link>
+      <Link to="/news" style={{ color:'var(--color-accent)', fontSize:'14px' }}>â† Back to News</Link>
     </main>
   )
 
   return (
     <main style={{ paddingTop:'104px' }}>
-      {/* Cover */}
       {article.cover_image && (
         <div style={{ width:'100%', height:'400px', position:'relative', overflow:'hidden' }}>
           <img src={article.cover_image} alt={article.title} style={{ width:'100%', height:'100%', objectFit:'cover' }} />
@@ -94,7 +93,6 @@ export default function ArticlePage() {
         </div>
       )}
 
-      {/* Content */}
       <div style={{ maxWidth:'760px', margin:'0 auto', padding:`${article.cover_image ? '0' : '80px'} 24px 80px` }}>
         <div style={{ position:'relative', zIndex:1 }}>
           <div style={{ display:'flex', gap:'10px', alignItems:'center', marginBottom:'20px', flexWrap:'wrap' }}>
@@ -123,20 +121,17 @@ export default function ArticlePage() {
 
           <div style={{ height:'1px', background:'var(--color-border)', marginBottom:'40px' }} />
 
-          {/* Article body */}
           <div className="article-body" dangerouslySetInnerHTML={{ __html: article.content || '' }} />
 
           <div style={{ height:'1px', background:'var(--color-border)', margin:'40px 0' }} />
 
-          {/* Bottom share + back */}
           <div style={{ display:'flex', alignItems:'center', justifyContent:'space-between', flexWrap:'wrap', gap:'12px' }}>
-            <Link to="/news" style={{ fontSize:'13px', color:'var(--color-accent)', fontWeight:600 }}>← Back to News</Link>
+            <Link to="/news" style={{ fontSize:'13px', color:'var(--color-accent)', fontWeight:600 }}>â† Back to News</Link>
             <ShareBar title={article.title} />
           </div>
         </div>
       </div>
 
-      {/* Related articles */}
       {related.length > 0 && (
         <div style={{ borderTop:'1px solid var(--color-border)', background:'var(--color-surface)', padding:'48px 24px 64px' }}>
           <div style={{ maxWidth:'1280px', margin:'0 auto' }}>
@@ -150,7 +145,7 @@ export default function ArticlePage() {
                   <div style={{ height:'140px', background:'var(--color-surface-2)', overflow:'hidden' }}>
                     {a.cover_image
                       ? <img src={a.cover_image} alt={a.title} style={{ width:'100%', height:'100%', objectFit:'cover' }} />
-                      : <div style={{ display:'flex', alignItems:'center', justifyContent:'center', height:'100%', opacity:0.1, fontSize:'28px' }}>📰</div>
+                      : <div style={{ display:'flex', alignItems:'center', justifyContent:'center', height:'100%', opacity:0.1, fontSize:'28px' }}>ðŸ“°</div>
                     }
                   </div>
                   <div style={{ padding:'14px' }}>

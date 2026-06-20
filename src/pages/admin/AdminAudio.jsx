@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+﻿import { useEffect, useState } from 'react'
 import { supabase } from '../../lib/supabase'
 import AdminLayout from '../../components/layout/AdminLayout'
 import { formatDuration, formatDate } from '../../lib/utils'
@@ -90,7 +90,6 @@ export default function AdminAudio() {
           </button>
         </div>
 
-        {/* Upload form */}
         {showForm && (
           <div style={{ background:'var(--color-surface)', borderRadius:'16px', border:'1px solid var(--color-border)', padding:'24px', marginBottom:'28px' }}>
             <h2 style={{ fontFamily:'var(--font-display)', fontSize:'18px', fontWeight:700, color:'var(--color-text)', marginBottom:'20px' }}>Upload New Audio</h2>
@@ -101,7 +100,7 @@ export default function AdminAudio() {
               </div>
               <div style={{ gridColumn:'span 2' }}>
                 <label style={{ fontSize:'12px', fontWeight:600, color:'var(--color-text-muted)', display:'block', marginBottom:'6px' }}>Description</label>
-                <textarea value={form.description} onChange={e=>setForm(f=>({...f,description:e.target.value}))} rows={2} style={{ ...inputStyle, resize:'vertical' }} placeholder="Brief description…" />
+                <textarea value={form.description} onChange={e=>setForm(f=>({...f,description:e.target.value}))} rows={2} style={{ ...inputStyle, resize:'vertical' }} placeholder="Brief descriptionâ€¦" />
               </div>
               <div>
                 <label style={{ fontSize:'12px', fontWeight:600, color:'var(--color-text-muted)', display:'block', marginBottom:'6px' }}>Station</label>
@@ -133,19 +132,18 @@ export default function AdminAudio() {
             </div>
             <div style={{ display:'flex', gap:'10px', marginTop:'20px' }}>
               <button onClick={submit} disabled={uploading} style={{ padding:'10px 20px', borderRadius:'8px', fontSize:'13px', fontWeight:600, cursor:uploading?'wait':'pointer', background:'var(--color-brand)', color:'#fff', border:'none', opacity:uploading?0.6:1 }}>
-                {uploading ? 'Uploading…' : 'Upload & Save'}
+                {uploading ? 'Uploadingâ€¦' : 'Upload & Save'}
               </button>
               <button onClick={()=>{setShowForm(false);setForm(EMPTY);setAudioFile(null);setCoverFile(null)}} style={{ padding:'10px 20px', borderRadius:'8px', fontSize:'13px', fontWeight:600, cursor:'pointer', background:'var(--color-surface-2)', color:'var(--color-text-muted)', border:'1px solid var(--color-border)' }}>Cancel</button>
             </div>
           </div>
         )}
 
-        {/* List */}
         <div style={{ background:'var(--color-surface)', borderRadius:'16px', border:'1px solid var(--color-border)', overflow:'hidden' }}>
           <div style={{ display:'grid', gridTemplateColumns:'1fr 130px 90px 90px 100px', gap:'14px', padding:'12px 20px', background:'var(--color-surface-2)', borderBottom:'1px solid var(--color-border)' }}>
             {['Title','Station','Duration','Date','Actions'].map(h=><p key={h} style={{ fontSize:'10px', fontWeight:700, color:'var(--color-text-dim)', textTransform:'uppercase', letterSpacing:'0.08em' }}>{h}</p>)}
           </div>
-          {loading ? <p style={{padding:'24px',color:'var(--color-text-muted)'}}>Loading…</p>
+          {loading ? <p style={{padding:'24px',color:'var(--color-text-muted)'}}>Loadingâ€¦</p>
             : items.length===0 ? <p style={{padding:'24px',color:'var(--color-text-muted)',textAlign:'center'}}>No audio uploaded yet.</p>
             : items.map(item=>(
               <div key={item.id} style={{ display:'grid', gridTemplateColumns:'1fr 130px 90px 90px 100px', gap:'14px', padding:'14px 20px', borderBottom:'1px solid var(--color-border)', alignItems:'center' }}
@@ -154,14 +152,14 @@ export default function AdminAudio() {
               >
                 <div style={{ display:'flex', alignItems:'center', gap:'12px' }}>
                   <div style={{ width:'36px', height:'36px', borderRadius:'8px', background:'var(--color-surface-2)', flexShrink:0, overflow:'hidden' }}>
-                    {item.cover_image ? <img src={item.cover_image} alt="" style={{width:'100%',height:'100%',objectFit:'cover'}}/> : <div style={{display:'flex',alignItems:'center',justifyContent:'center',height:'100%',fontSize:'16px'}}>🎙️</div>}
+                    {item.cover_image ? <img src={item.cover_image} alt="" style={{width:'100%',height:'100%',objectFit:'cover'}}/> : <div style={{display:'flex',alignItems:'center',justifyContent:'center',height:'100%',fontSize:'16px'}}>ðŸŽ™ï¸</div>}
                   </div>
                   <div>
                     <p style={{ fontSize:'13px', fontWeight:500, color:'var(--color-text)', overflow:'hidden', textOverflow:'ellipsis', whiteSpace:'nowrap', maxWidth:'200px' }}>{item.title}</p>
                     <span style={{ fontSize:'11px', fontWeight:600, padding:'2px 8px', borderRadius:'999px', background:item.published?'rgba(52,199,89,0.12)':'rgba(255,165,0,0.12)', color:item.published?'var(--color-success)':'var(--color-warning)' }}>{item.published?'Published':'Draft'}</span>
                   </div>
                 </div>
-                <p style={{ fontSize:'12px', color:'var(--color-text-muted)', overflow:'hidden', textOverflow:'ellipsis', whiteSpace:'nowrap' }}>{item.stations?.name||'—'}</p>
+                <p style={{ fontSize:'12px', color:'var(--color-text-muted)', overflow:'hidden', textOverflow:'ellipsis', whiteSpace:'nowrap' }}>{item.stations?.name||'â€”'}</p>
                 <p style={{ fontSize:'12px', color:'var(--color-text-dim)' }}>{formatDuration(item.duration_sec)}</p>
                 <p style={{ fontSize:'12px', color:'var(--color-text-dim)' }}>{formatDate(item.created_at)}</p>
                 <div style={{ display:'flex', gap:'8px' }}>

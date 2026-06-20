@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+﻿import { useEffect, useState } from 'react'
 import { supabase } from '../../lib/supabase'
 import AdminLayout from '../../components/layout/AdminLayout'
 import { DAYS, formatTime } from '../../lib/utils'
@@ -61,16 +61,14 @@ export default function AdminProgrammes() {
           <button onClick={()=>{ setShowForm(true); setEditing(null); setForm(EMPTY) }} style={{ padding:'10px 20px', borderRadius:'10px', fontSize:'13px', fontWeight:600, cursor:'pointer', background:'var(--color-brand)', color:'#fff', border:'none' }}>+ Add Programme</button>
         </div>
 
-        {/* Day filter */}
         <div style={{ display:'flex', gap:'6px', flexWrap:'wrap', marginBottom:'20px' }}>
           {['all',...DAYS].map(d=>(
             <button key={d} onClick={()=>setDayFilter(d)} style={{ padding:'6px 14px', borderRadius:'999px', fontSize:'11px', fontWeight:600, cursor:'pointer', textTransform:'capitalize', background:dayFilter===d?'var(--color-brand)':'var(--color-surface)', color:dayFilter===d?'#fff':'var(--color-text-muted)', border:`1px solid ${dayFilter===d?'var(--color-brand)':'var(--color-border)'}`, transition:'all 0.15s' }}>{d==='all'?'All':d.slice(0,3).charAt(0).toUpperCase()+d.slice(1,3)}</button>
           ))}
         </div>
 
-        {/* Table */}
         <div style={{ background:'var(--color-surface)', borderRadius:'16px', border:'1px solid var(--color-border)', overflow:'hidden', marginBottom: showForm?'28px':0 }}>
-          {loading ? <p style={{padding:'24px',color:'var(--color-text-muted)'}}>Loading…</p>
+          {loading ? <p style={{padding:'24px',color:'var(--color-text-muted)'}}>Loadingâ€¦</p>
             : filtered.length===0 ? <p style={{padding:'24px',color:'var(--color-text-muted)',textAlign:'center'}}>No programmes scheduled.</p>
             : filtered.map(p=>(
               <div key={p.id} style={{ display:'grid', gridTemplateColumns:'100px 1fr 120px 100px 120px 80px', gap:'12px', padding:'14px 20px', borderBottom:'1px solid var(--color-border)', alignItems:'center' }}
@@ -84,9 +82,9 @@ export default function AdminProgrammes() {
                 </div>
                 <div style={{ display:'flex', alignItems:'center', gap:'6px' }}>
                   <div style={{ width:'6px', height:'6px', borderRadius:'50%', background:p.stations?.color_hex||'#555', flexShrink:0 }} />
-                  <p style={{ fontSize:'11px', color:'var(--color-text-muted)', overflow:'hidden', textOverflow:'ellipsis', whiteSpace:'nowrap' }}>{p.stations?.name||'—'}</p>
+                  <p style={{ fontSize:'11px', color:'var(--color-text-muted)', overflow:'hidden', textOverflow:'ellipsis', whiteSpace:'nowrap' }}>{p.stations?.name||'â€”'}</p>
                 </div>
-                <p style={{ fontSize:'11px', color:'var(--color-text-dim)' }}>{p.language||'—'}</p>
+                <p style={{ fontSize:'11px', color:'var(--color-text-dim)' }}>{p.language||'â€”'}</p>
                 <div style={{ display:'flex', gap:'3px', flexWrap:'wrap' }}>
                   {p.days?.slice(0,4).map(d=><span key={d} style={{ fontSize:'9px', fontWeight:700, padding:'2px 5px', borderRadius:'4px', background:'var(--color-surface-2)', color:'var(--color-text-dim)', textTransform:'uppercase' }}>{d.slice(0,2)}</span>)}
                   {p.days?.length>4 && <span style={{ fontSize:'9px', color:'var(--color-text-dim)' }}>+{p.days.length-4}</span>}
@@ -100,7 +98,6 @@ export default function AdminProgrammes() {
           }
         </div>
 
-        {/* Form */}
         {showForm && (
           <div style={{ background:'var(--color-surface)', borderRadius:'16px', border:'1px solid var(--color-border)', padding:'24px' }}>
             <h2 style={{ fontFamily:'var(--font-display)', fontSize:'18px', fontWeight:700, color:'var(--color-text)', marginBottom:'20px' }}>{editing?'Edit':'New'} Programme</h2>
