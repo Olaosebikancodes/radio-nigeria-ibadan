@@ -71,7 +71,7 @@ export default function News() {
 
           <div style={{ position:'relative', maxWidth:'440px' }}>
             <span style={{ position:'absolute', left:'14px', top:'50%', transform:'translateY(-50%)', color:'var(--color-text-dim)', fontSize:'14px' }}>ðŸ”</span>
-            <input value={search} onChange={e => setSearch(e.target.value)} placeholder="Search articlesâ€¦"
+            <input value={search} onChange={e => setSearch(e.target.value)} placeholder="Search articles…"
               style={{ width:'100%', padding:'11px 16px 11px 40px', borderRadius:'10px', fontSize:'14px',
                 background:'var(--color-surface)', border:'1px solid var(--color-border)', color:'var(--color-text)',
                 outline:'none', transition:'border-color 0.2s',
@@ -109,11 +109,11 @@ export default function News() {
 
         {totalPages > 1 && (
           <div style={{ display:'flex', gap:'8px', justifyContent:'center', marginTop:'48px' }}>
-            <button disabled={page===0} onClick={() => setPage(p=>p-1)} style={{ padding:'8px 16px', borderRadius:'8px', fontSize:'13px', fontWeight:500, cursor:page===0?'not-allowed':'pointer', background:'var(--color-surface)', color: page===0?'var(--color-text-dim)':'var(--color-text)', border:'1px solid var(--color-border)', opacity: page===0?0.4:1 }}>â† Prev</button>
+            <button disabled={page===0} onClick={() => setPage(p=>p-1)} style={{ padding:'8px 16px', borderRadius:'8px', fontSize:'13px', fontWeight:500, cursor:page===0?'not-allowed':'pointer', background:'var(--color-surface)', color: page===0?'var(--color-text-dim)':'var(--color-text)', border:'1px solid var(--color-border)', opacity: page===0?0.4:1 }}>← Prev</button>
             {Array.from({length:totalPages}).map((_,i) => (
               <button key={i} onClick={() => setPage(i)} style={{ width:'36px', height:'36px', borderRadius:'8px', fontSize:'13px', fontWeight:600, cursor:'pointer', background: page===i?'var(--color-brand)':'var(--color-surface)', color: page===i?'#fff':'var(--color-text-muted)', border:`1px solid ${page===i?'var(--color-brand)':'var(--color-border)'}`, transition:'all 0.2s' }}>{i+1}</button>
             ))}
-            <button disabled={page===totalPages-1} onClick={() => setPage(p=>p+1)} style={{ padding:'8px 16px', borderRadius:'8px', fontSize:'13px', fontWeight:500, cursor:page===totalPages-1?'not-allowed':'pointer', background:'var(--color-surface)', color: page===totalPages-1?'var(--color-text-dim)':'var(--color-text)', border:'1px solid var(--color-border)', opacity: page===totalPages-1?0.4:1 }}>Next â†’</button>
+            <button disabled={page===totalPages-1} onClick={() => setPage(p=>p+1)} style={{ padding:'8px 16px', borderRadius:'8px', fontSize:'13px', fontWeight:500, cursor:page===totalPages-1?'not-allowed':'pointer', background:'var(--color-surface)', color: page===totalPages-1?'var(--color-text-dim)':'var(--color-text)', border:'1px solid var(--color-border)', opacity: page===totalPages-1?0.4:1 }}>Next ←’</button>
           </div>
         )}
       </div>

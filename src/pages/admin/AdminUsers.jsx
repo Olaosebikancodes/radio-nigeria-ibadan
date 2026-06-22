@@ -32,11 +32,11 @@ export default function AdminUsers() {
     const { data, error } = await supabase.auth.signUp({ email:form.email, password:form.password })
     if (error) { toast.error(error.message); setSaving(false); return }
     const userId = data.user?.id
-    if (!userId) { toast.error('Could not get user ID â€” account may already exist'); setSaving(false); return }
+    if (!userId) { toast.error('Could not get user ID "” account may already exist'); setSaving(false); return }
     const { error: staffErr } = await supabase.from('staff').insert({ user_id:userId, name:form.name, role:form.role, station_id:form.station_id||null })
     setSaving(false)
     if (staffErr) { toast.error(staffErr.message); return }
-    toast.success(`Account created â€” ${form.email} will receive a confirmation email`); setShowForm(false); setForm(EMPTY); fetchAll()
+    toast.success(`Account created "” ${form.email} will receive a confirmation email`); setShowForm(false); setForm(EMPTY); fetchAll()
   }
 
   const removeStaff = async (id, name) => {
@@ -68,7 +68,7 @@ export default function AdminUsers() {
         </div>
 
         <div style={{ display:'flex', gap:'12px', marginBottom:'20px', flexWrap:'wrap' }}>
-          {[['admin','Admin â€” full access'],['station_manager','Station Manager â€” own station only']].map(([role,desc])=>(
+          {[['admin','Admin "” full access'],['station_manager','Station Manager "” own station only']].map(([role,desc])=>(
             <div key={role} style={{ display:'flex', alignItems:'center', gap:'6px', padding:'4px 12px', borderRadius:'999px', background:ROLE_COLORS[role], border:`1px solid ${ROLE_TEXT[role]}33` }}>
               <span style={{ width:'6px', height:'6px', borderRadius:'50%', background:ROLE_TEXT[role] }} />
               <span style={{ fontSize:'11px', fontWeight:600, color:ROLE_TEXT[role] }}>{desc}</span>
@@ -95,8 +95,8 @@ export default function AdminUsers() {
               <div>
                 <label style={{ fontSize:'12px', fontWeight:600, color:'var(--color-text-muted)', display:'block', marginBottom:'6px' }}>Role</label>
                 <select value={form.role} onChange={e=>setForm(f=>({...f,role:e.target.value}))} style={inputStyle}>
-                  <option value="station_manager">Station Manager â€” own station only</option>
-                  <option value="admin">Admin â€” full access</option>
+                  <option value="station_manager">Station Manager "” own station only</option>
+                  <option value="admin">Admin "” full access</option>
                 </select>
               </div>
               <div>
@@ -108,14 +108,14 @@ export default function AdminUsers() {
               </div>
             </div>
             <div style={{ display:'flex', gap:'10px', marginTop:'20px' }}>
-              <button onClick={createUser} disabled={saving} style={{ padding:'10px 20px', borderRadius:'8px', fontSize:'13px', fontWeight:600, cursor:'pointer', background:'var(--color-brand)', color:'#fff', border:'none', opacity:saving?0.6:1 }}>{saving?'Creatingâ€¦':'Create Account'}</button>
+              <button onClick={createUser} disabled={saving} style={{ padding:'10px 20px', borderRadius:'8px', fontSize:'13px', fontWeight:600, cursor:'pointer', background:'var(--color-brand)', color:'#fff', border:'none', opacity:saving?0.6:1 }}>{saving?'Creating…':'Create Account'}</button>
               <button onClick={()=>{setShowForm(false);setForm(EMPTY)}} style={{ padding:'10px 20px', borderRadius:'8px', fontSize:'13px', fontWeight:600, cursor:'pointer', background:'var(--color-surface-2)', color:'var(--color-text-muted)', border:'1px solid var(--color-border)' }}>Cancel</button>
             </div>
           </div>
         )}
 
         <div style={{ background:'var(--color-surface)', borderRadius:'16px', border:'1px solid var(--color-border)', overflow:'hidden' }}>
-          {loading ? <p style={{padding:'24px',color:'var(--color-text-muted)'}}>Loadingâ€¦</p>
+          {loading ? <p style={{padding:'24px',color:'var(--color-text-muted)'}}>Loading…</p>
             : staff.length===0 ? <p style={{padding:'24px',color:'var(--color-text-muted)',textAlign:'center'}}>No staff accounts yet.</p>
             : staff.map(s=>(
               <div key={s.id} className="staff-row" style={{ display:'flex', alignItems:'center', justifyContent:'space-between', padding:'16px 20px', borderBottom:'1px solid var(--color-border)' }}

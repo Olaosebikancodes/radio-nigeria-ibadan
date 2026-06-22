@@ -73,7 +73,7 @@ function PlayerCard({ station }) {
           onMouseEnter={e=>{ if(hasStream && !isPlaying) { e.currentTarget.style.background=`${station.color_hex}33` }}}
           onMouseLeave={e=>{ if(!isPlaying) { e.currentTarget.style.background=`${station.color_hex}22` }}}
         >
-          {!hasStream ? 'Stream unavailable' : isPlaying ? 'â™â™  Pause Stream' : 'â–¶  Play Stream'}
+          {!hasStream ? 'Stream unavailable' : isPlaying ? '™™  Pause Stream' : '–¶  Play Stream'}
         </button>
 
         {isActive && (
@@ -113,14 +113,14 @@ export default function Live() {
             Listen Live
           </h1>
           <p style={{ fontSize:'16px', color:'var(--color-text-muted)', maxWidth:'520px' }}>
-            Stream any of our 7 FM stations live. Pick a station, hit play â€” it's that simple.
+            Stream any of our 7 FM stations live. Pick a station, hit play "” it's that simple.
           </p>
         </div>
       </div>
 
       <div style={{ maxWidth:'1280px', margin:'0 auto', padding:'48px 24px 80px' }}>
         {loading
-          ? <p style={{ color:'var(--color-text-muted)' }}>Loading stationsâ€¦</p>
+          ? <p style={{ color:'var(--color-text-muted)' }}>Loading stations…</p>
           : <div style={{ display:'grid', gridTemplateColumns:'repeat(auto-fill, minmax(300px, 1fr))', gap:'20px' }}>
               {stations.map(s => <PlayerCard key={s.id ?? s.slug} station={s} />)}
             </div>

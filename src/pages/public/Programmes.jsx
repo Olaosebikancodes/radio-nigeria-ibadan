@@ -87,17 +87,17 @@ export default function Programmes() {
                       onMouseLeave={e=>{ if(!live) e.currentTarget.style.background=live?'rgba(0,92,46,0.08)':'transparent' }}
                     >
                       <p className="prog-time" style={{ fontSize:'12px', fontWeight:600, color: live ? 'var(--color-accent)' : 'var(--color-text-muted)' }}>
-                        {formatTime(p.start_time)} â€” {formatTime(p.end_time)}
+                        {formatTime(p.start_time)} "” {formatTime(p.end_time)}
                       </p>
                       <div className="prog-dot" style={{ width:'4px', height:'4px', borderRadius:'50%', background: stationColor, justifySelf:'center' }} />
                       <div className="prog-main">
                         <p style={{ fontWeight:600, fontSize:'14px', color:'var(--color-text)', overflow:'hidden', textOverflow:'ellipsis', whiteSpace:'nowrap' }}>{p.title}</p>
                         <p className="prog-host-mobile" style={{ display:'none', fontSize:'11px', color:'var(--color-text-muted)', marginTop:'2px' }}>{p.host || p.stations?.name || ''}</p>
                       </div>
-                      <p className="prog-host" style={{ fontSize:'12px', color:'var(--color-text-muted)', overflow:'hidden', textOverflow:'ellipsis', whiteSpace:'nowrap' }}>{p.host || 'â€”'}</p>
+                      <p className="prog-host" style={{ fontSize:'12px', color:'var(--color-text-muted)', overflow:'hidden', textOverflow:'ellipsis', whiteSpace:'nowrap' }}>{p.host || '"”'}</p>
                       <div className="prog-station" style={{ display:'flex', alignItems:'center', gap:'6px' }}>
                         {live && <LiveBadge />}
-                        <p style={{ fontSize:'11px', color:'var(--color-text-dim)', overflow:'hidden', textOverflow:'ellipsis', whiteSpace:'nowrap' }}>{p.stations?.name || 'â€”'}</p>
+                        <p style={{ fontSize:'11px', color:'var(--color-text-dim)', overflow:'hidden', textOverflow:'ellipsis', whiteSpace:'nowrap' }}>{p.stations?.name || '"”'}</p>
                       </div>
                     </div>
                   )

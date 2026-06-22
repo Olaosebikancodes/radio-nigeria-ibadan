@@ -58,11 +58,11 @@ export default function AdminStations() {
                   </div>
                   <div>
                     <p style={{ fontSize:'15px', fontWeight:700, color:'var(--color-text)', fontFamily:'var(--font-display)' }}>{s.name}</p>
-                    <p style={{ fontSize:'12px', color:'var(--color-text-muted)' }}>{s.location} Â· <span style={{ color: s.stream_url ? 'var(--color-success)' : 'var(--color-live)', fontWeight:600 }}>{s.stream_url ? 'â— Stream set' : 'â— No stream URL'}</span></p>
+                    <p style={{ fontSize:'12px', color:'var(--color-text-muted)' }}>{s.location} · <span style={{ color: s.stream_url ? 'var(--color-success)' : 'var(--color-live)', fontWeight:600 }}>{s.stream_url ? '— Stream set' : '— No stream URL'}</span></p>
                   </div>
                 </div>
                 {(isAdmin || s.id===staff?.station_id) && (
-                  <span style={{ fontSize:'12px', color:'var(--color-accent)', fontWeight:600 }}>{editing===s.id ? 'Cancel âœ•' : 'Edit â†’'}</span>
+                  <span style={{ fontSize:'12px', color:'var(--color-accent)', fontWeight:600 }}>{editing===s.id ? 'Cancel œ•' : 'Edit ←’'}</span>
                 )}
               </div>
 
@@ -92,7 +92,7 @@ export default function AdminStations() {
                     </div>
                     <div style={{ gridColumn:'span 2' }}>
                       <label style={{ fontSize:'12px', fontWeight:600, color:'var(--color-text-muted)', display:'block', marginBottom:'6px' }}>Description</label>
-                      <textarea value={form.description||''} onChange={e=>setForm(f=>({...f,description:e.target.value}))} rows={3} style={{ ...inputStyle, resize:'vertical' }} placeholder="About this stationâ€¦" />
+                      <textarea value={form.description||''} onChange={e=>setForm(f=>({...f,description:e.target.value}))} rows={3} style={{ ...inputStyle, resize:'vertical' }} placeholder="About this station…" />
                     </div>
                     <div>
                       <label style={{ fontSize:'12px', fontWeight:600, color:'var(--color-text-muted)', display:'block', marginBottom:'6px' }}>Brand Color</label>
@@ -117,7 +117,7 @@ export default function AdminStations() {
                     </div>
                   </div>
                   <div style={{ display:'flex', gap:'10px', paddingTop:'4px' }}>
-                    <button onClick={save} disabled={saving} style={{ padding:'10px 20px', borderRadius:'8px', fontSize:'13px', fontWeight:600, cursor:'pointer', background:'var(--color-brand)', color:'#fff', border:'none', opacity:saving?0.6:1 }}>{saving?'Savingâ€¦':'Save Changes'}</button>
+                    <button onClick={save} disabled={saving} style={{ padding:'10px 20px', borderRadius:'8px', fontSize:'13px', fontWeight:600, cursor:'pointer', background:'var(--color-brand)', color:'#fff', border:'none', opacity:saving?0.6:1 }}>{saving?'Saving…':'Save Changes'}</button>
                     <button onClick={()=>{setEditing(null);setForm({})}} style={{ padding:'10px 20px', borderRadius:'8px', fontSize:'13px', fontWeight:600, cursor:'pointer', background:'var(--color-surface-2)', color:'var(--color-text-muted)', border:'1px solid var(--color-border)' }}>Cancel</button>
                   </div>
                 </div>

@@ -36,11 +36,11 @@ export default function AdminLogin() {
             </div>
             <div>
               <label style={{ fontSize:'12px', fontWeight:600, color:'var(--color-text-muted)', display:'block', marginBottom:'6px' }}>Password</label>
-              <input type="password" value={password} onChange={e=>setPassword(e.target.value)} required placeholder="â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢" style={inputStyle} onFocus={e=>e.target.style.borderColor='var(--color-brand-light)'} onBlur={e=>e.target.style.borderColor='var(--color-border)'} />
+              <input type="password" value={password} onChange={e=>setPassword(e.target.value)} required placeholder="••••••••" style={inputStyle} onFocus={e=>e.target.style.borderColor='var(--color-brand-light)'} onBlur={e=>e.target.style.borderColor='var(--color-border)'} />
             </div>
             {error && <p style={{ fontSize:'13px', color:'var(--color-live)', background:'rgba(255,59,48,0.08)', padding:'10px 12px', borderRadius:'8px', border:'1px solid rgba(255,59,48,0.2)' }}>{error}</p>}
             <button type="submit" disabled={loading} style={{ padding:'13px', borderRadius:'10px', fontSize:'14px', fontWeight:700, cursor:loading?'not-allowed':'pointer', background:'var(--color-brand)', color:'#fff', border:'none', transition:'background 0.2s', opacity:loading?0.6:1 }}>
-              {loading ? 'Signing inâ€¦' : 'Sign In â†’'}
+              {loading ? 'Signing in…' : 'Sign In ←’'}
             </button>
           </form>
         </div>

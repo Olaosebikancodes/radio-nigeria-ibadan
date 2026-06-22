@@ -13,9 +13,9 @@ function StatCard({ label, value, icon, color, to }) {
     >
       <div style={{ display:'flex', alignItems:'flex-start', justifyContent:'space-between', marginBottom:'16px' }}>
         <div style={{ width:'40px', height:'40px', borderRadius:'10px', background:`${color}20`, display:'flex', alignItems:'center', justifyContent:'center', color }}>{icon}</div>
-        <span style={{ fontSize:'11px', color:'var(--color-text-dim)', fontWeight:500 }}>View all â†’</span>
+        <span style={{ fontSize:'11px', color:'var(--color-text-dim)', fontWeight:500 }}>View all ←’</span>
       </div>
-      <p style={{ fontFamily:'var(--font-display)', fontWeight:900, fontSize:'32px', color:'var(--color-text)', letterSpacing:'-0.04em' }}>{value ?? 'â€”'}</p>
+      <p style={{ fontFamily:'var(--font-display)', fontWeight:900, fontSize:'32px', color:'var(--color-text)', letterSpacing:'-0.04em' }}>{value ?? '"”'}</p>
       <p style={{ fontSize:'13px', color:'var(--color-text-muted)', marginTop:'4px' }}>{label}</p>
     </Link>
   )
@@ -78,7 +78,7 @@ export default function AdminDashboard() {
               <div key={a.id} style={{ display:'flex', alignItems:'center', justifyContent:'space-between', padding:'14px 24px', borderBottom:'1px solid var(--color-border)', gap:'12px', flexWrap:'wrap' }}>
                 <div style={{ minWidth:0, flex:1 }}>
                   <p style={{ fontSize:'14px', fontWeight:500, color:'var(--color-text)', overflow:'hidden', textOverflow:'ellipsis', whiteSpace:'nowrap' }}>{a.title}</p>
-                  <p style={{ fontSize:'11px', color:'var(--color-text-dim)', marginTop:'2px' }}>{a.stations?.name ?? 'All Stations'} Â· {new Date(a.created_at).toLocaleDateString('en-NG')}</p>
+                  <p style={{ fontSize:'11px', color:'var(--color-text-dim)', marginTop:'2px' }}>{a.stations?.name ?? 'All Stations'} · {new Date(a.created_at).toLocaleDateString('en-NG')}</p>
                 </div>
                 <span style={{ fontSize:'11px', fontWeight:600, padding:'3px 10px', borderRadius:'999px', background: a.active?'rgba(52,199,89,0.12)':'rgba(255,59,48,0.1)', color: a.active?'var(--color-success)':'var(--color-live)', flexShrink:0 }}>{a.active ? 'Active' : 'Inactive'}</span>
               </div>

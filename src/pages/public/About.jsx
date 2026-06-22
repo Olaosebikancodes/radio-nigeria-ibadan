@@ -10,13 +10,13 @@ export default function About() {
     { year:'1963', event:'Rev. Victor Badejo becomes the first Nigerian General Director of the Corporation.' },
     { year:'1978', event:'NBC reorganised by Decree No. 8 into the Federal Radio Corporation of Nigeria (FRCN).' },
     { year:'2001', event:'Premier 93.5 FM commissioned on October 30th by the late First Lady, Chief Stella Obasanjo.' },
-    { year:'2007', event:'Amuludun 99.1 FM established on October 10th â€” a dedicated pure Yoruba language station.' },
+    { year:'2007', event:'Amuludun 99.1 FM established on October 10th "” a dedicated pure Yoruba language station.' },
   ]
 
   const departments = [
     { name:'Programmes',          icon:<Mic size={22}/>,         desc:'Develops, produces, and schedules all on-air content including music, talk shows, dramas, documentaries, and community programming.' },
     { name:'News & Current Affairs', icon:<Newspaper size={22}/>,  desc:'Gathers, reports, edits, and broadcasts news bulletins in English and Yoruba. Covers local, national, and international stories.' },
-    { name:'Engineering Services',icon:<Wrench size={22}/>,      desc:'Maintains all broadcast equipment â€” transmitters, studio consoles, recording gear, and transmission infrastructure.' },
+    { name:'Engineering Services',icon:<Wrench size={22}/>,      desc:'Maintains all broadcast equipment "” transmitters, studio consoles, recording gear, and transmission infrastructure.' },
     { name:'ICT',                 icon:<Monitor size={22}/>,     desc:'Manages digital infrastructure including servers, computers, digital audio workstations, streaming, and internal networks.' },
     { name:'Marketing',           icon:<TrendingUp size={22}/>,  desc:'Handles advertising sales, sponsorships, commercial spots, and all revenue generation for the station.' },
     { name:'Administration',      icon:<FolderOpen size={22}/>,  desc:'Manages HR, correspondence, office operations, staff welfare, and general management functions.' },
@@ -29,12 +29,12 @@ export default function About() {
     <main className="inner-page-main" style={{ paddingTop:'140px' }}>
       <div style={{ background:`linear-gradient(to bottom, rgba(0,92,46,0.15), transparent)`, borderBottom:'1px solid var(--color-border)', padding:'80px 24px 60px' }}>
         <div style={{ maxWidth:'800px', margin:'0 auto', textAlign:'center' }}>
-          <p style={{ fontSize:'17px', fontWeight:600, color:'var(--color-brand-light)', textTransform:'uppercase', letterSpacing:'0.1em', marginBottom:'16px' }}>Est. 1955 Â· Dugbe, Ibadan</p>
+          <p style={{ fontSize:'17px', fontWeight:600, color:'var(--color-brand-light)', textTransform:'uppercase', letterSpacing:'0.1em', marginBottom:'16px' }}>Est. 1955 · Dugbe, Ibadan</p>
           <h1 style={{ fontFamily:'var(--font-display)', fontSize:'clamp(36px,6vw,64px)', fontWeight:900, color:'var(--color-text)', letterSpacing:'-0.04em', marginBottom:'20px' }}>
             Broadcasting Nigeria's Voice, <em style={{ color:'var(--color-accent)', fontStyle:'italic' }}>Since 1955</em>
           </h1>
           <p style={{ fontSize:'17px', color:'var(--color-text-muted)', lineHeight:1.7, maxWidth:'600px', margin:'0 auto' }}>
-            The Federal Radio Corporation of Nigeria â€” Ibadan Zonal Station is the Southwest arm of the FRCN, responsible for broadcasting across Oyo, Ogun, Ondo, Osun, Edo, Lagos and beyond.
+            The Federal Radio Corporation of Nigeria "” Ibadan Zonal Station is the Southwest arm of the FRCN, responsible for broadcasting across Oyo, Ogun, Ondo, Osun, Edo, Lagos and beyond.
           </p>
         </div>
       </div>
