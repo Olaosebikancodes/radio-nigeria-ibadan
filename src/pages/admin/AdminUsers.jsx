@@ -32,11 +32,11 @@ export default function AdminUsers() {
     const { data, error } = await supabase.auth.signUp({ email:form.email, password:form.password })
     if (error) { toast.error(error.message); setSaving(false); return }
     const userId = data.user?.id
-    if (!userId) { toast.error('Could not get user ID "” account may already exist'); setSaving(false); return }
+    if (!userId) { toast.error('Could not get user ID — account may already exist'); setSaving(false); return }
     const { error: staffErr } = await supabase.from('staff').insert({ user_id:userId, name:form.name, role:form.role, station_id:form.station_id||null })
     setSaving(false)
     if (staffErr) { toast.error(staffErr.message); return }
-    toast.success(`Account created "” ${form.email} will receive a confirmation email`); setShowForm(false); setForm(EMPTY); fetchAll()
+    toast.success(`Account created — ${form.email} will receive a confirmation email`); setShowForm(false); setForm(EMPTY); fetchAll()
   }
 
   const removeStaff = async (id, name) => {
@@ -68,7 +68,7 @@ export default function AdminUsers() {
         </div>
 
         <div style={{ display:'flex', gap:'12px', marginBottom:'20px', flexWrap:'wrap' }}>
-          {[['admin','Admin "” full access'],['station_manager','Station Manager "” own station only']].map(([role,desc])=>(
+          {[['admin','Admin — full access'],['station_manager','Station Manager — own station only']].map(([role,desc])=>(
             <div key={role} style={{ display:'flex', alignItems:'center', gap:'6px', padding:'4px 12px', borderRadius:'999px', background:ROLE_COLORS[role], border:`1px solid ${ROLE_TEXT[role]}33` }}>
               <span style={{ width:'6px', height:'6px', borderRadius:'50%', background:ROLE_TEXT[role] }} />
               <span style={{ fontSize:'11px', fontWeight:600, color:ROLE_TEXT[role] }}>{desc}</span>
@@ -95,8 +95,8 @@ export default function AdminUsers() {
               <div>
                 <label style={{ fontSize:'12px', fontWeight:600, color:'var(--color-text-muted)', display:'block', marginBottom:'6px' }}>Role</label>
                 <select value={form.role} onChange={e=>setForm(f=>({...f,role:e.target.value}))} style={inputStyle}>
-                  <option value="station_manager">Station Manager "” own station only</option>
-                  <option value="admin">Admin "” full access</option>
+                  <option value="station_manager">Station Manager — own station only</option>
+                  <option value="admin">Admin — full access</option>
                 </select>
               </div>
               <div>

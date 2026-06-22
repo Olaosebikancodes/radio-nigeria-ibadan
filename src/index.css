@@ -99,11 +99,10 @@ body::before {
   content: '';
   position: fixed;
   inset: 0;
-  background-image: url('/frcn_doodle_pattern.svg');
+  background-image: url('https://tfxpqxxzopsycpnmdyke.supabase.co/storage/v1/object/public/images/Premier%20FM%2093.5%20(1).png');
   background-repeat: repeat;
   background-size: 420px 420px;
   opacity: 0.12;
-  filter: brightness(0);
   pointer-events: none;
   z-index: 0;
 }

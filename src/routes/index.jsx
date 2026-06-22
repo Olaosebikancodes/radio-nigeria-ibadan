@@ -1,15 +1,13 @@
-﻿import { lazy, Suspense } from 'react'
+import { lazy, Suspense } from 'react'
 import { Routes, Route, Navigate } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
 
-// Public pages "” lazy loaded
 const Home           = lazy(() => import('../pages/public/Home'))
 const About          = lazy(() => import('../pages/public/About'))
 const Stations       = lazy(() => import('../pages/public/Stations'))
 const StationDetail  = lazy(() => import('../pages/public/StationDetail'))
 const Contact        = lazy(() => import('../pages/public/Contact'))
 
-// Admin pages "” lazy loaded
 const AdminLogin      = lazy(() => import('../pages/admin/AdminLogin'))
 const AdminDashboard  = lazy(() => import('../pages/admin/AdminDashboard'))
 const AdminAdverts    = lazy(() => import('../pages/admin/AdminAdverts'))

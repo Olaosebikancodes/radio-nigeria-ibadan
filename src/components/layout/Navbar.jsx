@@ -5,10 +5,10 @@ import { usePlayer } from "../../context/PlayerContext";
 import { SOCIAL_LINKS } from "../../lib/utils";
 
 const NAV = [
-  { label: "Home", to: "/" },
+  { label: "Home",     to: "/" },
   { label: "Stations", to: "/stations" },
-  { label: "About", to: "/about" },
-  { label: "Contact", to: "/contact" },
+  { label: "About",    to: "/about" },
+  { label: "Contact",  to: "/contact" },
 ];
 
 const FacebookIcon = () => (
