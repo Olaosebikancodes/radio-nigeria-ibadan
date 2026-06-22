@@ -109,7 +109,7 @@ export default function News() {
 
         {totalPages > 1 && (
           <div style={{ display:'flex', gap:'8px', justifyContent:'center', marginTop:'48px' }}>
-            <button disabled={page===0} onClick={() => setPage(p=>p-1)} style={{ padding:'8px 16px', borderRadius:'8px', fontSize:'13px', fontWeight:500, cursor:page===0?'not-allowed':'pointer', background:'var(--color-surface)', color: page===0?'var(--color-text-dim)':'var(--color-text)', border:'1px solid var(--color-border)', opacity: page===0?0.4:1 }}>← Prev</button>
+            <button disabled={page===0} onClick={() => setPage(p=>p-1)} style={{ padding:'8px 16px', borderRadius:'8px', fontSize:'13px', fontWeight:500, cursor:page===0?'not-allowed':'pointer', background:'var(--color-surface)', color: page===0?'var(--color-text-dim)':'var(--color-text)', border:'1px solid var(--color-border)', opacity: page===0?0.4:1 }}>← Prev</button>
             {Array.from({length:totalPages}).map((_,i) => (
               <button key={i} onClick={() => setPage(i)} style={{ width:'36px', height:'36px', borderRadius:'8px', fontSize:'13px', fontWeight:600, cursor:'pointer', background: page===i?'var(--color-brand)':'var(--color-surface)', color: page===i?'#fff':'var(--color-text-muted)', border:`1px solid ${page===i?'var(--color-brand)':'var(--color-border)'}`, transition:'all 0.2s' }}>{i+1}</button>
             ))}

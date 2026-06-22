@@ -80,7 +80,7 @@ export default function ArticlePage() {
     <main style={{ paddingTop:'104px', display:'flex', flexDirection:'column', alignItems:'center', justifyContent:'center', minHeight:'60vh', gap:'16px' }}>
       <p style={{ fontSize:'48px' }}>ðŸ“°</p>
       <h2 style={{ fontFamily:'var(--font-display)', fontSize:'28px', color:'var(--color-text)' }}>Article not found</h2>
-      <Link to="/news" style={{ color:'var(--color-accent)', fontSize:'14px' }}>← Back to News</Link>
+      <Link to="/news" style={{ color:'var(--color-accent)', fontSize:'14px' }}>← Back to News</Link>
     </main>
   )
 
@@ -126,7 +126,7 @@ export default function ArticlePage() {
           <div style={{ height:'1px', background:'var(--color-border)', margin:'40px 0' }} />
 
           <div style={{ display:'flex', alignItems:'center', justifyContent:'space-between', flexWrap:'wrap', gap:'12px' }}>
-            <Link to="/news" style={{ fontSize:'13px', color:'var(--color-accent)', fontWeight:600 }}>← Back to News</Link>
+            <Link to="/news" style={{ fontSize:'13px', color:'var(--color-accent)', fontWeight:600 }}>← Back to News</Link>
             <ShareBar title={article.title} />
           </div>
         </div>
