@@ -42,6 +42,7 @@ export const isOnAir = (start, end) => {
 export const truncate = (str = "", n = 120) =>
   str.length > n ? str.slice(0, n).trimEnd() + "…" : str;
 
+// News article categories used in filtering. Add new categories here if needed.
 export const CATEGORIES = [
   { label: "All", value: "all" },
   { label: "Politics", value: "politics" },
@@ -63,9 +64,14 @@ export const DAYS = [
   "sunday",
 ];
 
+// Base URL for all images stored in Supabase Storage (the "images" bucket).
 const IMG =
   "https://tfxpqxxzopsycpnmdyke.supabase.co/storage/v1/object/public/images";
 
+// STATIONS_SEED is a fallback used only when the database returns no stations
+// (e.g. during initial setup or if the "stations" table is empty).
+// In normal operation, station data comes from the database and this is not used.
+// The live stream URLs here point to the streaming server at centova57.instainternet.com.
 export const STATIONS_SEED = [
   {
     name: "Premier FM",
@@ -150,6 +156,8 @@ export const STATIONS_SEED = [
   },
 ];
 
+// Social media links shown in the Navbar and Footer.
+// Update these URLs here if the station's Facebook or YouTube handles change.
 export const SOCIAL_LINKS = {
   facebook: "https://facebook.com/radionigeriaibadan",
   youtube: "https://www.youtube.com/@pfm935ibadan",

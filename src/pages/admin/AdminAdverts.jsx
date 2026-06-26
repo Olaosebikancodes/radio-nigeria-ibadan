@@ -7,8 +7,22 @@ import toast from 'react-hot-toast'
 
 const inputStyle = { width:'100%', padding:'9px 12px', borderRadius:'8px', fontSize:'13px', background:'var(--color-surface-2)', border:'1px solid var(--color-border)', color:'var(--color-text)', outline:'none', fontFamily:'var(--font-body)' }
 
+// Default/empty form state when creating a new advert
 const EMPTY = { title:'', image_url:'', link_url:'', station_id:'', active:true, sort_order:0 }
 
+// Adverts page — manage banner ads shown on station detail pages.
+// Each advert can be assigned to one specific station, or left as "All Stations"
+// to appear across every station page on the public site.
+//
+// "sort_order" controls which advert appears first (lower number = higher up).
+// "Active" toggle lets you pause an advert without deleting it.
+//
+// Images are uploaded to Supabase Storage under the "images/adverts/" folder.
+// Recommended image size: 1200×400px (banner format).
+//
+// Access control:
+//   • Admin → can create/edit adverts for any station
+//   • Station manager → can only manage adverts for their own station
 export default function AdminAdverts() {
   const { staff } = useAuth()
   const isAdmin   = staff?.role === 'admin'
@@ -48,6 +62,8 @@ export default function AdminAdverts() {
   }
   const cancel = () => { setShowForm(false); setEditing(null); setForm(EMPTY) }
 
+  // Uploads the selected image file to Supabase Storage and stores the public URL on the form.
+  // Files are saved under: images/adverts/<timestamp>.<extension>
   const uploadImage = async (file) => {
     if (!file) return
     const ext  = file.name.split('.').pop()
@@ -61,6 +77,7 @@ export default function AdminAdverts() {
     toast.success('Image uploaded')
   }
 
+  // Ensures the click-through link always starts with https:// so it opens correctly
   const normalizeUrl = (url) => {
     if (!url) return ''
     url = url.trim()

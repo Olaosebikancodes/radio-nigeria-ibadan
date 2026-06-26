@@ -2,12 +2,18 @@ import { lazy, Suspense } from 'react'
 import { Routes, Route, Navigate } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
 
+// Pages are loaded lazily — they're only downloaded by the browser when visited.
+// This keeps the initial page load fast.
+
+// Public pages (no login required)
 const Home           = lazy(() => import('../pages/public/Home'))
 const About          = lazy(() => import('../pages/public/About'))
 const Stations       = lazy(() => import('../pages/public/Stations'))
 const StationDetail  = lazy(() => import('../pages/public/StationDetail'))
 const Contact        = lazy(() => import('../pages/public/Contact'))
 
+// Admin pages (login required — see ProtectedRoute below)
+// Access the admin panel at: yourdomain.com/admin
 const AdminLogin      = lazy(() => import('../pages/admin/AdminLogin'))
 const AdminDashboard  = lazy(() => import('../pages/admin/AdminDashboard'))
 const AdminAdverts    = lazy(() => import('../pages/admin/AdminAdverts'))
@@ -23,6 +29,8 @@ function PageLoader() {
   )
 }
 
+// Wraps any admin page — redirects to /admin/login if not logged in.
+// If a user is logged in but can't access a page, check their role in the staff table.
 function ProtectedRoute({ children }) {
   const { user, loading } = useAuth()
   if (loading) return <PageLoader />

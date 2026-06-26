@@ -13,6 +13,8 @@ function ScrollToTop() {
   return null
 }
 
+// Layout decides whether to show the public Navbar/Footer or the admin sidebar.
+// Admin pages (any URL starting with /admin) use AdminLayout instead of the public layout.
 function Layout() {
   const { pathname } = useLocation()
   const isAdmin = pathname.startsWith('/admin')

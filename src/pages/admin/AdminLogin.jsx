@@ -2,6 +2,11 @@
 import { useNavigate } from 'react-router-dom'
 import { useAuth } from '../../context/AuthContext'
 
+// Admin login page — accessible at /admin/login
+// Login uses email + password from Supabase Auth.
+// To reset a staff password: go to the Supabase dashboard → Authentication → Users,
+// find the user, and use "Send password reset email" or set a new password manually.
+// The account must also have a matching row in the "staff" table to work properly.
 export default function AdminLogin() {
   const [email, setEmail]       = useState('')
   const [password, setPassword] = useState('')

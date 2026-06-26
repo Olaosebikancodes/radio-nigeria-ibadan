@@ -21,6 +21,10 @@ function StatCard({ label, value, icon, color, to }) {
   )
 }
 
+// Dashboard — the first page seen after login.
+// Shows counts of total adverts, active adverts, and live stations,
+// plus the 5 most recently created adverts.
+// Each stat card links to the relevant admin section.
 export default function AdminDashboard() {
   const [stats, setStats]   = useState({})
   const [recent, setRecent] = useState([])

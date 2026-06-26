@@ -7,6 +7,19 @@ import toast from 'react-hot-toast'
 const inputStyle = { width:'100%', padding:'9px 12px', borderRadius:'8px', fontSize:'13px', background:'var(--color-surface-2)', border:'1px solid var(--color-border)', color:'var(--color-text)', outline:'none', fontFamily:'var(--font-body)' }
 const EMPTY = { name:'', role:'station_manager', station_id:'', email:'', password:'' }
 
+// Staff Accounts page — only visible to admins.
+// Creates both a Supabase Auth user (login credentials) AND a staff row in the database.
+//
+// Roles:
+//   "admin"           → full access to all pages and stations
+//   "station_manager" → limited to their assigned station's info and adverts
+//
+// When a new account is created, Supabase sends a confirmation email to the staff member.
+// They must confirm it before they can log in. If confirmation is a problem, you can
+// disable email confirmation in: Supabase dashboard → Authentication → Providers → Email.
+//
+// "Remove" only deletes the staff row — it does NOT delete the Supabase Auth account.
+// To fully delete a user, also go to Supabase → Authentication → Users and delete them there.
 export default function AdminUsers() {
   const [staff, setStaff]       = useState([])
   const [stations, setStations] = useState([])
@@ -29,16 +42,20 @@ export default function AdminUsers() {
   const createUser = async () => {
     if (!form.name||!form.email||!form.password) { toast.error('Name, email, and password required'); return }
     setSaving(true)
+    // Step 1: Create the Supabase Auth account (handles password hashing, email confirmation)
     const { data, error } = await supabase.auth.signUp({ email:form.email, password:form.password })
     if (error) { toast.error(error.message); setSaving(false); return }
     const userId = data.user?.id
     if (!userId) { toast.error('Could not get user ID — account may already exist'); setSaving(false); return }
+    // Step 2: Create the staff record linking the auth user to a role and station
     const { error: staffErr } = await supabase.from('staff').insert({ user_id:userId, name:form.name, role:form.role, station_id:form.station_id||null })
     setSaving(false)
     if (staffErr) { toast.error(staffErr.message); return }
     toast.success(`Account created — ${form.email} will receive a confirmation email`); setShowForm(false); setForm(EMPTY); fetchAll()
   }
 
+  // Removes the staff row only. The Supabase Auth account remains — delete it manually
+  // in the Supabase dashboard if the person should have no access at all.
   const removeStaff = async (id, name) => {
     if (!confirm(`Remove ${name} from staff?`)) return
     await supabase.from('staff').delete().eq('id',id)

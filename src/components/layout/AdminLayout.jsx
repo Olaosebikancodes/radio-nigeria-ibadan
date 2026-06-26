@@ -3,6 +3,9 @@ import { NavLink, useNavigate } from 'react-router-dom'
 import { useAuth } from '../../context/AuthContext'
 import { LayoutDashboard, Megaphone, Radio, Users, Menu, X } from 'lucide-react'
 
+// The sidebar navigation links for the admin panel.
+// To add a new admin section: create the page, add a route in src/routes/index.jsx,
+// then add an entry here so it appears in the sidebar.
 const LINKS = [
   { to:'/admin',           label:'Dashboard', Icon: LayoutDashboard, exact:true },
   { to:'/admin/adverts',   label:'Adverts',   Icon: Megaphone },
@@ -22,6 +25,9 @@ export default function AdminLayout({ children }) {
 
       <aside className="admin-sidebar" style={{ width:'220px', background:'var(--color-surface)', borderRight:'1px solid var(--color-border)', display:'flex', flexDirection:'column', position:'fixed', top:0, left:0, bottom:0, zIndex:50 }}>
         <div style={{ padding:'16px 20px', borderBottom:'1px solid var(--color-border)', display:'flex', alignItems:'center', justifyContent:'center' }}>
+          {/* Logo image — stored in Supabase Storage under the "images" bucket.
+              To change the logo, upload a new image to Supabase Storage and replace the URL here
+              (and in the Navbar component: src/components/layout/Navbar.jsx) */}
           <img src="https://tfxpqxxzopsycpnmdyke.supabase.co/storage/v1/object/public/images/Untitled%20design(8).png" alt="Radio Nigeria" style={{ height:'52px', width:'auto', objectFit:'contain' }} />
         </div>
         <nav style={{ flex:1, padding:'12px 10px', display:'flex', flexDirection:'column', gap:'2px', overflowY:'auto' }}>

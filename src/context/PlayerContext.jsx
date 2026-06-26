@@ -1,11 +1,15 @@
 import { createContext, useContext, useRef, useState } from 'react'
 
+// PlayerContext manages the single audio player shared across the whole site.
+// Any page can call play(station) to start a stream without unmounting the player
+// when the user navigates to a different page.
+// The station object must have a "stream_url" field — this is set in AdminStations.
 const PlayerContext = createContext(null)
 
 export function PlayerProvider({ children }) {
   const [activeStation, setActiveStation] = useState(null)
   const [playing, setPlaying] = useState(false)
-  const [volume, setVolume]   = useState(0.8)
+  const [volume, setVolume]   = useState(0.8)  // 0 to 1; default 80%
   const audioRef = useRef(null)
 
   const play = (item) => {

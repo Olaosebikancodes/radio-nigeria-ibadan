@@ -6,6 +6,16 @@ import toast from 'react-hot-toast'
 
 const inputStyle = { width:'100%', padding:'9px 12px', borderRadius:'8px', fontSize:'13px', background:'var(--color-surface-2)', border:'1px solid var(--color-border)', color:'var(--color-text)', outline:'none', fontFamily:'var(--font-body)' }
 
+// Stations page — where station info is managed.
+// Key field to keep updated: "Live Stream URL" — this is the direct audio link
+// (MP3, AAC, or M3U8) that powers the Listen Live button on the public site.
+// If a stream is down or silent, check that URL first.
+//
+// Access control:
+//   • Admin staff → can see and edit ALL stations
+//   • Station manager → can only see and edit THEIR assigned station
+//
+// The "sort_order" column in the database controls the order stations appear on the public site.
 export default function AdminStations() {
   const [stations, setStations] = useState([])
   const [editing, setEditing]   = useState(null)
@@ -16,6 +26,7 @@ export default function AdminStations() {
 
   const fetchAll = async () => {
     let query = supabase.from('stations').select('*').order('sort_order')
+    // Station managers only see their own station
     if (!isAdmin && staff?.station_id) query = query.eq('id', staff.station_id)
     const { data } = await query
     setStations(data||[])

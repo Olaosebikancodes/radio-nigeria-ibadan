@@ -1,6 +1,17 @@
 import { createContext, useContext, useEffect, useState } from 'react'
 import { supabase } from '../lib/supabase'
 
+// AuthContext handles login state for the entire app.
+// It exposes: user (Supabase auth record), staff (our custom staff table row),
+// loading (true while the session is being checked), signIn, and signOut.
+//
+// There are TWO user concepts here — do not confuse them:
+//   • "user"  → Supabase Auth user (email + password, managed in Supabase dashboard)
+//   • "staff" → a row in the "staff" table in our database, linked to the user by user_id
+//
+// A staff member needs BOTH: a Supabase auth account AND a matching row in the staff table.
+// The admin panel (AdminUsers page) creates both at the same time.
+// If someone can log in but sees nothing, their staff row is probably missing.
 const AuthContext = createContext(null)
 
 export function AuthProvider({ children }) {
@@ -9,12 +20,14 @@ export function AuthProvider({ children }) {
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
+    // On first load, check if there's already an active session (e.g. page refresh)
     supabase.auth.getSession().then(({ data }) => {
       setUser(data.session?.user ?? null)
       if (data.session?.user) fetchStaff(data.session.user.id)
       else setLoading(false)
     })
 
+    // Listen for login/logout events and keep state in sync
     const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
       setUser(session?.user ?? null)
       if (session?.user) fetchStaff(session.user.id)
@@ -24,6 +37,10 @@ export function AuthProvider({ children }) {
     return () => subscription.unsubscribe()
   }, [])
 
+  // Fetch the staff record linked to this auth user.
+  // The "role" field on staff determines what they can see in the admin panel:
+  //   "admin"           → full access (all stations, all adverts, can manage staff)
+  //   "station_manager" → can only edit their own station and its adverts
   const fetchStaff = async (userId) => {
     const { data } = await supabase
       .from('staff')

@@ -12,6 +12,9 @@ export default function Stations() {
   const { play, activeStation, playing } = usePlayer()
 
   useEffect(() => {
+    // Fetches only stations where active=true, ordered by sort_order.
+    // If no stations are returned from the database, it falls back to STATIONS_SEED
+    // (a hardcoded list in src/lib/utils.js) so the page never appears empty.
     supabase.from('stations').select('*').eq('active',true).order('sort_order')
       .then(({ data }) => { setStations(data?.length ? data : STATIONS_SEED); setLoading(false) })
   }, [])
@@ -26,8 +29,8 @@ export default function Stations() {
       <div style={{ background:`linear-gradient(to bottom, rgba(0,92,46,0.12), transparent)`, borderBottom:'1px solid var(--color-border)', padding:'60px 24px 48px' }}>
         <div style={{ maxWidth:'1280px', margin:'0 auto' }}>
           <p style={{ fontSize:'17px', fontWeight:600, color:'var(--color-brand-light)', textTransform:'uppercase', letterSpacing:'0.1em', marginBottom:'10px' }}>FRCN South West Zone</p>
-          <h1 style={{ fontFamily:'var(--font-display)', fontSize:'clamp(32px,5vw,56px)', fontWeight:900, color:'var(--color-text)', letterSpacing:'-0.04em', marginBottom:'12px' }}>Our Stations</h1>
-          <p style={{ fontSize:'18px', color:'var(--color-text-muted)', maxWidth:'560px' }}>8 FM stations serving Oyo, Ogun, Ondo, Osun, Ekiti and the broader South West region.</p>
+          <h1 style={{ fontFamily:'var(--font-display)', fontSize:'clamp(32px,5vw,56px)', fontWeight:900, color:'var(--color-text)', letterSpacing:'0.04em', marginBottom:'12px' }}>SOUTH WEST FM STATIONS</h1>
+          <p style={{ fontSize:'18px', color:'var(--color-text-muted)', maxWidth:'560px' }}>Ibadan Zonal Station.</p>
         </div>
       </div>
 
