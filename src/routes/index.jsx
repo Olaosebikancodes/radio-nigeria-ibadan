@@ -18,7 +18,6 @@ const AdminLogin      = lazy(() => import('../pages/admin/AdminLogin'))
 const AdminDashboard  = lazy(() => import('../pages/admin/AdminDashboard'))
 const AdminAdverts    = lazy(() => import('../pages/admin/AdminAdverts'))
 const AdminStations   = lazy(() => import('../pages/admin/AdminStations'))
-const AdminUsers      = lazy(() => import('../pages/admin/AdminUsers'))
 
 function PageLoader() {
   return (
@@ -51,7 +50,6 @@ export default function AppRoutes() {
         <Route path="/admin"          element={<ProtectedRoute><AdminDashboard /></ProtectedRoute>} />
         <Route path="/admin/adverts"  element={<ProtectedRoute><AdminAdverts /></ProtectedRoute>} />
         <Route path="/admin/stations" element={<ProtectedRoute><AdminStations /></ProtectedRoute>} />
-        <Route path="/admin/users"    element={<ProtectedRoute><AdminUsers /></ProtectedRoute>} />
 
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>

@@ -1,16 +1,12 @@
 import { useState } from 'react'
 import { NavLink, useNavigate } from 'react-router-dom'
 import { useAuth } from '../../context/AuthContext'
-import { LayoutDashboard, Megaphone, Radio, Users, Menu, X } from 'lucide-react'
+import { LayoutDashboard, Megaphone, Radio, Menu, X } from 'lucide-react'
 
-// The sidebar navigation links for the admin panel.
-// To add a new admin section: create the page, add a route in src/routes/index.jsx,
-// then add an entry here so it appears in the sidebar.
 const LINKS = [
   { to:'/admin',           label:'Dashboard', Icon: LayoutDashboard, exact:true },
   { to:'/admin/adverts',   label:'Adverts',   Icon: Megaphone },
   { to:'/admin/stations',  label:'Stations',  Icon: Radio },
-  { to:'/admin/users',     label:'Staff',     Icon: Users },
 ]
 
 export default function AdminLayout({ children }) {
