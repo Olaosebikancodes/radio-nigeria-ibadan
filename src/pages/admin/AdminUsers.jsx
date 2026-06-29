@@ -5,14 +5,10 @@ import { useAuth } from '../../context/AuthContext'
 import toast from 'react-hot-toast'
 
 const inputStyle = { width:'100%', padding:'9px 12px', borderRadius:'8px', fontSize:'13px', background:'var(--color-surface-2)', border:'1px solid var(--color-border)', color:'var(--color-text)', outline:'none', fontFamily:'var(--font-body)' }
-const EMPTY = { name:'', role:'station_manager', station_id:'', email:'', password:'' }
+const EMPTY = { name:'', role:'admin', station_id:'', email:'', password:'' }
 
-// Staff Accounts page — only visible to admins.
+// Staff Accounts page — manage admin accounts.
 // Creates both a Supabase Auth user (login credentials) AND a staff row in the database.
-//
-// Roles:
-//   "admin"           → full access to all pages and stations
-//   "station_manager" → limited to their assigned station's info and adverts
 //
 // When a new account is created, Supabase sends a confirmation email to the staff member.
 // They must confirm it before they can log in. If confirmation is a problem, you can
@@ -62,8 +58,8 @@ export default function AdminUsers() {
     toast.success('Staff removed'); fetchAll()
   }
 
-  const ROLE_COLORS = { admin:'rgba(240,165,0,0.15)', station_manager:'rgba(26,107,154,0.12)' }
-  const ROLE_TEXT   = { admin:'var(--color-accent)', station_manager:'#5BA8D4' }
+  const ROLE_COLOR = 'rgba(240,165,0,0.15)'
+  const ROLE_TEXT  = 'var(--color-accent)'
 
   return (
     <AdminLayout>
@@ -81,16 +77,7 @@ export default function AdminUsers() {
             <h1 style={{ fontFamily:'var(--font-display)', fontSize:'28px', fontWeight:700, color:'var(--color-text)', letterSpacing:'-0.03em' }}>Staff Accounts</h1>
             <p style={{ fontSize:'13px', color:'var(--color-text-muted)', marginTop:'4px' }}>{staff.length} staff member{staff.length!==1?'s':''}</p>
           </div>
-          {me?.role==='admin' && <button onClick={()=>setShowForm(s=>!s)} style={{ padding:'10px 20px', borderRadius:'10px', fontSize:'13px', fontWeight:600, cursor:'pointer', background:'var(--color-brand)', color:'#fff', border:'none' }}>{showForm?'Cancel':'+ Add Staff'}</button>}
-        </div>
-
-        <div style={{ display:'flex', gap:'12px', marginBottom:'20px', flexWrap:'wrap' }}>
-          {[['admin','Admin — full access'],['station_manager','Station Manager — own station only']].map(([role,desc])=>(
-            <div key={role} style={{ display:'flex', alignItems:'center', gap:'6px', padding:'4px 12px', borderRadius:'999px', background:ROLE_COLORS[role], border:`1px solid ${ROLE_TEXT[role]}33` }}>
-              <span style={{ width:'6px', height:'6px', borderRadius:'50%', background:ROLE_TEXT[role] }} />
-              <span style={{ fontSize:'11px', fontWeight:600, color:ROLE_TEXT[role] }}>{desc}</span>
-            </div>
-          ))}
+          <button onClick={()=>setShowForm(s=>!s)} style={{ padding:'10px 20px', borderRadius:'10px', fontSize:'13px', fontWeight:600, cursor:'pointer', background:'var(--color-brand)', color:'#fff', border:'none' }}>{showForm?'Cancel':'+ Add Staff'}</button>
         </div>
 
         {showForm && (
@@ -108,13 +95,6 @@ export default function AdminUsers() {
               <div>
                 <label style={{ fontSize:'12px', fontWeight:600, color:'var(--color-text-muted)', display:'block', marginBottom:'6px' }}>Temporary Password *</label>
                 <input type="password" value={form.password} onChange={e=>setForm(f=>({...f,password:e.target.value}))} style={inputStyle} placeholder="Min. 8 characters" />
-              </div>
-              <div>
-                <label style={{ fontSize:'12px', fontWeight:600, color:'var(--color-text-muted)', display:'block', marginBottom:'6px' }}>Role</label>
-                <select value={form.role} onChange={e=>setForm(f=>({...f,role:e.target.value}))} style={inputStyle}>
-                  <option value="station_manager">Station Manager — own station only</option>
-                  <option value="admin">Admin — full access</option>
-                </select>
               </div>
               <div>
                 <label style={{ fontSize:'12px', fontWeight:600, color:'var(--color-text-muted)', display:'block', marginBottom:'6px' }}>Assigned Station</label>
@@ -140,7 +120,7 @@ export default function AdminUsers() {
                 onMouseLeave={e=>e.currentTarget.style.background='transparent'}
               >
                 <div style={{ display:'flex', alignItems:'center', gap:'14px' }}>
-                  <div style={{ width:'40px', height:'40px', borderRadius:'10px', background:`${ROLE_TEXT[s.role] ?? '#555'}20`, display:'flex', alignItems:'center', justifyContent:'center', fontSize:'16px', fontWeight:700, fontFamily:'var(--font-display)', color:ROLE_TEXT[s.role] }}>
+                  <div style={{ width:'40px', height:'40px', borderRadius:'10px', background:`${ROLE_TEXT}20`, display:'flex', alignItems:'center', justifyContent:'center', fontSize:'16px', fontWeight:700, fontFamily:'var(--font-display)', color:ROLE_TEXT }}>
                     {s.name?.charAt(0).toUpperCase()}
                   </div>
                   <div>
@@ -149,8 +129,8 @@ export default function AdminUsers() {
                   </div>
                 </div>
                 <div className="staff-row-right" style={{ display:'flex', alignItems:'center', gap:'12px' }}>
-                  <span style={{ fontSize:'11px', fontWeight:600, padding:'4px 12px', borderRadius:'999px', background:ROLE_COLORS[s.role], color:ROLE_TEXT[s.role], textTransform:'capitalize' }}>{s.role?.replace('_',' ')}</span>
-                  {me?.role==='admin' && s.user_id!==me?.user_id && (
+                  <span style={{ fontSize:'11px', fontWeight:600, padding:'4px 12px', borderRadius:'999px', background:ROLE_COLOR, color:ROLE_TEXT }}>Admin</span>
+                  {s.user_id!==me?.user_id && (
                     <button onClick={()=>removeStaff(s.id,s.name)} style={{ fontSize:'11px', fontWeight:600, color:'var(--color-live)', background:'none', border:'none', cursor:'pointer' }}>Remove</button>
                   )}
                 </div>

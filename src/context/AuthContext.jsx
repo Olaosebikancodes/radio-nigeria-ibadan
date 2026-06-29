@@ -37,10 +37,6 @@ export function AuthProvider({ children }) {
     return () => subscription.unsubscribe()
   }, [])
 
-  // Fetch the staff record linked to this auth user.
-  // The "role" field on staff determines what they can see in the admin panel:
-  //   "admin"           → full access (all stations, all adverts, can manage staff)
-  //   "station_manager" → can only edit their own station and its adverts
   const fetchStaff = async (userId) => {
     const { data } = await supabase
       .from('staff')

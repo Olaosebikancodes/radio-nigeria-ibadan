@@ -2,7 +2,6 @@ import { useEffect, useRef, useState } from 'react'
 import { Megaphone, Image } from 'lucide-react'
 import { supabase } from '../../lib/supabase'
 import AdminLayout from '../../components/layout/AdminLayout'
-import { useAuth } from '../../context/AuthContext'
 import toast from 'react-hot-toast'
 
 const inputStyle = { width:'100%', padding:'9px 12px', borderRadius:'8px', fontSize:'13px', background:'var(--color-surface-2)', border:'1px solid var(--color-border)', color:'var(--color-text)', outline:'none', fontFamily:'var(--font-body)' }
@@ -19,14 +18,7 @@ const EMPTY = { title:'', image_url:'', link_url:'', station_id:'', active:true,
 //
 // Images are uploaded to Supabase Storage under the "images/adverts/" folder.
 // Recommended image size: 1200×400px (banner format).
-//
-// Access control:
-//   • Admin → can create/edit adverts for any station
-//   • Station manager → can only manage adverts for their own station
 export default function AdminAdverts() {
-  const { staff } = useAuth()
-  const isAdmin   = staff?.role === 'admin'
-
   const [adverts, setAdverts]     = useState([])
   const [stations, setStations]   = useState([])
   const [form, setForm]           = useState(EMPTY)
@@ -37,22 +29,19 @@ export default function AdminAdverts() {
   const fileInputRef = useRef(null)
 
   const fetchAll = async () => {
-    let adsQuery = supabase.from('adverts').select('*, stations(name)').order('sort_order')
-    if (!isAdmin && staff?.station_id) adsQuery = adsQuery.eq('station_id', staff.station_id)
-
     const [{ data: ads }, { data: stas }] = await Promise.all([
-      adsQuery,
+      supabase.from('adverts').select('*, stations(name)').order('sort_order'),
       supabase.from('stations').select('id,name').order('sort_order'),
     ])
     setAdverts(ads || [])
     setStations(stas || [])
   }
 
-  useEffect(() => { if (staff) fetchAll() }, [staff])
+  useEffect(() => { fetchAll() }, [])
 
   const openNew = () => {
     setEditing(null)
-    setForm({ ...EMPTY, station_id: isAdmin ? '' : (staff?.station_id || '') })
+    setForm(EMPTY)
     setShowForm(true)
   }
   const openEdit = (a) => {
@@ -165,13 +154,10 @@ export default function AdminAdverts() {
               </div>
               <div>
                 <label style={{ fontSize:'12px', fontWeight:600, color:'var(--color-text-muted)', display:'block', marginBottom:'6px' }}>Show on Station</label>
-                {isAdmin
-                  ? <select value={form.station_id} onChange={e=>setForm(f=>({...f,station_id:e.target.value}))} style={inputStyle}>
-                      <option value="">All Stations</option>
-                      {stations.map(s => <option key={s.id} value={s.id}>{s.name}</option>)}
-                    </select>
-                  : <input value={stations.find(s=>s.id===form.station_id)?.name || 'Your Station'} readOnly style={{ ...inputStyle, opacity:0.6, cursor:'not-allowed' }} />
-                }
+                <select value={form.station_id} onChange={e=>setForm(f=>({...f,station_id:e.target.value}))} style={inputStyle}>
+                  <option value="">All Stations</option>
+                  {stations.map(s => <option key={s.id} value={s.id}>{s.name}</option>)}
+                </select>
               </div>
               <div>
                 <label style={{ fontSize:'12px', fontWeight:600, color:'var(--color-text-muted)', display:'block', marginBottom:'6px' }}>Sort Order</label>

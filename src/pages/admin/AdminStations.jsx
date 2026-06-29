@@ -1,7 +1,6 @@
 ﻿import { useEffect, useState } from 'react'
 import { supabase } from '../../lib/supabase'
 import AdminLayout from '../../components/layout/AdminLayout'
-import { useAuth } from '../../context/AuthContext'
 import toast from 'react-hot-toast'
 
 const inputStyle = { width:'100%', padding:'9px 12px', borderRadius:'8px', fontSize:'13px', background:'var(--color-surface-2)', border:'1px solid var(--color-border)', color:'var(--color-text)', outline:'none', fontFamily:'var(--font-body)' }
@@ -11,27 +10,18 @@ const inputStyle = { width:'100%', padding:'9px 12px', borderRadius:'8px', fontS
 // (MP3, AAC, or M3U8) that powers the Listen Live button on the public site.
 // If a stream is down or silent, check that URL first.
 //
-// Access control:
-//   • Admin staff → can see and edit ALL stations
-//   • Station manager → can only see and edit THEIR assigned station
-//
 // The "sort_order" column in the database controls the order stations appear on the public site.
 export default function AdminStations() {
   const [stations, setStations] = useState([])
   const [editing, setEditing]   = useState(null)
   const [form, setForm]         = useState({})
   const [saving, setSaving]     = useState(false)
-  const { staff } = useAuth()
-  const isAdmin = staff?.role === 'admin'
 
   const fetchAll = async () => {
-    let query = supabase.from('stations').select('*').order('sort_order')
-    // Station managers only see their own station
-    if (!isAdmin && staff?.station_id) query = query.eq('id', staff.station_id)
-    const { data } = await query
+    const { data } = await supabase.from('stations').select('*').order('sort_order')
     setStations(data||[])
   }
-  useEffect(() => { if (staff) fetchAll() }, [staff])
+  useEffect(() => { fetchAll() }, [])
 
   const startEdit = (s) => { setEditing(s.id); setForm({ name:s.name, frequency:s.frequency||'', tagline:s.tagline||'', description:s.description||'', location:s.location||'', stream_url:s.stream_url||'', color_hex:s.color_hex||'#005C2E', social_facebook:s.social_facebook||'', social_youtube:s.social_youtube||'' }) }
 
@@ -62,7 +52,7 @@ export default function AdminStations() {
         <div style={{ display:'flex', flexDirection:'column', gap:'16px' }}>
           {stations.map(s => (
             <div key={s.id} style={{ background:'var(--color-surface)', borderRadius:'14px', border:`1px solid ${editing===s.id?s.color_hex+'55':'var(--color-border)'}`, overflow:'hidden', transition:'border-color 0.2s' }}>
-              <div style={{ display:'flex', alignItems:'center', justifyContent:'space-between', padding:'18px 20px', cursor: isAdmin||s.id===staff?.station_id?'pointer':'default' }} onClick={()=>{ if(!isAdmin&&s.id!==staff?.station_id) return; editing===s.id?setEditing(null):startEdit(s) }}>
+              <div style={{ display:'flex', alignItems:'center', justifyContent:'space-between', padding:'18px 20px', cursor:'pointer' }} onClick={()=>{ editing===s.id?setEditing(null):startEdit(s) }}>
                 <div style={{ display:'flex', alignItems:'center', gap:'14px' }}>
                   <div style={{ width:'40px', height:'40px', borderRadius:'10px', background:`${s.color_hex}25`, border:`1px solid ${s.color_hex}40`, display:'flex', alignItems:'center', justifyContent:'center' }}>
                     <span style={{ fontFamily:'var(--font-display)', fontWeight:900, fontSize:'12px', color:s.color_hex }}>{s.frequency}</span>
@@ -72,9 +62,7 @@ export default function AdminStations() {
                     <p style={{ fontSize:'12px', color:'var(--color-text-muted)' }}>{s.location} · <span style={{ color: s.stream_url ? 'var(--color-success)' : 'var(--color-live)', fontWeight:600 }}>{s.stream_url ? '— Stream set' : '— No stream URL'}</span></p>
                   </div>
                 </div>
-                {(isAdmin || s.id===staff?.station_id) && (
-                  <span style={{ fontSize:'12px', color:'var(--color-accent)', fontWeight:600 }}>{editing===s.id ? 'Cancel œ•' : 'Edit ←’'}</span>
-                )}
+                <span style={{ fontSize:’12px’, color:’var(--color-accent)’, fontWeight:600 }}>{editing===s.id ? ‘Cancel œ•’ : ‘Edit ←’’}</span>
               </div>
 
               {editing===s.id && (
