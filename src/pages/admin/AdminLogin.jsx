@@ -45,7 +45,7 @@ export default function AdminLogin() {
             </div>
             {error && <p style={{ fontSize:'13px', color:'var(--color-live)', background:'rgba(255,59,48,0.08)', padding:'10px 12px', borderRadius:'8px', border:'1px solid rgba(255,59,48,0.2)' }}>{error}</p>}
             <button type="submit" disabled={loading} style={{ padding:'13px', borderRadius:'10px', fontSize:'14px', fontWeight:700, cursor:loading?'not-allowed':'pointer', background:'var(--color-brand)', color:'#fff', border:'none', transition:'background 0.2s', opacity:loading?0.6:1 }}>
-              {loading ? ‘Signing in…’ : ‘Sign In →’}
+              {loading ? 'Signing in…' : 'Sign In →'}
             </button>
           </form>
         </div>
