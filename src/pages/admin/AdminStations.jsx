@@ -62,7 +62,7 @@ export default function AdminStations() {
                     <p style={{ fontSize:'12px', color:'var(--color-text-muted)' }}>{s.location} · <span style={{ color: s.stream_url ? 'var(--color-success)' : 'var(--color-live)', fontWeight:600 }}>{s.stream_url ? '— Stream set' : '— No stream URL'}</span></p>
                   </div>
                 </div>
-                <span style={{ fontSize:’12px’, color:’var(--color-accent)’, fontWeight:600 }}>{editing===s.id ? ‘Cancel œ•’ : ‘Edit ←’’}</span>
+                <span style={{ fontSize:’12px’, color:’var(--color-accent)’, fontWeight:600 }}>{editing===s.id ? ‘Cancel’ : ‘Edit’}</span>
               </div>
 
               {editing===s.id && (
